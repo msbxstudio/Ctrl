@@ -11,7 +11,9 @@ import 'package:lucide_icons/lucide_icons.dart';
 final class LevelPage extends ConsumerStatefulWidget {
   static const routePath = '/levels/:id';
 
-  const LevelPage({super.key});
+  final int id;
+
+  const LevelPage({super.key, required this.id});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -36,8 +38,11 @@ final class LevelPageState extends ConsumerState<LevelPage> {
 
       appBar: AppBar(
         centerTitle: false,
+        automaticallyImplyLeading: false,
+        automaticallyImplyActions: false,
+
         titleSpacing: 8.0,
-        title: const Text('Level 21'),
+        title: Text('Level ${widget.id}'),
 
         leadingWidth: 48.0,
         leading: const PopButton(),
