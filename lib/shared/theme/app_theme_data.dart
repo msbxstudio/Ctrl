@@ -21,25 +21,25 @@ extension AppThemeData on ThemeData {
       applyElevationOverlayColor: brightness == Brightness.dark,
 
       textTheme: const TextTheme(
-        labelSmall: TextStyle(fontSize: 10),
-        labelMedium: TextStyle(fontSize: 12),
-        labelLarge: TextStyle(fontSize: 14),
+        labelSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 10),
+        labelMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12),
+        labelLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
 
-        bodySmall: TextStyle(fontSize: 12),
-        bodyMedium: TextStyle(fontSize: 14),
-        bodyLarge: TextStyle(fontSize: 16),
+        bodySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12),
+        bodyMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
+        bodyLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 16),
 
-        titleSmall: TextStyle(fontSize: 14),
-        titleMedium: TextStyle(fontSize: 18),
-        titleLarge: TextStyle(fontSize: 22),
+        titleSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
+        titleMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 18),
+        titleLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 22),
 
-        headlineSmall: TextStyle(fontSize: 24),
-        headlineMedium: TextStyle(fontSize: 30),
-        headlineLarge: TextStyle(fontSize: 36),
+        headlineSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 24),
+        headlineMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 30),
+        headlineLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 36),
 
-        displaySmall: TextStyle(fontSize: 42),
-        displayMedium: TextStyle(fontSize: 50),
-        displayLarge: TextStyle(fontSize: 58),
+        displaySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 42),
+        displayMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 50),
+        displayLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 58),
       ),
 
       dividerTheme: DividerThemeData(color: scheme.outlineVariant),

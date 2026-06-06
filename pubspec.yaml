@@ -40,6 +40,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Icon pack based on Tabler Icons.
+  flutter_tabler_icons: ^1.43.0
+
+  # Icon pack based on Lucide Icons.
+  lucide_icons: ^0.257.0
+
+  #
+  material_symbols_icons: ^4.2892.0
+
   # Simplifies internationalization (i18n), translations, and locale switching.
   easy_localization: ^3.0.8
 
@@ -51,6 +60,9 @@ dependencies:
 
   # Declarative routing and navigation for Flutter apps.
   go_router: ^16.0.0
+
+  # Internationalization utilities for dates, numbers, and text formatting.
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -78,3 +90,9 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/l10n/
+
+  # To add fonts
+  fonts:
+    - family: "JetBrains Mono"
+      fonts:
+        - asset: assets/fonts/JetBrainsMono.ttf
