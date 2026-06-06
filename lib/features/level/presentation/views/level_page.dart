@@ -1,5 +1,6 @@
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/utils/index.dart';
+import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
 import 'package:flutter/material.dart';
@@ -23,15 +24,17 @@ final class LevelPage extends ConsumerStatefulWidget {
 
 final class LevelPageState extends ConsumerState<LevelPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<FormState>();
 
   final _answerFieldController = TextEditingController();
-
-  final _correctAnswer = '1234';
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final controllerProvider = levelControllerProvider(widget.id);
+
+    final _ = ref.read(controllerProvider.notifier);
+    final asyncValue = ref.watch(controllerProvider);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -42,14 +45,14 @@ final class LevelPageState extends ConsumerState<LevelPage> {
         automaticallyImplyActions: false,
 
         titleSpacing: 8.0,
-        title: Text('Level ${widget.id}'),
+        title: asyncValue.hasValue ? Text('Level ${widget.id}') : null,
 
         leadingWidth: 48.0,
         leading: const PopButton(),
 
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: asyncValue.hasValue ? () {} : null,
             tooltip: 'Hint',
 
             icon: const Icon(TablerIcons.bulb_filled),
@@ -57,16 +60,26 @@ final class LevelPageState extends ConsumerState<LevelPage> {
         ],
       ),
 
-      body: Form(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 16.0,
+      body: asyncValue.when(
+        data: (data) {
+          final (:level) = data;
 
-          children: [const Text('Level Page')],
-        ).padded(const EdgeInsets.symmetric(horizontal: 12.0)),
-      ).centered(),
+          return Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 16.0,
+
+            children: [Text(level.question)],
+          ).centered();
+        },
+        error: (e, s) {
+          return const Text('Error loading level').centered();
+        },
+        loading: () {
+          return const CircularProgressIndicator().centered();
+        },
+      ),
 
       bottomNavigationBar: Theme(
         data: theme.copyWith(
@@ -81,102 +94,111 @@ final class LevelPageState extends ConsumerState<LevelPage> {
           ),
         ),
 
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 4.0,
+        child: asyncValue.maybeWhen(
+          data: (data) {
+            final (:level) = data;
 
-          children: [
-            Row(
+            return Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8.0,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 4.0,
 
               children: [
-                Form(
-                  key: _formKey,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8.0,
 
-                  child: TextFormField(
-                    readOnly: true,
-                    controller: _answerFieldController,
+                  children: [
+                    TextFormField(
+                      readOnly: true,
+                      controller: _answerFieldController,
 
-                    decoration: InputDecoration(
-                      hintText: 'Answer',
-                      suffixIcon: IconButton(
-                        onPressed: _clearAnswer,
+                      decoration: InputDecoration(
+                        hintText: 'Answer',
+                        suffixIcon: IconButton(
+                          onPressed: _clearAnswer,
 
-                        style: theme.iconButtonTheme.style?.copyWith(
-                          splashFactory: NoSplash.splashFactory,
-                          overlayColor: WidgetStateProperty.all(
-                            Colors.transparent,
+                          style: theme.iconButtonTheme.style?.copyWith(
+                            splashFactory: NoSplash.splashFactory,
+                            overlayColor: WidgetStateProperty.all(
+                              Colors.transparent,
+                            ),
+
+                            foregroundColor: WidgetStateProperty.resolveWith(
+                              (states) => states.contains(WidgetState.pressed)
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.onSurfaceVariant,
+                            ),
                           ),
 
-                          foregroundColor: WidgetStateProperty.resolveWith(
-                            (states) => states.contains(WidgetState.pressed)
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.onSurfaceVariant,
-                          ),
+                          icon: const Icon(LucideIcons.x),
                         ),
-
-                        icon: const Icon(LucideIcons.x),
                       ),
-                    ),
-                  ),
-                ).expand(flex: 31),
+                    ).expand(flex: 31),
 
-                FilledButton.tonal(
-                  onPressed: _sendAnswer,
+                    FilledButton.tonal(
+                      onPressed: () {
+                        if (_answerFieldController.text == level.answer) {
+                          showSnackbar(context, 'Correct answer!');
+                        } else {
+                          showSnackbar(context, 'Incorrect answer!');
+                        }
+                      },
 
-                  child: Text('ENTER'),
-                ).expand(flex: 20),
+                      child: Text('ENTER'),
+                    ).expand(flex: 20),
+                  ],
+                ),
+                ..._keyboard(options: level.options),
               ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8.0,
-
-              children: const <int>[1, 2, 3, 4, 5]
-                  .map(
-                    (it) => FilledButton.tonal(
-                      onPressed: () => _addItem('$it'),
-
-                      child: Text('$it'),
-                    ).expand(),
-                  )
-                  .toList(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8.0,
-
-              children: const <int>[6, 7, 8, 9, 0]
-                  .map(
-                    (it) => FilledButton.tonal(
-                      onPressed: () => _addItem('$it'),
-
-                      child: Text('$it'),
-                    ).expand(),
-                  )
-                  .toList(),
-            ),
-          ],
+            );
+          },
+          orElse: () {
+            return const SizedBox.shrink();
+          },
         ),
       ).padded(const EdgeInsets.all(12.0)),
     ).dismissKeyboard(context);
   }
 
-  void _addItem(String item) {
-    _answerFieldController.text += item;
+  List<Widget> _keyboard({required List options}) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 8.0,
+
+        children: options
+            .take(5)
+            .map(
+              (it) => FilledButton.tonal(
+                onPressed: () => _addItem('$it'),
+
+                child: Text('$it'),
+              ).expand(),
+            )
+            .toList(),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 8.0,
+
+        children: options
+            .skip(5)
+            .map(
+              (it) => FilledButton.tonal(
+                onPressed: () => _addItem('$it'),
+
+                child: Text('$it'),
+              ).expand(),
+            )
+            .toList(),
+      ),
+    ];
   }
 
-  void _sendAnswer() {
-    if (!_formKey.currentState!.validate()) return;
-
-    if (_answerFieldController.text == _correctAnswer) {
-      Debugger.log('Correct answer!');
-    } else {
-      showSnackbar(context, 'Incorrect answer!');
-    }
+  void _addItem(String item) {
+    _answerFieldController.text += item;
   }
 
   void _clearAnswer() {

@@ -64,6 +64,14 @@ dependencies:
   # Internationalization utilities for dates, numbers, and text formatting.
   intl: ^0.20.2
 
+  # Enables in-app purchases and subscriptions on Android and iOS.
+  in_app_purchase: ^3.2.1
+  in_app_purchase_android: ^0.4.0
+  in_app_purchase_storekit: ^0.3.21
+
+  # Add support to Game Center and Google Play Games services.
+  games_services: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
