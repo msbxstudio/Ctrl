@@ -1,0 +1,44 @@
+import 'package:ctrl/app/index.dart';
+import 'package:ctrl/core/utils/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final class SplashPage extends ConsumerStatefulWidget {
+  static const routePath = '/splash';
+
+  const SplashPage({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return SplashPageState();
+  }
+}
+
+final class SplashPageState extends ConsumerState<SplashPage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(splashControllerProvider, (_, next) {
+      next.maybeWhen(
+        data: (status) {
+          ref.read(goRouterProvider).replace('/');
+        },
+        orElse: () {
+          Debugger.log('SplashPage: No data yet');
+        },
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+
+      body: const Center(child: CircularProgressIndicator.adaptive()),
+    );
+  }
+}

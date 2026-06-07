@@ -30,7 +30,7 @@ final class LevelRepositoryImpl implements LevelRepository {
 
   @override
   Future<Level> getCurrent() async {
-    return await Future.value(_levels.firstWhere((l) => l.id == 7));
+    return await Future.value(_levels.firstWhere((l) => l.id == 22));
   }
 
   @override

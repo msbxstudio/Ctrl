@@ -17,6 +17,7 @@ export 'presentation/controllers/level_controller.dart';
 export 'presentation/controllers/levels_controller.dart';
 
 export 'presentation/providers/controller_provider.dart';
+export 'presentation/providers/mutation_provider.dart';
 export 'presentation/providers/repository_provider.dart';
 
 export 'presentation/views/level_page.dart';

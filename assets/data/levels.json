@@ -300,9 +300,7 @@
       "A",
       "T",
       "W",
-      "U",
-      "T",
-      "S"
+      "U"
     ]
   },
   {
@@ -336,9 +334,10 @@
       "T",
       "U",
       "Y",
-      "R",
+      "A",
       "N",
-      "Z"
+      "Z",
+      "O"
     ]
   },
   {
@@ -423,16 +422,18 @@
     "keyboard": "complexity",
     "question": "Acceso a array por índice",
     "answer": "1",
+    "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
+      "0",
       "1",
       "n",
-      "log n",
-      "n log n",
-      "n²",
-      "n³",
-      "2ⁿ",
-      "n!",
-      "∞"
+      "L",
+      "M",
+      "2",
+      "E",
+      "!",
+      "∞",
+      "?"
     ]
   },
   {
@@ -441,16 +442,18 @@
     "keyboard": "complexity",
     "question": "Recorrer un array una vez",
     "answer": "n",
+    "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
+      "0",
       "1",
       "n",
-      "log n",
-      "n log n",
-      "n²",
-      "n³",
-      "2ⁿ",
-      "n!",
-      "∞"
+      "L",
+      "M",
+      "2",
+      "E",
+      "!",
+      "∞",
+      "?"
     ]
   },
   {
@@ -459,16 +462,18 @@
     "keyboard": "complexity",
     "question": "Dos loops anidados",
     "answer": "n²",
+    "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
+      "0",
       "1",
       "n",
-      "log n",
-      "n log n",
-      "n²",
-      "n³",
-      "2ⁿ",
-      "n!",
-      "∞"
+      "L",
+      "M",
+      "2",
+      "E",
+      "!",
+      "∞",
+      "?"
     ]
   },
   {
@@ -477,16 +482,18 @@
     "keyboard": "complexity",
     "question": "Binary Search",
     "answer": "log n",
+    "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
+      "0",
       "1",
       "n",
-      "log n",
-      "n log n",
-      "n²",
-      "n³",
-      "2ⁿ",
-      "n!",
-      "∞"
+      "L",
+      "M",
+      "2",
+      "E",
+      "!",
+      "∞",
+      "?"
     ]
   },
   {
@@ -495,16 +502,18 @@
     "keyboard": "complexity",
     "question": "Merge Sort",
     "answer": "n log n",
+    "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
+      "0",
       "1",
       "n",
-      "log n",
-      "n log n",
-      "n²",
-      "n³",
-      "2ⁿ",
-      "n!",
-      "∞"
+      "L",
+      "M",
+      "2",
+      "E",
+      "!",
+      "∞",
+      "?"
     ]
   },
   {

@@ -11,6 +11,13 @@ final appRoutes = <RouteBase>[
   ),
 
   GoRoute(
+    path: SplashPage.routePath,
+    builder: (_, _) {
+      return const SplashPage();
+    },
+  ),
+
+  GoRoute(
     path: LevelPage.routePath,
     builder: (_, state) {
       return LevelPage(id: int.parse(state.pathParameters['id']!));
@@ -21,6 +28,13 @@ final appRoutes = <RouteBase>[
     path: LevelsPage.routePath,
     builder: (_, _) {
       return const LevelsPage();
+    },
+  ),
+
+  GoRoute(
+    path: SettingsPage.routePath,
+    builder: (_, _) {
+      return const SettingsPage();
     },
   ),
 ];

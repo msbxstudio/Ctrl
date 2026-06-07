@@ -2,10 +2,10 @@ import 'package:games_services/games_services.dart';
 
 import 'app_service.dart';
 
-final class GamingService extends AppService<GamesServices?> {
+final class GamingService extends AppService<GamesServices> {
   static final instance = GamingService._();
 
-  GamingService._() : super(null);
+  GamingService._() : super.later();
 
   @override
   void initialize() {

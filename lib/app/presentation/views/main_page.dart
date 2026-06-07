@@ -30,9 +30,12 @@ final class MainPageState extends ConsumerState<MainPage> {
       key: _scaffoldKey,
 
       appBar: AppBar(
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await ref.read(goRouterProvider).push(SettingsPage.routePath);
+            },
 
             tooltip: 'Settings',
             icon: Icon(LucideIcons.settings, color: theme.colorScheme.outline),
@@ -41,7 +44,9 @@ final class MainPageState extends ConsumerState<MainPage> {
 
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(24.0),
-          child: _greeting('User'),
+          child: _greeting(
+            'User',
+          ).padded(const EdgeInsets.symmetric(horizontal: 16.0)),
         ),
       ),
 
@@ -108,37 +113,39 @@ final class MainPageState extends ConsumerState<MainPage> {
                     .toList(),
           ),
         ],
-      ).padded(const EdgeInsets.symmetric(horizontal: 12.0)),
+      ).padded(const EdgeInsets.symmetric(horizontal: 16.0)),
 
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        spacing: 12.0,
+      bottomNavigationBar: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 12.0,
 
-        children:
-            const <Map<String, dynamic>>[
-                  {
-                    'icon': Symbols.timer,
-                    'label': 'AVG TIME',
-                    'value': '02:10',
-                    'highlight': false,
-                  },
-                  {
-                    'icon': Symbols.local_fire_department,
-                    'label': 'STREAK',
-                    'value': '12 DAYS',
-                    'highlight': true,
-                  },
-                ]
-                .map(
-                  (it) => _metric(
-                    icon: it['icon'],
-                    label: it['label'],
-                    value: it['value'],
-                    highlight: it['highlight'],
-                  ).expand(),
-                )
-                .toList(),
-      ).padded(const EdgeInsets.all(12.0)),
+          children:
+              const <Map<String, dynamic>>[
+                    {
+                      'icon': Symbols.timer,
+                      'label': 'AVG TIME',
+                      'value': '02:10',
+                      'highlight': false,
+                    },
+                    {
+                      'icon': Symbols.local_fire_department,
+                      'label': 'STREAK',
+                      'value': '12 DAYS',
+                      'highlight': true,
+                    },
+                  ]
+                  .map(
+                    (it) => _metric(
+                      icon: it['icon'],
+                      label: it['label'],
+                      value: it['value'],
+                      highlight: it['highlight'],
+                    ).expand(),
+                  )
+                  .toList(),
+        ).padded(const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0)),
+      ),
     );
   }
 

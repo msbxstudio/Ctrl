@@ -34,7 +34,7 @@ void main() async {
             (_) => AppConfigRepositoryImpl(preferences),
           ),
         ],
-        child: MainApp(),
+        child: const MainApp(),
       ),
     ),
   );

@@ -1,12 +1,11 @@
+import 'package:ctrl/app/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'app_routes.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/',
+    initialLocation: SplashPage.routePath,
 
     routes: appRoutes,
 

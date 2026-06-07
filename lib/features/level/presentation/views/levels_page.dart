@@ -36,77 +36,79 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
         automaticallyImplyActions: false,
 
         titleSpacing: 8.0,
-        title: const Text('Levels Page'),
+        title: const Text('Levels'),
 
         leadingWidth: 48.0,
         leading: const PopButton(),
       ),
 
-      body: asyncValue.when(
-        data: (data) {
-          final (:levels, :currentLevel) = data;
+      body: SafeArea(
+        child: asyncValue.when(
+          data: (data) {
+            final (:levels, :currentLevel) = data;
 
-          return GridView.builder(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-              vertical: 8.0,
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
-              crossAxisSpacing: 12.0,
-              mainAxisSpacing: 12.0,
-              childAspectRatio: 1.0,
-            ),
+            return GridView.builder(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 8.0,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+                childAspectRatio: 1.0,
+              ),
 
-            itemCount: levels.length,
-            itemBuilder: (_, index) {
-              final level = levels[index];
+              itemCount: levels.length,
+              itemBuilder: (_, index) {
+                final level = levels[index];
 
-              return IconButton(
-                onPressed: index + 1 <= currentLevel.id
-                    ? () async {
-                        await ref
-                            .read(goRouterProvider)
-                            .push('/levels/${level.id}');
-                      }
-                    : null,
+                return IconButton(
+                  onPressed: index + 1 <= currentLevel.id
+                      ? () async {
+                          await ref
+                              .read(goRouterProvider)
+                              .push('/levels/${level.id}');
+                        }
+                      : null,
 
-                style: theme.iconButtonTheme.style?.copyWith(
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                  style: theme.iconButtonTheme.style?.copyWith(
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    side: WidgetStateProperty.all(
+                      BorderSide(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+                        width: 1.0,
+                      ),
+                    ),
+                    textStyle: WidgetStateProperty.resolveWith(
+                      (states) => theme.textTheme.bodyMedium?.copyWith(
+                        color: states.contains(WidgetState.disabled)
+                            ? theme.colorScheme.onSurfaceVariant.withValues(
+                                alpha: 0.25,
+                              )
+                            : theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
-                  side: WidgetStateProperty.all(
-                    BorderSide(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.outlineVariant.withValues(alpha: 0.5),
-                      width: 1.0,
-                    ),
-                  ),
-                  textStyle: WidgetStateProperty.resolveWith(
-                    (states) => theme.textTheme.bodyMedium?.copyWith(
-                      color: states.contains(WidgetState.disabled)
-                          ? theme.colorScheme.onSurfaceVariant.withValues(
-                              alpha: 0.25,
-                            )
-                          : theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
 
-                icon: Text('${index + 1}'),
-              );
-            },
-          );
-        },
-        error: (e, s) {
-          return const Text('Error loading levels').centered();
-        },
-        loading: () {
-          return const CircularProgressIndicator.adaptive().centered();
-        },
+                  icon: Text('${index + 1}'),
+                );
+              },
+            );
+          },
+          error: (e, s) {
+            return const Text('Error loading levels').centered();
+          },
+          loading: () {
+            return const CircularProgressIndicator.adaptive().centered();
+          },
+        ),
       ),
     );
   }
