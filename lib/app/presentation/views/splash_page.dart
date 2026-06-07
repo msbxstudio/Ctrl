@@ -10,12 +10,12 @@ final class SplashPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return SplashPageState();
+    return _SplashPageState();
   }
 }
 
-final class SplashPageState extends ConsumerState<SplashPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+final class _SplashPageState extends ConsumerState<SplashPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ final class SplashPageState extends ConsumerState<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
 
       body: const Center(child: CircularProgressIndicator.adaptive()),
     );

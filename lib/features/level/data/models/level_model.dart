@@ -8,6 +8,7 @@ final class LevelModel extends Level {
     required super.question,
     required super.answer,
     required super.options,
+    super.progress,
   });
 
   factory LevelModel.fromJson(Map<String, dynamic> json) {
@@ -34,8 +35,31 @@ final class LevelModel extends Level {
       },
 
       options: (json['options'] as List)
-          .map((e) => e as String)
+          .map((e) => '$e')
           .toList(growable: false),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': switch (type) {
+        LevelType.missingSymbol => 'missing_symbol',
+        LevelType.debug => 'debug',
+        LevelType.logic => 'logic',
+        LevelType.hiddenCommand => 'hidden_command',
+        LevelType.complexity => 'complexity',
+        _ => 'output_prediction',
+      },
+      'keyboard': switch (keyboard) {
+        LevelKeyboard.symbol => 'symbol',
+        LevelKeyboard.character => 'character',
+        LevelKeyboard.complexity => 'complexity',
+        _ => 'numeric',
+      },
+      'question': question,
+      'answer': answer,
+      'options': options,
+    };
   }
 }

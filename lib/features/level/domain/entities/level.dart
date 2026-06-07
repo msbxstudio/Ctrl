@@ -1,13 +1,21 @@
+import 'package:ctrl/features/level/index.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class Level {
   final int id;
+
   final LevelType type;
+
   final LevelKeyboard keyboard;
+
   final String question;
+
   final String answer;
+
   final List<String> options;
+
+  final LevelProgress? progress;
 
   const Level(
     this.id, {
@@ -16,6 +24,7 @@ abstract class Level {
     required this.question,
     required this.answer,
     required this.options,
+    this.progress,
   });
 }
 

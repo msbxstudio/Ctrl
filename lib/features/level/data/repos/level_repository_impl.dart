@@ -1,40 +1,46 @@
-import 'dart:convert';
-
+import 'package:ctrl/core/exceptions/index.dart';
+import 'package:ctrl/core/services/index.dart';
 import 'package:ctrl/features/level/index.dart';
-import 'package:flutter/services.dart';
 
 final class LevelRepositoryImpl implements LevelRepository {
-  final _levels = <Level>[];
+  final DatabaseService _service;
 
-  LevelRepositoryImpl();
+  const LevelRepositoryImpl(this._service);
 
   @override
   Future<List<Level>> getAll() async {
-    if (_levels.isNotEmpty) {
-      return await Future.value(_levels);
+    try {
+      final result = await _service.query('level');
+      final levels = result.map(LevelModel.fromJson).toList();
+
+      return levels;
+    } catch (e) {
+      throw const UnknownException('Failed to load levels');
     }
-
-    final jsonString = await rootBundle.loadString('assets/data/levels.json');
-
-    final jsonData = jsonDecode(jsonString) as List<dynamic>;
-
-    _levels.addAll(jsonData.map((e) => LevelModel.fromJson(e)).toList());
-    return _levels;
   }
 
   @override
   Future<Level> getOne({required int id}) async {
-    await getAll();
-    return await Future.value(_levels.where((l) => l.id == id).first);
-  }
+    try {
+      final result = await _service.query(
+        'level',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
 
-  @override
-  Future<Level> getCurrent() async {
-    return await Future.value(_levels.firstWhere((l) => l.id == 22));
-  }
+      if (result.isEmpty) {
+        throw const NotFoundException('Level not found');
+      }
 
-  @override
-  Future<Level> update(String id, {required Level level}) {
-    return Future.value(level);
+      final level = LevelModel.fromJson(result.first);
+
+      return level;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to load level');
+    }
   }
 }

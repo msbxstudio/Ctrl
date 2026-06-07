@@ -13,6 +13,7 @@ export 'data/repos/app_config_repository_impl.dart';
 // *********************************************************
 // PRESENTATION
 // *********************************************************
+export 'presentation/controllers/main_controller.dart';
 export 'presentation/controllers/settings_controller.dart';
 export 'presentation/controllers/splash_controller.dart';
 

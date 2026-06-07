@@ -1,4 +1,5 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/core/services/index.dart';
 import 'package:ctrl/shared/theme/index.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -19,10 +20,16 @@ final class MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      DatabaseService.instance.initialize();
+    });
   }
 
   @override
   void dispose() {
+    DatabaseService.instance.dispose();
+
     super.dispose();
   }
 

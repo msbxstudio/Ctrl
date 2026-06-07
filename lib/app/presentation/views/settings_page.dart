@@ -12,17 +12,17 @@ final class SettingsPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return SettingsPageState();
+    return _SettingsPageState();
   }
 }
 
-final class SettingsPageState extends ConsumerState<SettingsPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+final class _SettingsPageState extends ConsumerState<SettingsPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
 
       appBar: AppBar(
         centerTitle: false,

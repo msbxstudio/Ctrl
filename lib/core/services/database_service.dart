@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:ctrl/features/level/index.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -144,6 +148,30 @@ final class _DatabaseMigration {
           REFERENCES level(id)
       );
     ''');
+
+    // 4. Populate levels
+    final jsonString = await rootBundle.loadString('assets/data/levels.json');
+
+    final jsonData = jsonDecode(jsonString) as List<dynamic>;
+
+    jsonData
+        .map((e) {
+          return LevelModel.fromJson(e);
+        })
+        .forEach((level) async {
+          await db.insert(
+            'level',
+            level.toJson(),
+            conflictAlgorithm: ConflictAlgorithm.ignore,
+          );
+        });
+
+    // 5. Create default player
+    await db.insert('player', {
+      'id': 1,
+      'name': 'Player',
+      'last_active_at': DateTime.now().toIso8601String(),
+    });
   }
 
   static Future<void> onUpgrade(
