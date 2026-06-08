@@ -154,7 +154,6 @@ extension AppThemeData on ThemeData {
         color: Colors.transparent,
       ),
 
-      // scaffoldBackgroundColor: Colors.white,
       extensions: const [AppColorExtension.dark],
     );
   }

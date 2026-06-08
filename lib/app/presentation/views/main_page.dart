@@ -83,7 +83,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                 'CTRL by MSBX',
                 textAlign: TextAlign.end,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.tertiary.withValues(alpha: 0.5),
+                  color: theme.colorScheme.tertiary.withValues(alpha: 0.75),
                 ),
               ),
               hero(currentLevel: currentLevel),
@@ -157,7 +157,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
   }
 
   Widget greeting(String name) {
-    return Text('Hello, $name!', style: Theme.of(context).textTheme.titleMedium)
+    return Text('Hello, $name!', style: Theme.of(context).textTheme.titleLarge)
         .aligned(Alignment.centerLeft)
         .padded(const EdgeInsets.symmetric(horizontal: 8.0));
   }

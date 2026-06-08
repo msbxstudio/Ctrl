@@ -23,6 +23,11 @@ Future<T?> showAppDialog<T>(
               clipBehavior: Clip.none,
               insetPadding: EdgeInsets.zero,
               child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+
                 constraints: constraints,
                 child: child.padded(padding ?? const EdgeInsets.all(16.0)),
               ),
