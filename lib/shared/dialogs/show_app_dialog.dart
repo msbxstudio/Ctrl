@@ -3,37 +3,30 @@ import 'package:flutter/material.dart';
 
 Future<T?> showAppDialog<T>(
   BuildContext context, {
-  required String title,
-  String? description,
-  required String primaryButtonText,
-  String? secondaryButtonText,
+  required Widget child,
+  BoxConstraints? constraints,
+  EdgeInsetsGeometry? padding,
+  bool fullscreen = false,
   bool dismissible = true,
   bool rootNavigator = true,
 }) {
   return showDialog<T>(
     context: context,
+    useSafeArea: true,
     barrierDismissible: dismissible,
     useRootNavigator: rootNavigator,
 
     builder: (_) {
-      return AlertDialog(
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-
-        title: Text(title),
-        content: description != null ? Text(description) : null,
-
-        actions: [
-          TextButton(onPressed: () async {}, child: Text(primaryButtonText)),
-          if (secondaryButtonText != null)
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context, rootNavigator: true).pop<bool>(false);
-              },
-
-              child: Text(secondaryButtonText),
-            ),
-        ].divide(const SizedBox(width: 8.0)),
-      );
+      return fullscreen
+          ? Dialog.fullscreen(child: child)
+          : Dialog(
+              clipBehavior: Clip.none,
+              insetPadding: EdgeInsets.zero,
+              child: Container(
+                constraints: constraints,
+                child: child.padded(padding ?? const EdgeInsets.all(16.0)),
+              ),
+            );
     },
   );
 }

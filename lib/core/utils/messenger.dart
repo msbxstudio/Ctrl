@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 void showSnackbar(
   BuildContext context,
   String message, {
-  SnackBarBehavior? behavior = SnackBarBehavior.fixed,
+  SnackBarBehavior? behavior = SnackBarBehavior.floating,
   bool loading = false,
-  int duration = 4,
+  int duration = 2,
 }) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(

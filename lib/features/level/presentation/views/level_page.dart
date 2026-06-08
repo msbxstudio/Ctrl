@@ -67,7 +67,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
           IconButton(
             onPressed: asyncValue.hasValue
                 ? () async {
-                    await showOpenSettingsDialog(context);
+                    await showHintDialog(context, hint: 'x + 1');
                   }
                 : null,
             tooltip: 'Hint',
@@ -80,14 +80,14 @@ final class LevelPageState extends ConsumerState<LevelPage> {
       body: asyncValue
           .when(
             data: (data) {
-              final (:level) = data;
+              final LevelData(:level) = data;
 
               return Text(
                 level.question,
                 textAlign: TextAlign.center,
               ).centered();
             },
-            error: (e, s) {
+            error: (_, _) {
               return const Text('Error loading level').centered();
             },
             loading: () {
@@ -165,11 +165,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
                                 .read(goRouterProvider)
                                 .replace('/levels/${widget.id + 1}');
                           } else {
-                            showSnackbar(
-                              context,
-                              'Respuesta incorrecta.',
-                              duration: 2,
-                            );
+                            showSnackbar(context, 'Respuesta incorrecta.');
                           }
                         },
 

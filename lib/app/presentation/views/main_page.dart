@@ -92,49 +92,20 @@ final class _MainPageState extends ConsumerState<MainPage> {
 
               Row(
                 spacing: 12.0,
-                children:
-                    const <Map<String, dynamic>>[
-                          {
-                            'label': 'Levels',
-                            'icon': LucideIcons.grip,
-                            'route': '/levels',
-                            'highlight': false,
-                          },
-                          {
-                            'label': 'Play',
-                            'icon': LucideIcons.play,
-                            'route': '/levels/1',
-                            'highlight': true,
-                          },
-                        ]
-                        .map(
-                          (it) => FilledButton.icon(
-                            onPressed: () async {
-                              await ref
-                                  .read(goRouterProvider)
-                                  .push(it['route']);
-                            },
-
-                            style: Theme.of(context).iconButtonTheme.style
-                                ?.copyWith(
-                                  backgroundColor: WidgetStateProperty.all(
-                                    it['highlight']
-                                        ? theme.colorScheme.primary
-                                        : theme.colorScheme.outlineVariant
-                                              .withValues(alpha: 0.75),
-                                  ),
-                                  shape: WidgetStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                  ),
-                                ),
-
-                            label: Text(it['label']),
-                            icon: Icon(it['icon']),
-                          ).expand(),
-                        )
-                        .toList(),
+                children: [
+                  button(
+                    label: 'Levels',
+                    icon: LucideIcons.grip,
+                    route: '/levels',
+                    highlight: false,
+                  ).expand(),
+                  button(
+                    label: 'Play',
+                    icon: LucideIcons.play,
+                    route: '/levels/${currentLevel.id}',
+                    highlight: true,
+                  ).expand(),
+                ],
               ),
             ],
           ).padded(const EdgeInsets.symmetric(horizontal: 16.0));
@@ -169,7 +140,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                             icon: Symbols.timer,
                             label: 'STREAK',
                             value: '${player.streakDays} DAYS',
-                            highlight: false,
+                            highlight: true,
                           ).expand(),
                         ],
                       ).padded(
@@ -268,6 +239,35 @@ final class _MainPageState extends ConsumerState<MainPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget button({
+    required String label,
+    required IconData icon,
+    required String route,
+    bool highlight = false,
+  }) {
+    final theme = Theme.of(context);
+
+    return FilledButton.icon(
+      onPressed: () async {
+        await ref.read(goRouterProvider).push(route);
+      },
+
+      style: Theme.of(context).iconButtonTheme.style?.copyWith(
+        backgroundColor: WidgetStateProperty.all(
+          highlight
+              ? theme.colorScheme.primary
+              : theme.colorScheme.outlineVariant.withValues(alpha: 0.75),
+        ),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        ),
+      ),
+
+      label: Text(label),
+      icon: Icon(icon),
     );
   }
 

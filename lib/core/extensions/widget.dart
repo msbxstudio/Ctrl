@@ -24,7 +24,7 @@ extension WidgetX on Widget {
     return Center(child: this);
   }
 
-  Widget padded(EdgeInsets margin) {
+  Widget padded(EdgeInsetsGeometry margin) {
     return Padding(padding: margin, child: this);
   }
 
