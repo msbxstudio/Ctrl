@@ -7,6 +7,7 @@ final class LevelModel extends Level {
     required super.keyboard,
     required super.question,
     required super.answer,
+    super.hint,
     required super.options,
     super.progress,
   });
@@ -17,6 +18,7 @@ final class LevelModel extends Level {
 
       question: json['question'],
       answer: json['answer'],
+      hint: json['hint'],
 
       type: switch (json['type']) {
         'missing_symbol' => LevelType.missingSymbol,
@@ -59,6 +61,7 @@ final class LevelModel extends Level {
       },
       'question': question,
       'answer': answer,
+      'hint': hint,
       'options': options,
     };
   }

@@ -112,6 +112,7 @@ final class _DatabaseMigration {
         keyboard TEXT NOT NULL,
         question TEXT NOT NULL,
         answer TEXT NOT NULL,
+        hint TEXT NULL,
         options TEXT NOT NULL DEFAULT '[]'
       );
     ''');

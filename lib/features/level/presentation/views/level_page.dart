@@ -20,14 +20,14 @@ final class LevelPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
-    return LevelPageState();
+    return _LevelPageState();
   }
 }
 
-final class LevelPageState extends ConsumerState<LevelPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+final class _LevelPageState extends ConsumerState<LevelPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _answerFieldController = TextEditingController();
+  final answerFieldController = TextEditingController();
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
     final asyncValue = ref.watch(controllerProvider);
 
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
 
       appBar: AppBar(
         centerTitle: false,
@@ -67,7 +67,12 @@ final class LevelPageState extends ConsumerState<LevelPage> {
           IconButton(
             onPressed: asyncValue.hasValue
                 ? () async {
-                    await showHintDialog(context, hint: 'x + 1');
+                    final LevelData(:level) = asyncValue.value!;
+
+                    await showHintDialog(
+                      context,
+                      hint: level.hint ?? 'No hint',
+                    );
                   }
                 : null,
             tooltip: 'Hint',
@@ -128,12 +133,12 @@ final class LevelPageState extends ConsumerState<LevelPage> {
                     children: [
                       TextFormField(
                         readOnly: true,
-                        controller: _answerFieldController,
+                        controller: answerFieldController,
 
                         decoration: InputDecoration(
                           hintText: 'Answer',
                           suffixIcon: IconButton(
-                            onPressed: _clearAnswer,
+                            onPressed: clearAnswer,
 
                             style: theme.iconButtonTheme.style?.copyWith(
                               splashFactory: NoSplash.splashFactory,
@@ -156,11 +161,11 @@ final class LevelPageState extends ConsumerState<LevelPage> {
                       FilledButton.tonal(
                         onPressed: () async {
                           final match = controller.checkAnswer(
-                            _answerFieldController.text,
+                            answerFieldController.text,
                           );
 
                           if (match) {
-                            _answerFieldController.clear();
+                            answerFieldController.clear();
                             ref
                                 .read(goRouterProvider)
                                 .replace('/levels/${widget.id + 1}');
@@ -173,7 +178,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
                       ).expand(flex: 20),
                     ],
                   ),
-                  ..._keyboard(options: level.options),
+                  ...keyboard(options: level.options),
                 ],
               );
             },
@@ -186,7 +191,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
     ).dismissKeyboard(context);
   }
 
-  List<Widget> _keyboard({required List options}) {
+  List<Widget> keyboard({required List options}) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +201,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
             .take(5)
             .map(
               (it) => FilledButton.tonal(
-                onPressed: () => _addItem('$it'),
+                onPressed: () => addItem('$it'),
 
                 child: Text('$it'),
               ).expand(),
@@ -211,7 +216,7 @@ final class LevelPageState extends ConsumerState<LevelPage> {
             .skip(5)
             .map(
               (it) => FilledButton.tonal(
-                onPressed: () => _addItem('$it'),
+                onPressed: () => addItem('$it'),
 
                 child: Text('$it', textAlign: TextAlign.center),
               ).expand(),
@@ -221,11 +226,11 @@ final class LevelPageState extends ConsumerState<LevelPage> {
     ];
   }
 
-  void _addItem(String item) {
-    _answerFieldController.text += item;
+  void addItem(String item) {
+    answerFieldController.text += item;
   }
 
-  void _clearAnswer() {
-    _answerFieldController.clear();
+  void clearAnswer() {
+    answerFieldController.clear();
   }
 }

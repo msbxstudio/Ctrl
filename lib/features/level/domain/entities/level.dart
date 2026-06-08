@@ -13,6 +13,8 @@ abstract class Level {
 
   final String answer;
 
+  final String? hint;
+
   final List<String> options;
 
   final LevelProgress? progress;
@@ -23,6 +25,7 @@ abstract class Level {
     required this.keyboard,
     required this.question,
     required this.answer,
+    this.hint,
     required this.options,
     this.progress,
   });
