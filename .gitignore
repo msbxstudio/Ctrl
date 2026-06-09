@@ -50,3 +50,7 @@ app.*.map.json
 # Font files
 **/*.otf
 **/*.ttf
+
+# Audio file
+**/*.mp3
+**/*.wav

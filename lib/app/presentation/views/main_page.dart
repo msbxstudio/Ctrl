@@ -73,42 +73,66 @@ final class _MainPageState extends ConsumerState<MainPage> {
           final MainData(:player, :currentLevel, :averageTime) = data;
 
           return Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            spacing: 8.0,
-
             children: [
-              Text(
-                'CTRL by MSBX',
-                textAlign: TextAlign.end,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.tertiary.withValues(alpha: 0.75),
-                ),
-              ),
-              hero(currentLevel: currentLevel),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 8.0,
 
-              const Separator(verticalIndent: 8.0),
-
-              Row(
-                spacing: 12.0,
                 children: [
-                  button(
-                    label: 'Levels',
-                    icon: LucideIcons.grip,
-                    route: '/levels',
+                  Text(
+                    'CTRL by MSBX',
+                    textAlign: TextAlign.end,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.tertiary.withValues(alpha: 0.75),
+                    ),
+                  ),
+                  hero(currentLevel: currentLevel),
+
+                  const Separator(verticalIndent: 8.0),
+
+                  Row(
+                    spacing: 12.0,
+                    children: [
+                      button(
+                        label: 'Levels',
+                        icon: LucideIcons.grip,
+                        route: '/levels',
+                        highlight: false,
+                      ).expand(),
+                      button(
+                        label: 'Play',
+                        icon: LucideIcons.play,
+                        route: '/levels/${currentLevel.id}',
+                        highlight: true,
+                      ).expand(),
+                    ],
+                  ),
+                ],
+              ).expand(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 12.0,
+
+                children: [
+                  metric(
+                    icon: Symbols.timer,
+                    label: 'AVG TIME',
+                    value: '00:00',
                     highlight: false,
                   ).expand(),
-                  button(
-                    label: 'Play',
-                    icon: LucideIcons.play,
-                    route: '/levels/${currentLevel.id}',
+                  metric(
+                    icon: Symbols.local_fire_department,
+                    label: 'STREAK',
+                    value: '${player.streakDays} DAYS',
                     highlight: true,
                   ).expand(),
                 ],
               ),
             ],
-          ).padded(const EdgeInsets.symmetric(horizontal: 16.0));
+          ).padded(
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          );
         },
         error: (_, _) {
           return const Text('An error occurred').centered();
@@ -117,42 +141,6 @@ final class _MainPageState extends ConsumerState<MainPage> {
           return const CircularProgressIndicator.adaptive().centered();
         },
       ),
-
-      bottomNavigationBar: asyncValue.hasValue
-          ? Builder(
-              builder: (_) {
-                final MainData(:player) = asyncValue.value!;
-
-                return SafeArea(
-                  child:
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 12.0,
-
-                        children: [
-                          metric(
-                            icon: Symbols.timer,
-                            label: 'AVG TIME',
-                            value: '00:00',
-                            highlight: false,
-                          ).expand(),
-                          metric(
-                            icon: Symbols.timer,
-                            label: 'STREAK',
-                            value: '${player.streakDays} DAYS',
-                            highlight: true,
-                          ).expand(),
-                        ],
-                      ).padded(
-                        const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                      ),
-                );
-              },
-            )
-          : null,
     );
   }
 

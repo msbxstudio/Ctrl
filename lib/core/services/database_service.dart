@@ -34,7 +34,9 @@ final class DatabaseService extends AppService<Database> {
 
   @override
   void dispose() async {
-    await service.close();
+    await service!.close();
+    service = null;
+
     setInitialized(false);
   }
 
@@ -50,7 +52,7 @@ final class DatabaseService extends AppService<Database> {
     int? limit,
     int? offset,
   }) {
-    return service.database.query(
+    return service!.database.query(
       table,
       distinct: distinct,
       columns: columns,
@@ -70,7 +72,7 @@ final class DatabaseService extends AppService<Database> {
     String? nullColumnHack,
     ConflictAlgorithm? conflictAlgorithm,
   }) {
-    return service.database.insert(
+    return service!.database.insert(
       table,
       values,
       nullColumnHack: nullColumnHack,
@@ -85,7 +87,7 @@ final class DatabaseService extends AppService<Database> {
     List<Object?>? whereArgs,
     ConflictAlgorithm? conflictAlgorithm,
   }) {
-    return service.database.update(
+    return service!.database.update(
       table,
       values,
       where: where,
@@ -95,7 +97,18 @@ final class DatabaseService extends AppService<Database> {
   }
 
   Future<int> delete(String table, {String? where, List<Object?>? whereArgs}) {
-    return service.database.delete(table, where: where, whereArgs: whereArgs);
+    return service!.database.delete(table, where: where, whereArgs: whereArgs);
+  }
+
+  Future<void> reset() async {
+    dispose();
+
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'ctrl.db');
+
+    await deleteDatabase(path);
+
+    initialize();
   }
 }
 

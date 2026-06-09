@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 abstract class AppService<T> {
   /// The service instance.
   @protected
-  late final T service;
+  late T? service;
 
   bool _initialized = false;
 

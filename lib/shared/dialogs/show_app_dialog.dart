@@ -6,6 +6,7 @@ Future<T?> showAppDialog<T>(
   required Widget child,
   BoxConstraints? constraints,
   EdgeInsetsGeometry? padding,
+  Color? color,
   bool fullscreen = false,
   bool dismissible = true,
   bool rootNavigator = true,
@@ -18,13 +19,24 @@ Future<T?> showAppDialog<T>(
 
     builder: (_) {
       return fullscreen
-          ? Dialog.fullscreen(child: child)
+          ? Dialog.fullscreen(
+              insetAnimationCurve: Curves.decelerate,
+              insetAnimationDuration: const Duration(seconds: 2),
+              backgroundColor:
+                  color ??
+                  Theme.of(context).colorScheme.surfaceContainerHighest,
+
+              child: child.padded(padding ?? const EdgeInsets.all(16.0)),
+            )
           : Dialog(
               clipBehavior: Clip.none,
               insetPadding: EdgeInsets.zero,
+
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  color:
+                      color ??
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(24.0),
                 ),
 

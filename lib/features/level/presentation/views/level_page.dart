@@ -166,7 +166,13 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
                           if (match) {
                             answerFieldController.clear();
-                            ref
+
+                            await showLevelCompletedDialog(
+                              context,
+                              hint: 'Hello',
+                            );
+
+                            await ref
                                 .read(goRouterProvider)
                                 .replace('/levels/${widget.id + 1}');
                           } else {

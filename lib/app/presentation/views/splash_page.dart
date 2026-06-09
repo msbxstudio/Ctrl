@@ -1,5 +1,7 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/utils/index.dart';
+import 'package:ctrl/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,10 +37,12 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    final asyncValue = ref.watch(splashControllerProvider);
+
     return Scaffold(
       key: scaffoldKey,
 
-      body: const Center(child: CircularProgressIndicator.adaptive()),
+      body: AnimatedLogo(enabled: asyncValue.isLoading).centered(),
     );
   }
 }

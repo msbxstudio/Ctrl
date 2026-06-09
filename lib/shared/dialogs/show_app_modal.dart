@@ -8,6 +8,8 @@ Future<T?> showAppModal<T>(
   bool rootNavigator = true,
   bool scrollControlled = true,
 }) {
+  final theme = Theme.of(context);
+
   return showModalBottomSheet<T>(
     context: context,
 
@@ -28,7 +30,7 @@ Future<T?> showAppModal<T>(
           clipBehavior: Clip.antiAlias,
           elevation: 1.0,
 
-          color: Theme.of(context).colorScheme.surface,
+          color: theme.colorScheme.surfaceContainerHighest,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,7 +42,7 @@ Future<T?> showAppModal<T>(
                       height: 6.0,
 
                       decoration: BoxDecoration(
-                        color: Colors.black12,
+                        color: theme.colorScheme.surface.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                     )
