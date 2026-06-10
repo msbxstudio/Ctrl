@@ -170,6 +170,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                             await showLevelCompletedDialog(
                               context,
                               hint: 'Hello',
+                              rootNavigator: false,
                             );
 
                             await ref

@@ -13,7 +13,13 @@ Future<void> showLevelCompletedDialog(
   required String hint,
   bool rootNavigator = true,
 }) {
-  AudioPlayer().play(AssetSource('audio/success.mp3')).ignore();
+  AudioPlayer()
+      .play(
+        AssetSource('audio/success.mp3'),
+        mode: PlayerMode.lowLatency,
+        volume: 0.7,
+      )
+      .ignore();
 
   return showAppDialog(
     context,

@@ -1,5 +1,7 @@
+import 'package:ctrl/app/index.dart';
 import 'package:ctrl/core/exceptions/index.dart';
 import 'package:ctrl/features/level/index.dart';
+import 'package:ctrl/features/player/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Controller for [LevelPage] view.
@@ -7,12 +9,14 @@ final class LevelController
     extends AutoDisposeFamilyAsyncNotifier<LevelData, int> {
   @override
   Future<LevelData> build(int levelId) async {
-    final level = await ref.read(levelRepositoryProvider).getOne(id: levelId);
-    return (level: level);
-  }
+    ref.invalidate(mainControllerProvider);
 
-  Future<void> refresh() async {
-    ref.invalidateSelf();
+    final level = await Future.wait([
+      ref.read(levelRepositoryProvider).getOne(id: levelId),
+      ref.read(playerRepositoryProvider).update(currentLevelId: levelId),
+    ], eagerError: true).then((r) => (r[0] as Level));
+
+    return (level: level);
   }
 
   bool checkAnswer(String answer) {

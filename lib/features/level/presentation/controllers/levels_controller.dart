@@ -9,7 +9,7 @@ final class LevelsController extends AutoDisposeAsyncNotifier<LevelsData> {
     final (levels, player) = await Future.wait([
       ref.read(levelRepositoryProvider).getAll(),
       ref.read(playerRepositoryProvider).get(),
-    ]).then((r) => (r[0] as List<Level>, r[1] as Player));
+    ], eagerError: true).then((r) => (r[0] as List<Level>, r[1] as Player));
 
     final currentLevel = await ref
         .read(levelRepositoryProvider)

@@ -1,5 +1,6 @@
 import 'package:ctrl/app/index.dart';
 import 'package:ctrl/core/extensions/index.dart';
+import 'package:ctrl/core/utils/index.dart';
 import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
@@ -26,7 +27,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final _ = ref.read(mainControllerProvider.notifier);
+    final controller = ref.read(mainControllerProvider.notifier);
     final asyncValue = ref.watch(mainControllerProvider);
 
     return Scaffold(
@@ -41,6 +42,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                     await ref
                         .read(goRouterProvider)
                         .push(SettingsPage.routePath);
+                    await controller.refresh();
                   },
 
                   tooltip: 'Settings',
@@ -72,66 +74,84 @@ final class _MainPageState extends ConsumerState<MainPage> {
         data: (data) {
           final MainData(:player, :currentLevel, :averageTime) = data;
 
-          return Column(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                spacing: 8.0,
+          return RefreshIndicator.adaptive(
+            onRefresh: () async {
+              await controller.refresh();
+            },
 
-                children: [
-                  Text(
-                    'CTRL by MSBX',
-                    textAlign: TextAlign.end,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: theme.colorScheme.tertiary.withValues(alpha: 0.75),
+            child: ScrollableFilledView(
+              child:
+                  Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        spacing: 8.0,
+
+                        children: [
+                          Text(
+                            'CTRL by MSBX',
+                            textAlign: TextAlign.end,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.colorScheme.tertiary.withValues(
+                                alpha: 0.75,
+                              ),
+                            ),
+                          ),
+                          hero(currentLevel: currentLevel),
+
+                          const Separator(verticalIndent: 8.0),
+
+                          Row(
+                            spacing: 12.0,
+                            children: [
+                              button(
+                                label: 'Levels',
+                                icon: LucideIcons.grip,
+                                route: '/levels',
+
+                                controller: controller,
+                                highlight: false,
+                              ).expand(),
+                              button(
+                                label: 'Play',
+                                icon: LucideIcons.play,
+                                route: '/levels/${currentLevel.id}',
+
+                                controller: controller,
+                                highlight: true,
+                              ).expand(),
+                            ],
+                          ),
+                        ],
+                      ).expand(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        spacing: 12.0,
+
+                        children: [
+                          metric(
+                            icon: Symbols.timer,
+                            label: 'AVG TIME',
+                            value: '00:00',
+                            highlight: false,
+                          ).expand(),
+                          metric(
+                            icon: Symbols.local_fire_department,
+                            label: 'STREAK',
+                            value: '${player.streakDays} DAYS',
+                            highlight: true,
+                          ).expand(),
+                        ],
+                      ),
+                    ],
+                  ).padded(
+                    const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12.0,
                     ),
                   ),
-                  hero(currentLevel: currentLevel),
-
-                  const Separator(verticalIndent: 8.0),
-
-                  Row(
-                    spacing: 12.0,
-                    children: [
-                      button(
-                        label: 'Levels',
-                        icon: LucideIcons.grip,
-                        route: '/levels',
-                        highlight: false,
-                      ).expand(),
-                      button(
-                        label: 'Play',
-                        icon: LucideIcons.play,
-                        route: '/levels/${currentLevel.id}',
-                        highlight: true,
-                      ).expand(),
-                    ],
-                  ),
-                ],
-              ).expand(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 12.0,
-
-                children: [
-                  metric(
-                    icon: Symbols.timer,
-                    label: 'AVG TIME',
-                    value: '00:00',
-                    highlight: false,
-                  ).expand(),
-                  metric(
-                    icon: Symbols.local_fire_department,
-                    label: 'STREAK',
-                    value: '${player.streakDays} DAYS',
-                    highlight: true,
-                  ).expand(),
-                ],
-              ),
-            ],
-          ).padded(
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            ),
           );
         },
         error: (_, _) {
@@ -234,13 +254,20 @@ final class _MainPageState extends ConsumerState<MainPage> {
     required String label,
     required IconData icon,
     required String route,
+    MainController? controller,
     bool highlight = false,
   }) {
     final theme = Theme.of(context);
 
     return FilledButton.icon(
       onPressed: () async {
+        Debugger.log('Navigating to $route');
+
         await ref.read(goRouterProvider).push(route);
+
+        Debugger.log('Returned from $route, refreshing main data...');
+
+        await controller?.refresh();
       },
 
       style: Theme.of(context).iconButtonTheme.style?.copyWith(

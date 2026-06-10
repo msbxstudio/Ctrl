@@ -25,6 +25,11 @@ final class SettingsPage extends ConsumerStatefulWidget {
 final class _SettingsPageState extends ConsumerState<SettingsPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final legalOptions = const <Map<String, dynamic>>[
+    {'id': 1, 'label': 'Privacy Policy', 'url': 'https://example.com/privacy'},
+    {'id': 2, 'label': 'Terms of Service', 'url': 'https://example.com/terms'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,41 +89,41 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
             ].divide(const SizedBox(height: 8.0)),
 
             const SizedBox(height: 24.0),
+
             ...[
-              Text('settings.sections.advanced'.tr()),
-              FilledButton.tonal(
-                onPressed: () async {
-                  final confirmed = await showConfirmationModal(
-                    context,
-                    title:
-                        'Are you sure you want to erase all data? This action cannot be undone.',
-                  );
+              Text('settings.sections.privacy'.tr()),
+              card(
+                child: Column(
+                  children: legalOptions
+                      .map(
+                        (e) => option(
+                          title: e['label']!,
+                          onTap: () {
+                            // launchUrlString(e['url']);
+                          },
 
-                  if (confirmed != true) return;
-                  try {
-                    await DatabaseService.instance.reset();
-
-                    showSnackbar(
-                      context,
-                      'All data has been erased successfully.',
-                      behavior: SnackBarBehavior.fixed,
-                    );
-                  } catch (e) {
-                    showSnackbar(
-                      context,
-                      'An error occurred while erasing data.'
-                      '\n'
-                      'Please try again later.',
-                      behavior: SnackBarBehavior.fixed,
-                    );
-                  }
-                },
-
-                child: const Text('Erase all data'),
+                          borderRadius: e['id'] == 1
+                              ? BorderRadius.only(
+                                  topLeft: Radius.circular(8.0),
+                                  topRight: Radius.circular(8.0),
+                                )
+                              : BorderRadius.only(
+                                  bottomLeft: Radius.circular(8.0),
+                                  bottomRight: Radius.circular(8.0),
+                                ),
+                          trailing: Icon(
+                            LucideIcons.arrowUpRight,
+                            size: 20.0,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                      )
+                      .divide(const Separator(verticalIndent: 4.0)),
+                ),
               ),
             ].divide(const SizedBox(height: 8.0)),
 
-            const Separator(verticalIndent: 24.0),
+            const SizedBox(height: 24.0),
 
             ...[
               Text('settings.sections.donations'.tr()),
@@ -157,6 +162,50 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ),
                   ].divide(const Separator(verticalIndent: 4.0)),
                 ),
+              ),
+            ].divide(const SizedBox(height: 8.0)),
+
+            const Separator(verticalIndent: 24.0),
+
+            ...[
+              Text('settings.sections.danger_zone'.tr()),
+              FilledButton.tonal(
+                onPressed: () async {
+                  final confirmed = await showConfirmationModal(
+                    context,
+                    title:
+                        'Are you sure you want to erase all data? This action cannot be undone.',
+                  );
+
+                  if (confirmed != true) return;
+                  try {
+                    await DatabaseService.instance.reset();
+
+                    showSnackbar(
+                      context,
+                      'All data has been erased successfully.',
+                      behavior: SnackBarBehavior.fixed,
+                    );
+                  } catch (e) {
+                    showSnackbar(
+                      context,
+                      'An error occurred while erasing data.'
+                      '\n'
+                      'Please try again later.',
+                      behavior: SnackBarBehavior.fixed,
+                    );
+                  }
+                },
+
+                style: Theme.of(context).filledButtonTheme.style?.copyWith(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+
+                child: const Text('Erase all data'),
               ),
             ].divide(const SizedBox(height: 8.0)),
           ],

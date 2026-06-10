@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ctrl/features/level/index.dart';
 
 final class LevelModel extends Level {
@@ -36,9 +38,7 @@ final class LevelModel extends Level {
         _ => LevelKeyboard.numeric,
       },
 
-      options: (json['options'] as List)
-          .map((e) => '$e')
-          .toList(growable: false),
+      options: (jsonDecode(json['options']) as List).map((e) => '$e').toList(),
     );
   }
 
@@ -62,7 +62,7 @@ final class LevelModel extends Level {
       'question': question,
       'answer': answer,
       'hint': hint,
-      'options': options,
+      'options': jsonEncode(options),
     };
   }
 }
