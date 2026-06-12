@@ -38,7 +38,7 @@ final class MainAppState extends ConsumerState<MainApp> {
     final theme = Theme.of(context);
 
     final router = ref.watch(goRouterProvider);
-    final appConfig = ref.watch(appConfigRepositoryProvider);
+    final _ = ref.watch(appConfigRepositoryProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -50,8 +50,12 @@ final class MainAppState extends ConsumerState<MainApp> {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
 
-      locale: appConfig.locale,
+      locale: context.locale,
       routerConfig: router,
     );
+  }
+
+  bool isDifferentLocale(Locale a, Locale b) {
+    return a.languageCode != b.languageCode;
   }
 }

@@ -3,6 +3,8 @@ import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,7 +38,7 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
         automaticallyImplyActions: false,
 
         titleSpacing: 8.0,
-        title: const Text('Levels'),
+        title: Text('levels.title'.tr()),
 
         leadingWidth: 48.0,
         leading: const PopButton(),
@@ -103,7 +105,7 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
             );
           },
           error: (e, s) {
-            return const Text('Error loading levels').centered();
+            return Text('levels.error_loading_all'.tr()).centered();
           },
           loading: () {
             return const CircularProgressIndicator.adaptive().centered();

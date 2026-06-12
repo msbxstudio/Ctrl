@@ -1,4 +1,5 @@
 import 'package:ctrl/core/extensions/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'show_app_modal.dart';
@@ -29,7 +30,7 @@ Future<String?> showChoiceLanguageModal(
 
         children: [
           Text(
-            'Selecciona tu idioma',
+            'dialogs.language.title'.tr(),
             textAlign: TextAlign.center,
             style: Theme.of(
               context,
@@ -39,7 +40,7 @@ Future<String?> showChoiceLanguageModal(
           const SizedBox(height: 12.0),
 
           Text(
-            'Elige el idioma que prefieras. Puedes cambiarlo en cualquier momento.',
+            'dialogs.language.description'.tr(),
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Theme.of(context).colorScheme.outline,
             ),

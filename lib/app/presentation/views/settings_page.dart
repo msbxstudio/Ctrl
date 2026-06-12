@@ -1,3 +1,4 @@
+import 'package:ctrl/app/index.dart';
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/services/index.dart';
 import 'package:ctrl/core/utils/index.dart';
@@ -26,8 +27,16 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final legalOptions = const <Map<String, dynamic>>[
-    {'id': 1, 'label': 'Privacy Policy', 'url': 'https://example.com/privacy'},
-    {'id': 2, 'label': 'Terms of Service', 'url': 'https://example.com/terms'},
+    {
+      'id': 1,
+      'label': 'settings.privacy.privacy_policy',
+      'url': 'https://example.com/privacy',
+    },
+    {
+      'id': 2,
+      'label': 'settings.privacy.terms_of_service',
+      'url': 'https://example.com/terms',
+    },
   ];
 
   @override
@@ -54,7 +63,10 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
             ...[
               Text('settings.sections.account'.tr()),
               card(
-                child: option(title: 'Change username', onTap: () {}),
+                child: option(
+                  title: 'settings.account.change_username'.tr(),
+                  onTap: () {},
+                ),
               ),
             ].divide(const SizedBox(height: 8.0)),
 
@@ -64,14 +76,27 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
               Text('settings.sections.preferences'.tr()),
               card(
                 child: option(
-                  title: 'Language',
-                  onTap: () {},
+                  title: 'settings.preferences.language'.tr(),
+                  onTap: () async {
+                    final lang = await showChoiceLanguageModal(
+                      context,
+                      initialValue: context.locale.languageCode,
+                    );
+
+                    if (lang == null) return;
+
+                    await context.setLocale(Locale(lang)).whenComplete(() {
+                      ref
+                          .read(appConfigRepositoryProvider.notifier)
+                          .setLocale(lang);
+                    });
+                  },
 
                   trailing: Row(
                     spacing: 4.0,
                     children: [
                       Text(
-                        'EN',
+                        context.locale.languageCode.toUpperCase(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.outline,
@@ -97,7 +122,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                   children: legalOptions
                       .map(
                         (e) => option(
-                          title: e['label']!,
+                          title: (e['label'] as String).tr(),
                           onTap: () {
                             // launchUrlString(e['url']);
                           },
@@ -131,7 +156,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                 child: Column(
                   children: [
                     option(
-                      title: 'Buy Me a Coffee',
+                      title: 'settings.donations.coffee'.tr(),
                       onTap: () {},
 
                       borderRadius: BorderRadius.only(
@@ -142,7 +167,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                       trailing: const Text('\$0.99'),
                     ),
                     option(
-                      title: 'Buy Me a Pizza',
+                      title: 'settings.donations.pizza'.tr(),
                       onTap: () {},
 
                       borderRadius: BorderRadius.zero,
@@ -150,7 +175,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                       trailing: const Text('\$4.99'),
                     ),
                     option(
-                      title: 'Support Me',
+                      title: 'settings.donations.support'.tr(),
                       onTap: () {},
 
                       borderRadius: BorderRadius.only(
@@ -173,8 +198,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onPressed: () async {
                   final confirmed = await showConfirmationModal(
                     context,
-                    title:
-                        'Are you sure you want to erase all data? This action cannot be undone.',
+                    title: 'settings.danger_zone.erase_confirm'.tr(),
                   );
 
                   if (confirmed != true) return;
@@ -183,15 +207,13 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                     showSnackbar(
                       context,
-                      'All data has been erased successfully.',
+                      'settings.danger_zone.erase_success'.tr(),
                       behavior: SnackBarBehavior.fixed,
                     );
                   } catch (e) {
                     showSnackbar(
                       context,
-                      'An error occurred while erasing data.'
-                      '\n'
-                      'Please try again later.',
+                      'settings.danger_zone.erase_error'.tr(),
                       behavior: SnackBarBehavior.fixed,
                     );
                   }
@@ -205,7 +227,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                   ),
                 ),
 
-                child: const Text('Erase all data'),
+                child: Text('settings.danger_zone.erase_all'.tr()),
               ),
             ].divide(const SizedBox(height: 8.0)),
           ],

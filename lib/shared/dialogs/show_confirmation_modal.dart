@@ -1,4 +1,5 @@
 import 'package:ctrl/core/extensions/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'show_app_modal.dart';
@@ -61,7 +62,7 @@ Future<bool?> showConfirmationModal(
                     elevation: WidgetStateProperty.all(0.0),
                   ),
 
-              child: Text(primaryButtonText ?? 'Confirmar'),
+              child: Text(primaryButtonText ?? 'actions.common.confirm'.tr()),
             ).expand(),
             ElevatedButton(
               onPressed: () {
@@ -74,7 +75,7 @@ Future<bool?> showConfirmationModal(
                     elevation: WidgetStateProperty.all(0.0),
                   ),
 
-              child: Text(secondaryButtonText ?? 'Cancelar'),
+              child: Text(secondaryButtonText ?? 'actions.common.cancel'.tr()),
             ).expand(),
           ],
         ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),

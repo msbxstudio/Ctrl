@@ -4,6 +4,8 @@ import 'package:ctrl/core/utils/index.dart';
 import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -45,7 +47,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                     await controller.refresh();
                   },
 
-                  tooltip: 'Settings',
+                  tooltip: 'home.settings_tooltip'.tr(),
                   icon: Icon(
                     LucideIcons.settings,
                     color: theme.colorScheme.outline,
@@ -106,7 +108,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                             spacing: 12.0,
                             children: [
                               button(
-                                label: 'Levels',
+                                label: 'home.buttons.levels'.tr(),
                                 icon: LucideIcons.grip,
                                 route: '/levels',
 
@@ -114,7 +116,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                                 highlight: false,
                               ).expand(),
                               button(
-                                label: 'Play',
+                                label: 'home.buttons.play'.tr(),
                                 icon: LucideIcons.play,
                                 route: '/levels/${currentLevel.id}',
 
@@ -132,14 +134,16 @@ final class _MainPageState extends ConsumerState<MainPage> {
                         children: [
                           metric(
                             icon: Symbols.timer,
-                            label: 'AVG TIME',
+                            label: 'home.metrics.avg_time'.tr(),
                             value: '00:00',
                             highlight: false,
                           ).expand(),
                           metric(
                             icon: Symbols.local_fire_department,
-                            label: 'STREAK',
-                            value: '${player.streakDays} DAYS',
+                            label: 'home.metrics.streak'.tr(),
+                            value: 'home.metrics.days'.tr(
+                              namedArgs: {'count': '${player.streakDays}'},
+                            ),
                             highlight: true,
                           ).expand(),
                         ],
@@ -155,7 +159,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
           );
         },
         error: (_, _) {
-          return const Text('An error occurred').centered();
+          return Text('home.error'.tr()).centered();
         },
         loading: () {
           return const CircularProgressIndicator.adaptive().centered();
@@ -165,7 +169,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
   }
 
   Widget greeting(String name) {
-    return Text('Hello, $name!', style: Theme.of(context).textTheme.titleLarge)
+    return Text(
+          'home.greeting'.tr(namedArgs: {'name': name}),
+          style: Theme.of(context).textTheme.titleLarge,
+        )
         .aligned(Alignment.centerLeft)
         .padded(const EdgeInsets.symmetric(horizontal: 8.0));
   }
@@ -212,7 +219,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
                 color: Theme.of(context).colorScheme.primary,
               ),
               Text(
-                '${currentLevel.id == 1 ? 'NO' : ''} SESSION ACTIVE',
+                (currentLevel.id == 1
+                        ? 'home.status.inactive'
+                        : 'home.status.active')
+                    .tr(),
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: theme.colorScheme.outline,
                 ),
@@ -221,7 +231,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
           ).padded(const EdgeInsets.only(bottom: 12.0)),
 
           Text(
-            '${currentLevel.id == 1 ? 'START' : 'CONTINUE'} JOURNEY',
+            (currentLevel.id == 1
+                    ? 'home.journey.start'
+                    : 'home.journey.continue')
+                .tr(),
             textAlign: TextAlign.start,
             style: theme.textTheme.labelLarge?.copyWith(
               fontWeight: FontWeight.bold,
@@ -229,7 +242,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
             ),
           ),
           Text(
-            'Level ${currentLevel.id}',
+            'home.level'.tr(namedArgs: {'id': '${currentLevel.id}'}),
             textAlign: TextAlign.start,
             style: theme.textTheme.displaySmall?.copyWith(
               fontWeight: FontWeight.w900,
@@ -241,8 +254,12 @@ final class _MainPageState extends ConsumerState<MainPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Progress'),
-              Text('${currentLevel.id - 1} PUZZLES SOLVED'),
+              Text('home.progress.title'.tr()),
+              Text(
+                'home.progress.puzzles_solved'.tr(
+                  namedArgs: {'count': '${currentLevel.id - 1}'},
+                ),
+              ),
             ],
           ),
         ],

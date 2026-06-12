@@ -21,25 +21,25 @@ extension AppThemeData on ThemeData {
       applyElevationOverlayColor: brightness == Brightness.dark,
 
       textTheme: const TextTheme(
-        labelSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 10),
-        labelMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12),
-        labelLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
+        labelSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 10.0),
+        labelMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12.0),
+        labelLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14.0),
 
-        bodySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12),
-        bodyMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
-        bodyLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 16),
+        bodySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 12.0),
+        bodyMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14.0),
+        bodyLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 16.0),
 
-        titleSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14),
-        titleMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 18),
-        titleLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 22),
+        titleSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 14.0),
+        titleMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 18.0),
+        titleLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 22.0),
 
-        headlineSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 24),
-        headlineMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 30),
-        headlineLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 36),
+        headlineSmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 24.0),
+        headlineMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 30.0),
+        headlineLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 36.0),
 
-        displaySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 42),
-        displayMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 50),
-        displayLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 58),
+        displaySmall: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 42.0),
+        displayMedium: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 50.0),
+        displayLarge: TextStyle(fontFamily: 'JetBrains Mono', fontSize: 58.0),
       ),
 
       dividerTheme: DividerThemeData(color: scheme.outlineVariant),
@@ -47,10 +47,10 @@ extension AppThemeData on ThemeData {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(
-            const Size(double.minPositive, 44),
+            const Size(double.minPositive, 44.0),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           ),
         ),
       ),
@@ -61,7 +61,7 @@ extension AppThemeData on ThemeData {
             const Size(double.minPositive, 44),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           ),
         ),
       ),
@@ -79,7 +79,7 @@ extension AppThemeData on ThemeData {
             ),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
           ),
         ),
       ),

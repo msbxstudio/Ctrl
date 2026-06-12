@@ -1,1 +1,91 @@
-{}
+{
+  "actions": {
+    "common": {
+      "ok": "OK",
+      "back": "Back",
+      "close": "Close",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+
+  "home": {
+    "greeting": "Hello, {name}!",
+    "settings_tooltip": "Settings",
+    "status": {
+      "active": "SESSION ACTIVE",
+      "inactive": "NO SESSION ACTIVE"
+    },
+    "journey": {
+      "start": "START JOURNEY",
+      "continue": "CONTINUE JOURNEY"
+    },
+    "level": "Level {id}",
+    "progress": {
+      "title": "Progress",
+      "puzzles_solved": "{count} PUZZLES SOLVED"
+    },
+    "buttons": {
+      "levels": "Levels",
+      "play": "Play"
+    },
+    "metrics": {
+      "avg_time": "AVG TIME",
+      "streak": "STREAK",
+      "days": "{count} DAYS"
+    },
+    "error": "An error occurred"
+  },
+
+  "settings": {
+    "title": "Settings",
+    "sections": {
+      "account": "Account",
+      "preferences": "Preferences",
+      "privacy": "Privacy",
+      "donations": "Donations",
+      "danger_zone": "Danger Zone"
+    },
+    "account": {
+      "change_username": "Change username"
+    },
+    "preferences": {
+      "language": "Language"
+    },
+    "privacy": {
+      "privacy_policy": "Privacy Policy",
+      "terms_of_service": "Terms of Service"
+    },
+    "donations": {
+      "coffee": "Buy Me a Coffee",
+      "pizza": "Buy Me a Pizza",
+      "support": "Support Me"
+    },
+    "danger_zone": {
+      "erase_all": "Erase all data",
+      "erase_confirm": "Are you sure you want to erase all data? This action cannot be undone.",
+      "erase_success": "All data has been erased successfully.",
+      "erase_error": "An error occurred while erasing data.\nPlease try again later."
+    }
+  },
+
+  "levels": {
+    "title": "Levels",
+    "level": "Level {id}",
+    "hint_tooltip": "Hint",
+    "no_hint": "No hint available",
+    "answer_placeholder": "Answer",
+    "enter": "ENTER",
+    "wrong_answer": "Wrong answer.",
+    "error_loading": "Error loading level",
+    "error_loading_all": "Error loading levels",
+    "error_checking": "Error checking answer"
+  },
+
+  "dialogs": {
+    "language": {
+      "title": "Select your language",
+      "description": "Choose your preferred language. You can change it at any time."
+    }
+  }
+}

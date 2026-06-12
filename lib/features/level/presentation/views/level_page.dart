@@ -5,6 +5,8 @@ import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -35,7 +37,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
     ref.listenManual(checkAnswerMutationProvider, (prev, next) {
       if (prev?.hasError != true && next.hasError) {
-        showSnackbar(context, next.error ?? 'Error checking answer');
+        showSnackbar(context, next.error ?? 'levels.error_checking'.tr());
       }
     });
   }
@@ -58,7 +60,9 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
         automaticallyImplyActions: false,
 
         titleSpacing: 8.0,
-        title: asyncValue.hasValue ? Text('Level ${widget.id}') : null,
+        title: asyncValue.hasValue
+            ? Text('levels.level'.tr(namedArgs: {'id': '${widget.id}'}))
+            : null,
 
         leadingWidth: 48.0,
         leading: const PopButton(),
@@ -71,11 +75,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
                     await showHintDialog(
                       context,
-                      hint: level.hint ?? 'No hint',
+                      hint: level.hint ?? 'levels.no_hint'.tr(),
                     );
                   }
                 : null,
-            tooltip: 'Hint',
+            tooltip: 'levels.hint_tooltip'.tr(),
 
             icon: const Icon(TablerIcons.bulb_filled),
           ),
@@ -93,7 +97,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
               ).centered();
             },
             error: (_, _) {
-              return const Text('Error loading level').centered();
+              return Text('levels.error_loading'.tr()).centered();
             },
             loading: () {
               return const CircularProgressIndicator().centered();
@@ -136,7 +140,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                         controller: answerFieldController,
 
                         decoration: InputDecoration(
-                          hintText: 'Answer',
+                          hintText: 'levels.answer_placeholder'.tr(),
                           suffixIcon: IconButton(
                             onPressed: clearAnswer,
 
@@ -177,11 +181,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                                 .read(goRouterProvider)
                                 .replace('/levels/${widget.id + 1}');
                           } else {
-                            showSnackbar(context, 'Respuesta incorrecta.');
+                            showSnackbar(context, 'levels.wrong_answer'.tr());
                           }
                         },
 
-                        child: Text('ENTER'),
+                        child: Text('levels.enter'.tr()),
                       ).expand(flex: 20),
                     ],
                   ),

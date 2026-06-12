@@ -11,7 +11,7 @@ final class AppConfigRepositoryImpl extends AppConfigRepository {
     final currentLocale = _prefs.getString(_kLocaleKey);
 
     state = (state as AppConfigModel).copyWith(
-      locale: Locale(currentLocale ?? 'es'),
+      locale: Locale(currentLocale ?? 'en'),
     );
   }
 
