@@ -8,7 +8,6 @@
       "cancel": "Cancel"
     }
   },
-
   "home": {
     "greeting": "Hello, {name}!",
     "settings_tooltip": "Settings",
@@ -36,7 +35,6 @@
     },
     "error": "An error occurred"
   },
-
   "settings": {
     "title": "Settings",
     "sections": {
@@ -47,7 +45,7 @@
       "danger_zone": "Danger Zone"
     },
     "account": {
-      "change_username": "Change username"
+      "change_username": "Change name"
     },
     "preferences": {
       "language": "Language"
@@ -68,7 +66,6 @@
       "erase_error": "An error occurred while erasing data.\nPlease try again later."
     }
   },
-
   "levels": {
     "title": "Levels",
     "level": "Level {id}",
@@ -81,7 +78,6 @@
     "error_loading_all": "Error loading levels",
     "error_checking": "Error checking answer"
   },
-
   "dialogs": {
     "language": {
       "title": "Select your language",

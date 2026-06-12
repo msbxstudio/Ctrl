@@ -72,98 +72,100 @@ final class _MainPageState extends ConsumerState<MainPage> {
         ),
       ),
 
-      body: asyncValue.when(
-        data: (data) {
-          final MainData(:player, :currentLevel, :averageTime) = data;
+      body: SafeArea(
+        child: asyncValue.when(
+          data: (data) {
+            final MainData(:player, :currentLevel, :averageTime) = data;
 
-          return RefreshIndicator.adaptive(
-            onRefresh: () async {
-              await controller.refresh();
-            },
+            return RefreshIndicator.adaptive(
+              onRefresh: () async {
+                await controller.refresh();
+              },
 
-            child: ScrollableFilledView(
-              child:
-                  Column(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 8.0,
+              child: ScrollableFilledView(
+                child:
+                    Column(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          spacing: 8.0,
 
-                        children: [
-                          Text(
-                            'CTRL by MSBX',
-                            textAlign: TextAlign.end,
-                            style: theme.textTheme.labelLarge?.copyWith(
-                              color: theme.colorScheme.tertiary.withValues(
-                                alpha: 0.75,
+                          children: [
+                            Text(
+                              'CTRL by MSBX',
+                              textAlign: TextAlign.end,
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: theme.colorScheme.tertiary.withValues(
+                                  alpha: 0.75,
+                                ),
                               ),
                             ),
-                          ),
-                          hero(currentLevel: currentLevel),
+                            hero(currentLevel: currentLevel),
 
-                          const Separator(verticalIndent: 8.0),
+                            const Separator(verticalIndent: 8.0),
 
-                          Row(
-                            spacing: 12.0,
-                            children: [
-                              button(
-                                label: 'home.buttons.levels'.tr(),
-                                icon: LucideIcons.grip,
-                                route: '/levels',
+                            Row(
+                              spacing: 12.0,
+                              children: [
+                                button(
+                                  label: 'home.buttons.levels'.tr(),
+                                  icon: LucideIcons.grip,
+                                  route: '/levels',
 
-                                controller: controller,
-                                highlight: false,
-                              ).expand(),
-                              button(
-                                label: 'home.buttons.play'.tr(),
-                                icon: LucideIcons.play,
-                                route: '/levels/${currentLevel.id}',
+                                  controller: controller,
+                                  highlight: false,
+                                ).expand(),
+                                button(
+                                  label: 'home.buttons.play'.tr(),
+                                  icon: LucideIcons.play,
+                                  route: '/levels/${currentLevel.id}',
 
-                                controller: controller,
-                                highlight: true,
-                              ).expand(),
-                            ],
-                          ),
-                        ],
-                      ).expand(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 12.0,
-
-                        children: [
-                          metric(
-                            icon: Symbols.timer,
-                            label: 'home.metrics.avg_time'.tr(),
-                            value: '00:00',
-                            highlight: false,
-                          ).expand(),
-                          metric(
-                            icon: Symbols.local_fire_department,
-                            label: 'home.metrics.streak'.tr(),
-                            value: 'home.metrics.days'.tr(
-                              namedArgs: {'count': '${player.streakDays}'},
+                                  controller: controller,
+                                  highlight: true,
+                                ).expand(),
+                              ],
                             ),
-                            highlight: true,
-                          ).expand(),
-                        ],
+                          ],
+                        ).expand(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 12.0,
+
+                          children: [
+                            metric(
+                              icon: Symbols.timer,
+                              label: 'home.metrics.avg_time'.tr(),
+                              value: '00:00',
+                              highlight: false,
+                            ).expand(),
+                            metric(
+                              icon: Symbols.local_fire_department,
+                              label: 'home.metrics.streak'.tr(),
+                              value: 'home.metrics.days'.tr(
+                                namedArgs: {'count': '${player.streakDays}'},
+                              ),
+                              highlight: true,
+                            ).expand(),
+                          ],
+                        ),
+                      ],
+                    ).padded(
+                      const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 12.0,
                       ),
-                    ],
-                  ).padded(
-                    const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 12.0,
                     ),
-                  ),
-            ),
-          );
-        },
-        error: (_, _) {
-          return Text('home.error'.tr()).centered();
-        },
-        loading: () {
-          return const CircularProgressIndicator.adaptive().centered();
-        },
+              ),
+            );
+          },
+          error: (_, _) {
+            return Text('home.error'.tr()).centered();
+          },
+          loading: () {
+            return const CircularProgressIndicator.adaptive().centered();
+          },
+        ),
       ),
     );
   }

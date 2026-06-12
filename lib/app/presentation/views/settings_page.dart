@@ -41,6 +41,9 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ref.read(settingsControllerProvider.notifier);
+    final asyncValue = ref.watch(settingsControllerProvider);
+
     return Scaffold(
       key: scaffoldKey,
 
@@ -56,181 +59,201 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
         leading: const PopButton(),
       ),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: RefreshIndicator.adaptive(
+          onRefresh: controller.refresh,
 
-          children: [
-            ...[
-              Text('settings.sections.account'.tr()),
-              card(
-                child: option(
-                  title: 'settings.account.change_username'.tr(),
-                  onTap: () {},
+          child: asyncValue.when(
+            data: (data) {
+              final SettingsData(:player) = data;
+
+              return ListView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
                 ),
-              ),
-            ].divide(const SizedBox(height: 8.0)),
 
-            const SizedBox(height: 28.0),
+                children: [
+                  ...[
+                    Text('settings.sections.account'.tr()),
+                    card(
+                      child: option(
+                        title: 'settings.account.change_username'.tr(),
+                        onTap: () async {
+                          final name = await showChangeUsernameModal(
+                            context,
+                            initialValue: player.name,
+                          );
 
-            ...[
-              Text('settings.sections.preferences'.tr()),
-              card(
-                child: option(
-                  title: 'settings.preferences.language'.tr(),
-                  onTap: () async {
-                    final lang = await showChoiceLanguageModal(
-                      context,
-                      initialValue: context.locale.languageCode,
-                    );
+                          if (name == null) return;
 
-                    if (lang == null) return;
+                          await controller.updateName(name: name);
+                        },
 
-                    await context.setLocale(Locale(lang)).whenComplete(() {
-                      ref
-                          .read(appConfigRepositoryProvider.notifier)
-                          .setLocale(lang);
-                    });
-                  },
-
-                  trailing: Row(
-                    spacing: 4.0,
-                    children: [
-                      Text(
-                        context.locale.languageCode.toUpperCase(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.outline,
+                        trailing: trailing(
+                          text: player.name,
+                          icon: LucideIcons.chevronRight,
                         ),
                       ),
-                      Icon(
-                        LucideIcons.chevronRight,
-                        size: 20.0,
-                        color: Theme.of(context).colorScheme.outline,
+                    ),
+                  ].divide(const SizedBox(height: 8.0)),
+
+                  const SizedBox(height: 28.0),
+
+                  ...[
+                    Text('settings.sections.preferences'.tr()),
+                    card(
+                      child: option(
+                        title: 'settings.preferences.language'.tr(),
+                        onTap: () async {
+                          final lang = await showChoiceLanguageModal(
+                            context,
+                            initialValue: context.locale.languageCode,
+                          );
+
+                          if (lang == null) return;
+
+                          await controller.updateLanguage(
+                            context,
+                            languageCode: lang,
+                          );
+                        },
+
+                        trailing: trailing(
+                          text: context.locale.languageCode.toUpperCase(),
+                          icon: LucideIcons.chevronRight,
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ].divide(const SizedBox(height: 8.0)),
+                    ),
+                  ].divide(const SizedBox(height: 8.0)),
 
-            const SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
 
-            ...[
-              Text('settings.sections.privacy'.tr()),
-              card(
-                child: Column(
-                  children: legalOptions
-                      .map(
-                        (e) => option(
-                          title: (e['label'] as String).tr(),
-                          onTap: () {
-                            // launchUrlString(e['url']);
-                          },
+                  ...[
+                    Text('settings.sections.privacy'.tr()),
+                    card(
+                      child: Column(
+                        children: legalOptions
+                            .map(
+                              (e) => option(
+                                title: (e['label'] as String).tr(),
+                                onTap: () {
+                                  // launchUrlString(e['url']);
+                                },
 
-                          borderRadius: e['id'] == 1
-                              ? BorderRadius.only(
-                                  topLeft: Radius.circular(8.0),
-                                  topRight: Radius.circular(8.0),
-                                )
-                              : BorderRadius.only(
-                                  bottomLeft: Radius.circular(8.0),
-                                  bottomRight: Radius.circular(8.0),
+                                borderRadius: e['id'] == 1
+                                    ? BorderRadius.only(
+                                        topLeft: Radius.circular(8.0),
+                                        topRight: Radius.circular(8.0),
+                                      )
+                                    : BorderRadius.only(
+                                        bottomLeft: Radius.circular(8.0),
+                                        bottomRight: Radius.circular(8.0),
+                                      ),
+                                trailing: trailing(
+                                  icon: LucideIcons.arrowUpRight,
                                 ),
-                          trailing: Icon(
-                            LucideIcons.arrowUpRight,
-                            size: 20.0,
-                            color: Theme.of(context).colorScheme.outline,
+                              ),
+                            )
+                            .divide(const Separator(verticalIndent: 4.0)),
+                      ),
+                    ),
+                  ].divide(const SizedBox(height: 8.0)),
+
+                  const SizedBox(height: 24.0),
+
+                  ...[
+                    Text('settings.sections.donations'.tr()),
+                    card(
+                      child: Column(
+                        children: [
+                          option(
+                            title: 'settings.donations.coffee'.tr(),
+                            onTap: () {},
+
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
+                            ),
+                            leading: const Text('☕'),
+                            trailing: const Text('\$0.99'),
                           ),
-                        ),
-                      )
-                      .divide(const Separator(verticalIndent: 4.0)),
-                ),
-              ),
-            ].divide(const SizedBox(height: 8.0)),
+                          option(
+                            title: 'settings.donations.pizza'.tr(),
+                            onTap: () {},
 
-            const SizedBox(height: 24.0),
+                            borderRadius: BorderRadius.zero,
+                            leading: const Text('🍕'),
+                            trailing: const Text('\$4.99'),
+                          ),
+                          option(
+                            title: 'settings.donations.support'.tr(),
+                            onTap: () {},
 
-            ...[
-              Text('settings.sections.donations'.tr()),
-              card(
-                child: Column(
-                  children: [
-                    option(
-                      title: 'settings.donations.coffee'.tr(),
-                      onTap: () {},
-
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        topRight: Radius.circular(8.0),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
+                            ),
+                            leading: const Text('❤️'),
+                            trailing: const Text('\$9.99'),
+                          ),
+                        ].divide(const Separator(verticalIndent: 4.0)),
                       ),
-                      leading: const Text('☕'),
-                      trailing: const Text('\$0.99'),
                     ),
-                    option(
-                      title: 'settings.donations.pizza'.tr(),
-                      onTap: () {},
+                  ].divide(const SizedBox(height: 8.0)),
 
-                      borderRadius: BorderRadius.zero,
-                      leading: const Text('🍕'),
-                      trailing: const Text('\$4.99'),
+                  const Separator(verticalIndent: 24.0),
+
+                  ...[
+                    Text('settings.sections.danger_zone'.tr()),
+                    FilledButton.tonal(
+                      onPressed: () async {
+                        final confirmed = await showConfirmationModal(
+                          context,
+                          title: 'settings.danger_zone.erase_confirm'.tr(),
+                        );
+
+                        if (confirmed != true) return;
+                        try {
+                          await DatabaseService.instance.reset();
+
+                          showSnackbar(
+                            context,
+                            'settings.danger_zone.erase_success'.tr(),
+                            behavior: SnackBarBehavior.fixed,
+                          );
+                        } catch (e) {
+                          showSnackbar(
+                            context,
+                            'settings.danger_zone.erase_error'.tr(),
+                            behavior: SnackBarBehavior.fixed,
+                          );
+                        }
+                      },
+
+                      style: Theme.of(context).filledButtonTheme.style
+                          ?.copyWith(
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+
+                      child: Text('settings.danger_zone.erase_all'.tr()),
                     ),
-                    option(
-                      title: 'settings.donations.support'.tr(),
-                      onTap: () {},
+                  ].divide(const SizedBox(height: 8.0)),
+                ],
+              );
+            },
 
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8.0),
-                        bottomRight: Radius.circular(8.0),
-                      ),
-                      leading: const Text('❤️'),
-                      trailing: const Text('\$9.99'),
-                    ),
-                  ].divide(const Separator(verticalIndent: 4.0)),
-                ),
-              ),
-            ].divide(const SizedBox(height: 8.0)),
+            error: (_, _) {
+              return Text('settings.error'.tr()).centered();
+            },
 
-            const Separator(verticalIndent: 24.0),
-
-            ...[
-              Text('settings.sections.danger_zone'.tr()),
-              FilledButton.tonal(
-                onPressed: () async {
-                  final confirmed = await showConfirmationModal(
-                    context,
-                    title: 'settings.danger_zone.erase_confirm'.tr(),
-                  );
-
-                  if (confirmed != true) return;
-                  try {
-                    await DatabaseService.instance.reset();
-
-                    showSnackbar(
-                      context,
-                      'settings.danger_zone.erase_success'.tr(),
-                      behavior: SnackBarBehavior.fixed,
-                    );
-                  } catch (e) {
-                    showSnackbar(
-                      context,
-                      'settings.danger_zone.erase_error'.tr(),
-                      behavior: SnackBarBehavior.fixed,
-                    );
-                  }
-                },
-
-                style: Theme.of(context).filledButtonTheme.style?.copyWith(
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-
-                child: Text('settings.danger_zone.erase_all'.tr()),
-              ),
-            ].divide(const SizedBox(height: 8.0)),
-          ],
+            loading: () {
+              return const CircularProgressIndicator.adaptive().centered();
+            },
+          ),
         ),
       ),
     );
@@ -295,6 +318,29 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
             ),
       ),
+    );
+  }
+
+  Widget trailing({String? text, IconData? icon}) {
+    Debugger.ensure(
+      text != null || icon != null,
+      'Either text or icon must be provided',
+    );
+
+    return Row(
+      spacing: 4.0,
+      children: [
+        if (text != null)
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.outline,
+            ),
+          ),
+        if (icon != null)
+          Icon(icon, size: 20.0, color: Theme.of(context).colorScheme.outline),
+      ],
     );
   }
 }

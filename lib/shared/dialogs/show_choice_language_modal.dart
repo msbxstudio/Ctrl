@@ -11,13 +11,13 @@ final _languages = const [
 
 Future<String?> showChoiceLanguageModal(
   BuildContext context, {
-  String? initialValue,
+  required String initialValue,
 }) {
   return showAppModal<String?>(
     context,
 
     child: RadioGroup<String>(
-      groupValue: initialValue ?? _languages.first['code']!,
+      groupValue: initialValue,
       onChanged: (value) {
         if (!context.mounted) return;
         Navigator.of(context, rootNavigator: true).pop<String?>(value);

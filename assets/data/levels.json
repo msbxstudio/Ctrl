@@ -155,7 +155,7 @@
     "id": 9,
     "type": "debug",
     "keyboard": "symbol",
-    "question": "print('hello]",
+    "question": "print('hello)",
     "answer": "'",
     "options": [
       "(",

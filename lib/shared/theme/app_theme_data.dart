@@ -98,21 +98,21 @@ extension AppThemeData on ThemeData {
 
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
-        hintStyle: TextStyle(color: scheme.outline.withAlpha(155)),
+        hintStyle: TextStyle(color: scheme.outline.withValues(alpha: 0.7)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(color: scheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(color: scheme.primary),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(color: scheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(color: scheme.error),
         ),
       ),

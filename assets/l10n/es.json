@@ -8,7 +8,6 @@
       "cancel": "Cancelar"
     }
   },
-
   "home": {
     "greeting": "¡Hola, {name}!",
     "settings_tooltip": "Ajustes",
@@ -36,7 +35,6 @@
     },
     "error": "Ha ocurrido un error"
   },
-
   "settings": {
     "title": "Ajustes",
     "sections": {
@@ -47,7 +45,7 @@
       "danger_zone": "Zona de peligro"
     },
     "account": {
-      "change_username": "Cambiar nombre de usuario"
+      "change_username": "Cambiar nombre"
     },
     "preferences": {
       "language": "Idioma"
@@ -68,7 +66,6 @@
       "erase_error": "Ha ocurrido un error al borrar los datos.\nPor favor, inténtalo de nuevo más tarde."
     }
   },
-
   "levels": {
     "title": "Niveles",
     "level": "Nivel {id}",
@@ -81,7 +78,6 @@
     "error_loading_all": "Error al cargar los niveles",
     "error_checking": "Error al verificar la respuesta"
   },
-
   "dialogs": {
     "language": {
       "title": "Selecciona tu idioma",

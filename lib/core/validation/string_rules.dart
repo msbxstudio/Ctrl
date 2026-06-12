@@ -39,6 +39,22 @@ extension StringRules on Validator<String> {
     return addRule((v) => v != otherValueGetter() ? message : null);
   }
 
+  Validator<String> shouldContain(String substring, [String? message]) {
+    return addRule(
+      (v) => (v != null && !v.contains(substring))
+          ? (message ?? 'Debe contener "$substring"')
+          : null,
+    );
+  }
+
+  Validator<String> shouldNotContain(String substring, [String? message]) {
+    return addRule(
+      (v) => (v != null && v.contains(substring))
+          ? (message ?? 'No debe contener "$substring"')
+          : null,
+    );
+  }
+
   Validator<String> isDouble([String message = 'Debe ser un número']) {
     return addRule((v) => double.tryParse(v ?? '') == null ? message : null);
   }
