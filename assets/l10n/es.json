@@ -82,6 +82,21 @@
     "language": {
       "title": "Selecciona tu idioma",
       "description": "Elige el idioma que prefieras. Puedes cambiarlo en cualquier momento."
+    },
+    "username": {
+      "title": "Cambia tu nombre",
+      "description": "Ingresa un nuevo nombre para mostrar en la aplicación. Este nombre puede tener hasta {} caracteres.",
+      "input_hint": "Nuevo nombre",
+      "confirm": "Cambiar nombre"
+    }
+  },
+  "validators": {
+    "string": {
+      "required": "Este campo es obligatorio.",
+      "min_length": "Este campo debe tener al menos {} caracteres.",
+      "max_length": "Este campo no puede tener más de {} caracteres.",
+      "should_contain": "Este campo debe contener '{}'.",
+      "should_not_contain": "Este campo no debe contener '{}'."
     }
   }
 }

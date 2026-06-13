@@ -1,11 +1,14 @@
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/validation/index.dart';
+
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 
 import 'show_app_modal.dart';
 
 final _validator = Validator<String>()
+  ..required()
   ..minLength(3)
   ..shouldNotContain(' ');
 
@@ -29,7 +32,7 @@ Future<String?> showChangeUsernameModal(
 
         children: [
           Text(
-            'dialogs.language.title'.tr(),
+            'dialogs.username.title'.tr(),
             textAlign: TextAlign.center,
             style: Theme.of(
               context,
@@ -37,7 +40,7 @@ Future<String?> showChangeUsernameModal(
           ),
 
           Text(
-            'dialogs.language.description'.tr(),
+            'dialogs.username.description'.tr(args: ['15']),
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Theme.of(context).colorScheme.outline,
             ),
@@ -49,20 +52,19 @@ Future<String?> showChangeUsernameModal(
             validator: _validator.validate,
 
             decoration: InputDecoration(
-              hintText: 'dialogs.change_username.input_hint'.tr(),
+              hintText: 'dialogs.username.input_hint'.tr(),
             ),
           ),
 
           FilledButton(
             onPressed: () {
-              if (!formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 formKey.currentState?.save();
+                Navigator.of(context).pop(controller.text);
               }
-
-              Navigator.of(context).pop(controller.text);
             },
 
-            child: Text('dialogs.language.confirm'.tr()),
+            child: Text('dialogs.username.confirm'.tr()),
           ),
         ].divide(const SizedBox(height: 12.0)),
       ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),

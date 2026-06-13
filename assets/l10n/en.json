@@ -82,6 +82,21 @@
     "language": {
       "title": "Select your language",
       "description": "Choose your preferred language. You can change it at any time."
+    },
+    "username": {
+      "title": "Change your name",
+      "description": "Enter a new name to be displayed in the app. This name can be up to {} characters long.",
+      "input_hint": "New name",
+      "confirm": "Confirm"
+    }
+  },
+  "validators": {
+    "string": {
+      "required": "This field is required.",
+      "min_length": "This field must be at least {min} characters long.",
+      "max_length": "This field cannot be longer than {max} characters.",
+      "should_contain": "This field must contain '{value}'.",
+      "should_not_contain": "This field must not contain '{value}'."
     }
   }
 }

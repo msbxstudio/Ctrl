@@ -28,6 +28,7 @@ final class DatabaseService extends AppService<Database> {
       },
     );
 
+    await _ensureInitialValues();
     setInitialized(true);
   }
 
@@ -109,6 +110,27 @@ final class DatabaseService extends AppService<Database> {
 
     initialize();
   }
+
+  Future<void> _ensureInitialValues() async {
+    // 1. Populate levels
+    final jsonString = await rootBundle.loadString('assets/data/levels.json');
+
+    final jsonData = jsonDecode(jsonString) as List;
+
+    for (final data in jsonData) {
+      await insert('level', <String, dynamic>{
+        ...data,
+        'options': jsonEncode(data['options']),
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    }
+
+    // 2. Create default player
+    await insert('player', {
+      'id': 1,
+      'name': 'Player',
+      'last_active_at': DateTime.now().toIso8601String(),
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
 }
 
 final class _DatabaseMigration {
@@ -161,25 +183,6 @@ final class _DatabaseMigration {
           REFERENCES level(id)
       );
     ''');
-
-    // 4. Populate levels
-    final jsonString = await rootBundle.loadString('assets/data/levels.json');
-
-    final jsonData = jsonDecode(jsonString) as List;
-
-    for (final data in jsonData) {
-      await db.insert('level', <String, dynamic>{
-        ...data,
-        'options': jsonEncode(data['options']),
-      }, conflictAlgorithm: ConflictAlgorithm.ignore);
-    }
-
-    // 5. Create default player
-    await db.insert('player', {
-      'id': 1,
-      'name': 'Player',
-      'last_active_at': DateTime.now().toIso8601String(),
-    });
   }
 
   static Future<void> onUpgrade(

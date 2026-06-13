@@ -1,14 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
+
 import 'validator.dart';
 
 extension StringRules on Validator<String> {
-  Validator<String> required([String message = 'Campo obligatorio']) {
-    return addRule((v) => (v == null || v.trim().isEmpty) ? message : null);
+  Validator<String> required([String? message]) {
+    return addRule(
+      (v) => (v == null || v.trim().isEmpty)
+          ? (message ?? 'validators.string.required'.tr())
+          : null,
+    );
   }
 
   Validator<String> minLength(int min, [String? message]) {
     return addRule(
       (v) => (v != null && v.length < min)
-          ? (message ?? 'Mínimo $min caracteres')
+          ? (message ??
+                'validators.string.min_length'.tr(args: [min.toString()]))
           : null,
     );
   }
@@ -17,7 +24,27 @@ extension StringRules on Validator<String> {
     return addRule((v) {
       if (v == null || v.trim().isEmpty) return null;
       if (v.length < min) {
-        return message ?? 'Mínimo $min caracteres';
+        return message ?? 'validators.min_length'.tr(args: [min.toString()]);
+      }
+      return null;
+    });
+  }
+
+  Validator<String> maxLength(int max, [String? message]) {
+    return addRule(
+      (v) => (v != null && v.length > max)
+          ? (message ??
+                'validators.string.max_length'.tr(args: [max.toString()]))
+          : null,
+    );
+  }
+
+  Validator<String> maxLengthIfPresent(int max, [String? message]) {
+    return addRule((v) {
+      if (v == null || v.trim().isEmpty) return null;
+      if (v.length > max) {
+        return message ??
+            'validators.string.max_length'.tr(args: [max.toString()]);
       }
       return null;
     });
@@ -42,7 +69,8 @@ extension StringRules on Validator<String> {
   Validator<String> shouldContain(String substring, [String? message]) {
     return addRule(
       (v) => (v != null && !v.contains(substring))
-          ? (message ?? 'Debe contener "$substring"')
+          ? (message ??
+                'validators.string.should_contain'.tr(args: [substring]))
           : null,
     );
   }
@@ -50,7 +78,8 @@ extension StringRules on Validator<String> {
   Validator<String> shouldNotContain(String substring, [String? message]) {
     return addRule(
       (v) => (v != null && v.contains(substring))
-          ? (message ?? 'No debe contener "$substring"')
+          ? (message ??
+                'validators.string.should_not_contain'.tr(args: [substring]))
           : null,
     );
   }

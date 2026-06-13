@@ -13,7 +13,6 @@ Future<T?> showAppModal<T>(
   return showModalBottomSheet<T>(
     context: context,
 
-    useSafeArea: true,
     isDismissible: dismissible,
     useRootNavigator: rootNavigator,
     isScrollControlled: scrollControlled,
@@ -21,12 +20,10 @@ Future<T?> showAppModal<T>(
     backgroundColor: Colors.transparent,
     elevation: 0.0,
 
-    builder: (_) {
+    builder: (ctx) {
       return AnimatedPadding(
         duration: Durations.medium1,
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.viewInsetsOf(context).bottom,
-        ),
+        padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(ctx).bottom),
 
         child: SafeArea(
           minimum: const EdgeInsets.all(8.0),
