@@ -17,6 +17,8 @@ export 'presentation/controllers/main_controller.dart';
 export 'presentation/controllers/settings_controller.dart';
 export 'presentation/controllers/splash_controller.dart';
 
+export 'presentation/dialogs/choice_language_modal.dart';
+
 export 'presentation/providers/controller_provider.dart';
 export 'presentation/providers/repository_provider.dart';
 

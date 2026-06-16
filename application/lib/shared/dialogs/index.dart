@@ -1,5 +1,3 @@
-export 'show_change_username_modal.dart';
-export 'show_choice_language_modal.dart';
-export 'show_confirmation_modal.dart';
-export 'show_hint_dialog.dart';
-export 'show_level_completed_dialog.dart';
+export 'app_dialog.dart';
+export 'app_modal.dart';
+export 'confirmation_modal.dart';

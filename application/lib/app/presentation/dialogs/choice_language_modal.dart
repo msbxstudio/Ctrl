@@ -1,8 +1,7 @@
 import 'package:ctrl/core/extensions/index.dart';
+import 'package:ctrl/shared/dialogs/index.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import 'show_app_modal.dart';
 
 final _languages = const [
   {'title': 'Español', 'code': 'es'},

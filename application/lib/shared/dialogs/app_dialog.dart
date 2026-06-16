@@ -9,11 +9,12 @@ Future<T?> showAppDialog<T>(
   Color? color,
   bool fullscreen = false,
   bool dismissible = true,
+  bool useSafeArea = true,
   bool rootNavigator = true,
 }) {
   return showDialog<T>(
     context: context,
-    useSafeArea: true,
+    useSafeArea: useSafeArea,
     barrierDismissible: dismissible,
     useRootNavigator: rootNavigator,
 

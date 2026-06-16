@@ -1,9 +1,10 @@
 import 'package:ctrl/core/extensions/index.dart';
-import 'package:ctrl/shared/widgets/separator.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:ctrl/shared/dialogs/index.dart';
+import 'package:ctrl/shared/widgets/index.dart';
 
-import 'show_app_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import 'package:flutter/material.dart';
 
 Future<void> showHintDialog(
   BuildContext context, {

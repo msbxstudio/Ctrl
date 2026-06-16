@@ -13,4 +13,5 @@ export 'data/repos/player_repository_impl.dart';
 // *********************************************************
 // PRESENTATION
 // *********************************************************
+export 'presentation/dialogs/change_username_modal.dart';
 export 'presentation/providers/repository_provider.dart';

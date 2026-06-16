@@ -22,6 +22,9 @@ export 'data/repos/level_progress_repository_impl.dart';
 export 'presentation/controllers/level_controller.dart';
 export 'presentation/controllers/levels_controller.dart';
 
+export 'presentation/dialogs/hint_dialog.dart';
+export 'presentation/dialogs/level_completed_dialog.dart';
+
 export 'presentation/providers/controller_provider.dart';
 export 'presentation/providers/mutation_provider.dart';
 export 'presentation/providers/repository_provider.dart';
