@@ -1,0 +1,102 @@
+{
+  "actions": {
+    "common": {
+      "ok": "OK",
+      "back": "Volver",
+      "close": "Cerrar",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar"
+    }
+  },
+  "home": {
+    "greeting": "¡Hola, {name}!",
+    "settings_tooltip": "Ajustes",
+    "status": {
+      "active": "SESIÓN ACTIVA",
+      "inactive": "SIN SESIÓN ACTIVA"
+    },
+    "journey": {
+      "start": "INICIAR AVENTURA",
+      "continue": "CONTINUAR AVENTURA"
+    },
+    "level": "Nivel {id}",
+    "progress": {
+      "title": "Progreso",
+      "puzzles_solved": "{count} PUZZLES RESUELTOS"
+    },
+    "buttons": {
+      "levels": "Niveles",
+      "play": "Jugar"
+    },
+    "metrics": {
+      "avg_time": "TIEMPO PROM.",
+      "streak": "RACHA",
+      "days": "{count} DÍAS"
+    },
+    "error": "Ha ocurrido un error"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "sections": {
+      "account": "Cuenta",
+      "preferences": "Preferencias",
+      "privacy": "Privacidad",
+      "donations": "Donaciones",
+      "danger_zone": "Zona de peligro"
+    },
+    "account": {
+      "change_username": "Cambiar nombre"
+    },
+    "preferences": {
+      "language": "Idioma"
+    },
+    "privacy": {
+      "privacy_policy": "Política de privacidad",
+      "terms_of_service": "Términos de servicio"
+    },
+    "donations": {
+      "coffee": "Invítame un café",
+      "pizza": "Invítame una pizza",
+      "support": "Apóyame"
+    },
+    "danger_zone": {
+      "erase_all": "Borrar todos los datos",
+      "erase_confirm": "¿Estás seguro de que deseas borrar todos los datos? Esta acción no se puede deshacer.",
+      "erase_success": "Todos los datos han sido borrados exitosamente.",
+      "erase_error": "Ha ocurrido un error al borrar los datos.\nPor favor, inténtalo de nuevo más tarde."
+    }
+  },
+  "levels": {
+    "title": "Niveles",
+    "level": "Nivel {id}",
+    "hint_tooltip": "Pista",
+    "no_hint": "Sin pista disponible",
+    "answer_placeholder": "Respuesta",
+    "enter": "ENVIAR",
+    "wrong_answer": "Respuesta incorrecta.",
+    "error_loading": "Error al cargar el nivel",
+    "error_loading_all": "Error al cargar los niveles",
+    "error_checking": "Error al verificar la respuesta"
+  },
+  "dialogs": {
+    "language": {
+      "title": "Selecciona tu idioma",
+      "description": "Elige el idioma que prefieras. Puedes cambiarlo en cualquier momento."
+    },
+    "username": {
+      "title": "Cambia tu nombre",
+      "description": "Ingresa un nuevo nombre para mostrar en la aplicación. Este nombre puede tener hasta {} caracteres.",
+      "input_hint": "Nuevo nombre",
+      "confirm": "Cambiar nombre"
+    }
+  },
+  "validators": {
+    "string": {
+      "required": "Este campo es obligatorio.",
+      "min_length": "Este campo debe tener al menos {} caracteres.",
+      "max_length": "Este campo no puede tener más de {} caracteres.",
+      "should_contain": "Este campo debe contener '{}'.",
+      "should_not_contain": "Este campo no debe contener '{}'."
+    }
+  }
+}
