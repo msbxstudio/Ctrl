@@ -31,7 +31,10 @@ Future<void> showHintDialog(
       children: [
         Text(
           hint,
-          style: Theme.of(context).textTheme.headlineSmall,
+
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(height: 1.5),
         ).centered().expand(),
 
         ...[
@@ -48,7 +51,7 @@ Future<void> showHintDialog(
               ),
             ),
 
-            child: Text('actions.common.ok'.tr()),
+            child: Text('actions.common.close'.tr()),
           ).aligned(Alignment.center),
         ].divide(const SizedBox(height: 16.0)),
       ],

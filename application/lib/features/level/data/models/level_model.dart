@@ -18,7 +18,9 @@ final class LevelModel extends Level {
     return LevelModel(
       json['id'] as int,
 
-      question: json['question'],
+      question: QuestionModel.fromJson(
+        jsonDecode(json['question']) as Map<String, dynamic>,
+      ),
       answer: json['answer'],
       hint: json['hint'],
 
@@ -59,7 +61,7 @@ final class LevelModel extends Level {
         LevelKeyboard.complexity => 'complexity',
         _ => 'numeric',
       },
-      'question': question,
+      'question': jsonEncode((question as QuestionModel).toJson()),
       'answer': answer,
       'hint': hint,
       'options': jsonEncode(options),

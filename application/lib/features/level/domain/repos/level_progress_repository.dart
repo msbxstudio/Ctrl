@@ -13,5 +13,10 @@ abstract interface class LevelProgressRepository {
     required int ellapsedTime,
   });
 
-  Future<LevelProgress> update(String id, {int? attempts, int? ellapsedTime});
+  Future<LevelProgress> update(
+    int id, {
+    int? attempts,
+    int? ellapsedTime,
+    bool? isCompleted,
+  });
 }

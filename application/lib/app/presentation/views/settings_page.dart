@@ -1,4 +1,5 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/core/exceptions/index.dart';
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/services/index.dart';
 import 'package:ctrl/core/utils/index.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final class SettingsPage extends ConsumerStatefulWidget {
   static const routePath = '/settings';
@@ -31,12 +33,12 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
     {
       'id': 1,
       'label': 'settings.privacy.privacy_policy',
-      'url': 'https://example.com/privacy',
+      'url': 'https://ctrl.msbx.dev/privacy',
     },
     {
       'id': 2,
       'label': 'settings.privacy.terms_of_service',
-      'url': 'https://example.com/terms',
+      'url': 'https://ctrl.msbx.dev/terms',
     },
   ];
 
@@ -137,8 +139,21 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                             .map(
                               (e) => option(
                                 title: (e['label'] as String).tr(),
-                                onTap: () {
-                                  // launchUrlString(e['url']);
+                                onTap: () async {
+                                  try {
+                                    final success = await launchUrl(
+                                      Uri.parse(e['url']),
+                                      mode: LaunchMode.externalApplication,
+                                    );
+
+                                    if (!success) {
+                                      throw const LaunchException(
+                                        'No se pudo abrir el enlace solicitado.',
+                                      );
+                                    }
+                                  } on LaunchException catch (e) {
+                                    showSnackbar(context, e.message);
+                                  }
                                 },
 
                                 borderRadius: e['id'] == 1

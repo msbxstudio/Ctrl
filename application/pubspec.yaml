@@ -84,6 +84,9 @@ dependencies:
   # Renders SVG files inside Flutter widgets.
   flutter_svg: ^2.2.0
 
+  # Opens external URLs, emails, phone numbers, and apps from Flutter.
+  url_launcher: ^6.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

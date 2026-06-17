@@ -3,7 +3,10 @@
     "id": 1,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print(1 + 1)",
+    "question": {
+      "type": "raw",
+      "value": "print(1 + 1)"
+    },
     "answer": "2",
     "options": [
       "1",
@@ -22,7 +25,10 @@
     "id": 2,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print(10 - 3)",
+    "question": {
+      "type": "raw",
+      "value": "print(10 - 3)"
+    },
     "answer": "7",
     "options": [
       "1",
@@ -41,7 +47,10 @@
     "id": 3,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "var x = 4\nprint(x)",
+    "question": {
+      "type": "raw",
+      "value": "var x = 4\nprint(x)"
+    },
     "answer": "4",
     "options": [
       "1",
@@ -60,7 +69,10 @@
     "id": 4,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "var x = 3\nprint(x * 2)",
+    "question": {
+      "type": "raw",
+      "value": "var x = 3\nprint(x * 2)"
+    },
     "answer": "6",
     "options": [
       "1",
@@ -79,7 +91,10 @@
     "id": 5,
     "type": "missing_symbol",
     "keyboard": "symbol",
-    "question": "print('hello'_",
+    "question": {
+      "type": "raw",
+      "value": "print('hello'_"
+    },
     "answer": ")",
     "options": [
       "!",
@@ -98,7 +113,10 @@
     "id": 6,
     "type": "missing_symbol",
     "keyboard": "symbol",
-    "question": "items[0_",
+    "question": {
+      "type": "raw",
+      "value": "items[0_"
+    },
     "answer": "]",
     "options": [
       "(",
@@ -117,7 +135,10 @@
     "id": 7,
     "type": "missing_symbol",
     "keyboard": "symbol",
-    "question": "if(x > 0)_",
+    "question": {
+      "type": "raw",
+      "value": "if(x > 0)_"
+    },
     "answer": "{",
     "options": [
       "!",
@@ -136,7 +157,10 @@
     "id": 8,
     "type": "missing_symbol",
     "keyboard": "symbol",
-    "question": "function test(_",
+    "question": {
+      "type": "raw",
+      "value": "function test(_"
+    },
     "answer": ")",
     "options": [
       "!",
@@ -155,7 +179,10 @@
     "id": 9,
     "type": "debug",
     "keyboard": "symbol",
-    "question": "print('hello)",
+    "question": {
+      "type": "raw",
+      "value": "print('hello)"
+    },
     "answer": "'",
     "options": [
       "(",
@@ -174,7 +201,10 @@
     "id": 10,
     "type": "debug",
     "keyboard": "symbol",
-    "question": "(())]",
+    "question": {
+      "type": "raw",
+      "value": "(())]"
+    },
     "answer": "[",
     "options": [
       "(",
@@ -193,7 +223,10 @@
     "id": 11,
     "type": "debug",
     "keyboard": "symbol",
-    "question": "{[)]}",
+    "question": {
+      "type": "raw",
+      "value": "{[)]}"
+    },
     "answer": "(",
     "options": [
       "!",
@@ -212,7 +245,10 @@
     "id": 12,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "var x = 5\nx = x + 1\nprint(x)",
+    "question": {
+      "type": "raw",
+      "value": "var x = 5\nx = x + 1\nprint(x)"
+    },
     "answer": "6",
     "options": [
       "1",
@@ -231,7 +267,10 @@
     "id": 13,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print(8 / 2)",
+    "question": {
+      "type": "raw",
+      "value": "print(8 / 2)"
+    },
     "answer": "4",
     "options": [
       "1",
@@ -250,7 +289,10 @@
     "id": 14,
     "type": "logic",
     "keyboard": "numeric",
-    "question": "Array con 5 elementos. Último índice.",
+    "question": {
+      "type": "key",
+      "value": "levels.14.question"
+    },
     "answer": "4",
     "options": [
       "1",
@@ -269,7 +311,10 @@
     "id": 15,
     "type": "logic",
     "keyboard": "numeric",
-    "question": "String 'CTRL'. Longitud.",
+    "question": {
+      "type": "key",
+      "value": "levels.15.question"
+    },
     "answer": "4",
     "options": [
       "1",
@@ -288,7 +333,10 @@
     "id": 16,
     "type": "hidden_command",
     "keyboard": "character",
-    "question": "Command to check the current status of the system.",
+    "question": {
+      "type": "key",
+      "value": "levels.14.question"
+    },
     "answer": "STATUS",
     "options": [
       "S",
@@ -307,7 +355,10 @@
     "id": 17,
     "type": "hidden_command",
     "keyboard": "character",
-    "question": "Command to log in to the system.",
+    "question": {
+      "type": "key",
+      "value": "levels.17.question"
+    },
     "answer": "LOGIN",
     "options": [
       "L",
@@ -325,7 +376,10 @@
     "id": 18,
     "type": "hidden_command",
     "keyboard": "character",
-    "question": "Command to exit a function and optionally return a value.",
+    "question": {
+      "type": "key",
+      "value": "levels.18.question"
+    },
     "answer": "RETURN",
     "options": [
       "R",
@@ -344,7 +398,10 @@
     "id": 19,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print(2 * 3 + 1)",
+    "question": {
+      "type": "raw",
+      "value": "print(2 * 3 + 1)"
+    },
     "answer": "7",
     "options": [
       "1",
@@ -363,7 +420,10 @@
     "id": 20,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print((2 + 3) * 2)",
+    "question": {
+      "type": "raw",
+      "value": "print((2 + 3) * 2)"
+    },
     "answer": "10",
     "options": [
       "1",
@@ -382,7 +442,10 @@
     "id": 21,
     "type": "logic",
     "keyboard": "numeric",
-    "question": "Loop de 4 iteraciones. Incrementa 1 por vuelta. Resultado.",
+    "question": {
+      "type": "key",
+      "value": "levels.21.question"
+    },
     "answer": "4",
     "options": [
       "1",
@@ -401,7 +464,10 @@
     "id": 22,
     "type": "logic",
     "keyboard": "numeric",
-    "question": "Array [10,20,30]. Valor en índice 1.",
+    "question": {
+      "type": "key",
+      "value": "levels.22.question"
+    },
     "answer": "20",
     "options": [
       "1",
@@ -420,7 +486,10 @@
     "id": 23,
     "type": "complexity",
     "keyboard": "complexity",
-    "question": "Acceso a array por índice",
+    "question": {
+      "type": "key",
+      "value": "levels.23.question"
+    },
     "answer": "1",
     "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
@@ -440,7 +509,10 @@
     "id": 24,
     "type": "complexity",
     "keyboard": "complexity",
-    "question": "Recorrer un array una vez",
+    "question": {
+      "type": "key",
+      "value": "levels.24.question"
+    },
     "answer": "n",
     "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
@@ -460,8 +532,11 @@
     "id": 25,
     "type": "complexity",
     "keyboard": "complexity",
-    "question": "Dos loops anidados",
-    "answer": "n²",
+    "question": {
+      "type": "key",
+      "value": "levels.25.question"
+    },
+    "answer": "2",
     "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
       "0",
@@ -480,8 +555,11 @@
     "id": 26,
     "type": "complexity",
     "keyboard": "complexity",
-    "question": "Binary Search",
-    "answer": "log n",
+    "question": {
+      "type": "key",
+      "value": "levels.26.question"
+    },
+    "answer": "L",
     "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
       "0",
@@ -500,8 +578,11 @@
     "id": 27,
     "type": "complexity",
     "keyboard": "complexity",
-    "question": "Merge Sort",
-    "answer": "n log n",
+    "question": {
+      "type": "key",
+      "value": "levels.27.question"
+    },
+    "answer": "M",
     "hint": "1 = O(1), n = O(n), L = O(log n), M = O(n log n), 2 = O(n²), E = O(2ⁿ), ! = O(n!)",
     "options": [
       "0",
@@ -520,7 +601,10 @@
     "id": 28,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "print(9 % 2)",
+    "question": {
+      "type": "raw",
+      "value": "print(9 % 2)"
+    },
     "answer": "1",
     "options": [
       "1",
@@ -539,7 +623,10 @@
     "id": 29,
     "type": "output_prediction",
     "keyboard": "numeric",
-    "question": "var x = 2\nvar y = 3\nprint(x + y)",
+    "question": {
+      "type": "raw",
+      "value": "var x = 2\nvar y = 3\nprint(x + y)"
+    },
     "answer": "5",
     "options": [
       "1",
@@ -558,7 +645,10 @@
     "id": 30,
     "type": "logic",
     "keyboard": "numeric",
-    "question": "Si un array tiene 10 elementos, ¿cuántos índices válidos tiene?",
+    "question": {
+      "type": "key",
+      "value": "levels.30.question"
+    },
     "answer": "10",
     "options": [
       "1",

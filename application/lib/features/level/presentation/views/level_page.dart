@@ -74,7 +74,9 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
                     await showHintDialog(
                       context,
-                      hint: level.hint ?? 'levels.no_hint'.tr(),
+                      hint: level.hint != null
+                          ? level.hint!.split(', ').join('\n')
+                          : 'levels.no_hint'.tr(),
                     );
                   }
                 : null,
@@ -91,11 +93,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
               final LevelData(:level) = data;
 
               return Text(
-                level.question,
+                level.question.resolve(),
                 textAlign: TextAlign.center,
               ).centered();
             },
-            error: (_, _) {
+            error: (e, _) {
               return Text('levels.error_loading'.tr()).centered();
             },
             loading: () {
@@ -120,7 +122,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
         child: SafeArea(
           child: asyncValue.maybeWhen(
             data: (data) {
-              final (:level) = data;
+              final LevelData(:level) = data;
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -163,18 +165,17 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
                       FilledButton.tonal(
                         onPressed: () async {
-                          final match = controller.checkAnswer(
+                          final match = await controller.checkAnswer(
                             answerFieldController.text,
                           );
 
                           if (match) {
-                            answerFieldController.clear();
-
                             await showLevelCompletedDialog(
                               context,
-                              hint: 'Hello',
                               rootNavigator: false,
                             );
+
+                            answerFieldController.clear();
 
                             await ref
                                 .read(goRouterProvider)

@@ -1,8 +1,9 @@
 // *********************************************************
 // DOMAIN
 // *********************************************************
-export 'domain/entities/level.dart';
 export 'domain/entities/level_progress.dart';
+export 'domain/entities/level.dart';
+export 'domain/entities/question.dart';
 
 export 'domain/repos/level_repository.dart';
 export 'domain/repos/level_progress_repository.dart';
@@ -12,6 +13,7 @@ export 'domain/repos/level_progress_repository.dart';
 // *********************************************************
 export 'data/models/level_model.dart';
 export 'data/models/level_progress_model.dart';
+export 'data/models/question_model.dart';
 
 export 'data/repos/level_repository_impl.dart';
 export 'data/repos/level_progress_repository_impl.dart';

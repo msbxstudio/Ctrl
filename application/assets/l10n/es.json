@@ -5,7 +5,8 @@
       "back": "Volver",
       "close": "Cerrar",
       "confirm": "Confirmar",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "next": "Siguiente"
     }
   },
   "home": {
@@ -76,7 +77,46 @@
     "wrong_answer": "Respuesta incorrecta.",
     "error_loading": "Error al cargar el nivel",
     "error_loading_all": "Error al cargar los niveles",
-    "error_checking": "Error al verificar la respuesta"
+    "error_checking": "Error al verificar la respuesta",
+    "14": {
+      "question": "Array con 5 elementos. Último índice."
+    },
+    "15": {
+      "question": "Cadena 'CTRL'. Longitud."
+    },
+    "16": {
+      "question": "Comando para verificar el estado actual del sistema."
+    },
+    "17": {
+      "question": "Comando para iniciar sesión en el sistema."
+    },
+    "18": {
+      "question": "Comando para salir de una función y opcionalmente devolver un valor"
+    },
+    "21": {
+      "question": "Bucle de 4 iteraciones. Incrementar en 1 cada iteración. Resultado"
+    },
+    "22": {
+      "question": "Array [10,20,30]. Valor en el índice 1"
+    },
+    "23": {
+      "question": "Acceder a un array por índice"
+    },
+    "24": {
+      "question": "Recorrer un array una vez"
+    },
+    "25": {
+      "question": "Dos bucles anidados"
+    },
+    "26": {
+      "question": "Búsqueda binaria"
+    },
+    "27": {
+      "question": "Ordenamiento por mezcla"
+    },
+    "30": {
+      "question": "Si un array tiene 10 elementos, ¿cuántos índices válidos tiene?"
+    }
   },
   "dialogs": {
     "language": {
@@ -88,6 +128,12 @@
       "description": "Ingresa un nuevo nombre para mostrar en la aplicación. Este nombre puede tener hasta {} caracteres.",
       "input_hint": "Nuevo nombre",
       "confirm": "Cambiar nombre"
+    },
+    "level": {
+      "completed": {
+        "title": "¡Nivel completado!",
+        "description": "¡Felicidades! Has completado el nivel."
+      }
     }
   },
   "validators": {

@@ -9,7 +9,7 @@ abstract class Level {
 
   final LevelKeyboard keyboard;
 
-  final String question;
+  final Question question;
 
   final String answer;
 

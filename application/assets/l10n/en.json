@@ -5,7 +5,8 @@
       "back": "Back",
       "close": "Close",
       "confirm": "Confirm",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "next": "Next"
     }
   },
   "home": {
@@ -76,7 +77,46 @@
     "wrong_answer": "Wrong answer.",
     "error_loading": "Error loading level",
     "error_loading_all": "Error loading levels",
-    "error_checking": "Error checking answer"
+    "error_checking": "Error checking answer",
+    "14": {
+      "question": "Array with 5 elements. Last index."
+    },
+    "15": {
+      "question": "String 'CTRL'. Length."
+    },
+    "16": {
+      "question": "Command to check the current status of the system."
+    },
+    "17": {
+      "question": "Command to log in to the system."
+    },
+    "18": {
+      "question": "Command to exit a function and optionally return a value"
+    },
+    "21": {
+      "question": "Loop of 4 iterations. Increment by 1 each iteration. Result"
+    },
+    "22": {
+      "question": "Array [10,20,30]. Value at index 1"
+    },
+    "23": {
+      "question": "Access an array by index"
+    },
+    "24": {
+      "question": "Traverse an array once"
+    },
+    "25": {
+      "question": "Two nested loops"
+    },
+    "26": {
+      "question": "Binary search"
+    },
+    "27": {
+      "question": "Merge sort"
+    },
+    "30": {
+      "question": "If an array has 10 elements, how many valid indices does it have?"
+    }
   },
   "dialogs": {
     "language": {
@@ -88,6 +128,12 @@
       "description": "Enter a new name to be displayed in the app. This name can be up to {} characters long.",
       "input_hint": "New name",
       "confirm": "Confirm"
+    },
+    "level": {
+      "completed": {
+        "title": "Level complete!",
+        "description": "Congratulations! You've completed the level."
+      }
     }
   },
   "validators": {
