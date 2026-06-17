@@ -1,3 +1,5 @@
+"use client";
+
 import { useI18n, type Lang } from "@/lib/i18n";
 
 export function LangSwitcher() {
@@ -7,11 +9,7 @@ export function LangSwitcher() {
     { value: "es", label: "ES" },
   ];
   return (
-    <div
-      role="group"
-      aria-label="Language"
-      className="inline-flex items-center rounded-full border border-border bg-[var(--color-elevated)]/60 p-0.5 text-xs"
-    >
+    <div role="group" aria-label="Language" className="lang-switcher">
       {opts.map((o) => {
         const active = lang === o.value;
         return (
@@ -20,11 +18,7 @@ export function LangSwitcher() {
             type="button"
             onClick={() => setLang(o.value)}
             aria-pressed={active}
-            className={`rounded-full px-2.5 py-1 font-medium transition ${
-              active
-                ? "bg-foreground text-background"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`lang-switcher__btn${active ? " lang-switcher__btn--active" : ""}`}
           >
             {o.label}
           </button>

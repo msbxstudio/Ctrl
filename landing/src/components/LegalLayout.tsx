@@ -1,4 +1,6 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { useI18n } from "@/lib/i18n";
@@ -18,18 +20,18 @@ export function LegalLayout({
   return (
     <>
       <SiteHeader />
-      <article className="mx-auto max-w-3xl px-5 py-20">
-        <Link to="/" className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground">
+      <article className="legal">
+        <Link href="/" className="legal__back">
           ← {t.legal.back}
         </Link>
-        <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-sm text-muted-foreground">{t.legal.lastUpdated}: 2026-06-13</p>
-        <p className="mt-8 text-base text-foreground/90">{intro}</p>
-        <div className="mt-10 space-y-8">
+        <h1 className="legal__title">{title}</h1>
+        <p className="legal__date">{t.legal.lastUpdated}: 2026-06-13</p>
+        <p className="legal__intro">{intro}</p>
+        <div className="legal__sections">
           {sections.map((s, i) => (
             <section key={i}>
-              <h2 className="text-lg font-semibold">{s.h}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.p}</p>
+              <h2 className="legal__section-title">{s.h}</h2>
+              <p className="legal__section-text">{s.p}</p>
             </section>
           ))}
         </div>
