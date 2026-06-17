@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type Lang = "en" | "es";
@@ -81,86 +83,35 @@ export const translations = {
         intro:
           "CTRL is a single-player puzzle game. We've designed it to require as little personal information as possible.",
         sections: [
-          {
-            h: "No account, no login",
-            p: "CTRL does not require an account, email, or password. You can play immediately after installing the app.",
-          },
-          {
-            h: "Local progress",
-            p: "Your puzzle progress, settings, and statistics are stored locally on your device. We do not sync or upload them to any backend that we operate.",
-          },
-          {
-            h: "Offline play",
-            p: "CTRL is designed to run offline. Network connectivity is not required to play, and the core gameplay does not transmit data over the internet.",
-          },
-          {
-            h: "Advertising (Google AdMob)",
-            p: "CTRL may show occasional ads delivered by Google AdMob. AdMob may collect device identifiers and usage signals as described in Google's privacy policy. You can review and reset advertising identifiers in your device settings at any time.",
-          },
-          {
-            h: "External links",
-            p: "CTRL may link to external destinations such as the App Store or Google Play. We are not responsible for the privacy practices of third-party services.",
-          },
-          {
-            h: "Children",
-            p: "CTRL is suitable for general audiences and does not knowingly collect personal information from children.",
-          },
-          {
-            h: "Changes",
-            p: "This policy may be updated as the app evolves. The current version is always available on this page.",
-          },
-          {
-            h: "Contact",
-            p: "If you have questions about privacy, please reach out via the contact link in the footer.",
-          },
+          { h: "No account, no login", p: "CTRL does not require an account, email, or password. You can play immediately after installing the app." },
+          { h: "Local progress", p: "Your puzzle progress, settings, and statistics are stored locally on your device. We do not sync or upload them to any backend that we operate." },
+          { h: "Offline play", p: "CTRL is designed to run offline. Network connectivity is not required to play, and the core gameplay does not transmit data over the internet." },
+          { h: "Advertising (Google AdMob)", p: "CTRL may show occasional ads delivered by Google AdMob. AdMob may collect device identifiers and usage signals as described in Google's privacy policy. You can review and reset advertising identifiers in your device settings at any time." },
+          { h: "External links", p: "CTRL may link to external destinations such as the App Store or Google Play. We are not responsible for the privacy practices of third-party services." },
+          { h: "Children", p: "CTRL is suitable for general audiences and does not knowingly collect personal information from children." },
+          { h: "Changes", p: "This policy may be updated as the app evolves. The current version is always available on this page." },
+          { h: "Contact", p: "If you have questions about privacy, please reach out via the contact link in the footer." },
         ],
       },
       terms: {
         title: "Terms of Use",
         intro: "By installing or using CTRL, you agree to the following terms.",
         sections: [
-          {
-            h: "License",
-            p: "CTRL grants you a limited, personal, non-exclusive, non-transferable license to install and play the game on devices you own or control, for personal, non-commercial use.",
-          },
-          {
-            h: "Restrictions",
-            p: "You may not redistribute, sublicense, reverse engineer, decompile, or attempt to extract the source code or game content of CTRL, except where such restriction is prohibited by applicable law.",
-          },
-          {
-            h: "Availability",
-            p: "CTRL is provided as-is and as-available. We make no guarantees about uptime, compatibility with any particular device, or continued availability of the app or any specific level.",
-          },
-          {
-            h: "Disclaimer",
-            p: "To the maximum extent permitted by law, CTRL is provided without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.",
-          },
-          {
-            h: "Changes",
-            p: "These terms may be updated in the future. Continued use of CTRL after changes are posted constitutes acceptance of the revised terms.",
-          },
+          { h: "License", p: "CTRL grants you a limited, personal, non-exclusive, non-transferable license to install and play the game on devices you own or control, for personal, non-commercial use." },
+          { h: "Restrictions", p: "You may not redistribute, sublicense, reverse engineer, decompile, or attempt to extract the source code or game content of CTRL, except where such restriction is prohibited by applicable law." },
+          { h: "Availability", p: "CTRL is provided as-is and as-available. We make no guarantees about uptime, compatibility with any particular device, or continued availability of the app or any specific level." },
+          { h: "Disclaimer", p: "To the maximum extent permitted by law, CTRL is provided without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement." },
+          { h: "Changes", p: "These terms may be updated in the future. Continued use of CTRL after changes are posted constitutes acceptance of the revised terms." },
         ],
       },
       donations: {
         title: "Donations & Support Policy",
         intro: "CTRL is free to play. Donations are entirely optional.",
         sections: [
-          {
-            h: "Voluntary",
-            p: "Any donation made in support of CTRL is fully voluntary. Donations are not required to download, install, or enjoy the full game.",
-          },
-          {
-            h: "No advantage",
-            p: "Donations do not grant any competitive advantage, unlock essential features, or alter the gameplay experience in any way.",
-          },
-          {
-            h: "Refunds",
-            p: "Donations are non-refundable, except where a refund is required by applicable law.",
-          },
-          {
-            h: "Purpose",
-            p: "Donations help cover maintenance, ongoing development, and new content for CTRL.",
-          },
+          { h: "Voluntary", p: "Any donation made in support of CTRL is fully voluntary. Donations are not required to download, install, or enjoy the full game." },
+          { h: "No advantage", p: "Donations do not grant any competitive advantage, unlock essential features, or alter the gameplay experience in any way." },
+          { h: "Refunds", p: "Donations are non-refundable, except where a refund is required by applicable law." },
+          { h: "Purpose", p: "Donations help cover maintenance, ongoing development, and new content for CTRL." },
         ],
       },
     },
