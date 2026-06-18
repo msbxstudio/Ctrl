@@ -129,7 +129,6 @@ final class DatabaseService extends AppService<Database> {
     await insert('player', {
       'id': 1,
       'name': 'Player',
-      'last_active_at': DateTime.now().toIso8601String(),
     }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 }

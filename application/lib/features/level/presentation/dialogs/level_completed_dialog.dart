@@ -15,7 +15,7 @@ Future<void> showLevelCompletedDialog(
       .play(
         AssetSource('audio/success.mp3'),
         mode: PlayerMode.lowLatency,
-        volume: 0.7,
+        volume: 0.2,
       )
       .ignore();
 

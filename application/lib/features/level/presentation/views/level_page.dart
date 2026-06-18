@@ -20,7 +20,7 @@ final class LevelPage extends ConsumerStatefulWidget {
   const LevelPage({super.key, required this.id});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
+  ConsumerState createState() {
     return _LevelPageState();
   }
 }
@@ -122,7 +122,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
         child: SafeArea(
           child: asyncValue.maybeWhen(
             data: (data) {
-              final LevelData(:level) = data;
+              final LevelData(:level, :count) = data;
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -177,9 +177,13 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
                             answerFieldController.clear();
 
-                            await ref
-                                .read(goRouterProvider)
-                                .replace('/levels/${widget.id + 1}');
+                            if (level.id < count) {
+                              await ref
+                                  .read(goRouterProvider)
+                                  .replace('/levels/${level.id + 1}');
+                            } else {
+                              ref.read(goRouterProvider).pop(true);
+                            }
                           } else {
                             showSnackbar(context, 'levels.wrong_answer'.tr());
                           }

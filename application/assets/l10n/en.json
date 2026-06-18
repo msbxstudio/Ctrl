@@ -144,5 +144,8 @@
       "should_contain": "This field must contain '{value}'.",
       "should_not_contain": "This field must not contain '{value}'."
     }
+  },
+  "snackbar": {
+    "thank_you": "Thank you for your support!"
   }
 }

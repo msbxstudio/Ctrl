@@ -11,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -184,32 +185,56 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         children: [
                           option(
                             title: 'settings.donations.coffee'.tr(),
-                            onTap: () {},
+                            onTap: () async {
+                              final result = await PurchaseService.instance
+                                  .purchase('ctrl_coffee_donation');
+                              Debugger.log('Resultado: $result');
+                            },
 
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               topRight: Radius.circular(8.0),
                             ),
-                            leading: const Text('☕'),
+                            leading: SvgPicture.asset(
+                              'assets/images/coffee.svg',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             trailing: const Text('\$0.99'),
                           ),
                           option(
                             title: 'settings.donations.pizza'.tr(),
-                            onTap: () {},
+                            onTap: () async {
+                              final result = await PurchaseService.instance
+                                  .purchase('ctrl_pizza_donation');
+                              Debugger.log('Resultado: $result');
+                            },
 
                             borderRadius: BorderRadius.zero,
-                            leading: const Text('🍕'),
+                            leading: SvgPicture.asset(
+                              'assets/images/pizza.svg',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             trailing: const Text('\$4.99'),
                           ),
                           option(
                             title: 'settings.donations.support'.tr(),
-                            onTap: () {},
+                            onTap: () async {
+                              final result = await PurchaseService.instance
+                                  .purchase('ctrl_support_donation');
+                              Debugger.log('Resultado: $result');
+                            },
 
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(8.0),
                               bottomRight: Radius.circular(8.0),
                             ),
-                            leading: const Text('❤️'),
+                            leading: SvgPicture.asset(
+                              'assets/images/heart.svg',
+                              width: 20.0,
+                              height: 20.0,
+                            ),
                             trailing: const Text('\$9.99'),
                           ),
                         ].divide(const Separator(verticalIndent: 4.0)),
@@ -319,7 +344,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
         child:
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: 8.0,
+              spacing: 12.0,
 
               children: [
                 ?leading,

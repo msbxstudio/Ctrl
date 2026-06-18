@@ -11,7 +11,7 @@ final class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
+  ConsumerState createState() {
     return _SplashPageState();
   }
 }

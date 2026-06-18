@@ -144,5 +144,8 @@
       "should_contain": "Este campo debe contener '{}'.",
       "should_not_contain": "Este campo no debe contener '{}'."
     }
+  },
+  "snackbar": {
+    "thank_you": "¡Gracias por tu apoyo!"
   }
 }

@@ -14,7 +14,7 @@ final class LevelsPage extends ConsumerStatefulWidget {
   const LevelsPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
+  ConsumerState createState() {
     return LevelsPageState();
   }
 }
