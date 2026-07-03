@@ -51,6 +51,10 @@ final class LevelController
     );
   }
 
+  Future<void> refresh() async {
+    ref.invalidateSelf();
+  }
+
   Future<bool> checkAnswer(String answer) async {
     final notifier = ref.read(checkAnswerMutationProvider.notifier);
 
@@ -65,7 +69,8 @@ final class LevelController
         throw const UnknownException('Level data is not available');
       }
 
-      final (:level, :progress, :player, :startTime, :count) = state.value!;
+      final LevelData(:level, :progress, :player, :startTime, :count) =
+          state.value!;
       final match = level.answer == answer;
 
       if (!progress.completed) {

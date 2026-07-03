@@ -19,4 +19,8 @@ abstract interface class LevelProgressRepository {
     int? ellapsedTime,
     bool? isCompleted,
   });
+
+  Future<int> averageTime();
+
+  Future<int> count({bool? completed, bool? distinct});
 }

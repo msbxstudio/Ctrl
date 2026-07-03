@@ -1,5 +1,4 @@
 import 'package:ctrl/app/index.dart';
-import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
@@ -8,6 +7,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'levels_page_error.dart';
+import 'levels_page_loader.dart';
+
 final class LevelsPage extends ConsumerStatefulWidget {
   static const routePath = '/levels';
 
@@ -15,23 +17,19 @@ final class LevelsPage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState createState() {
-    return LevelsPageState();
+    return _LevelsPageState();
   }
 }
 
-final class LevelsPageState extends ConsumerState<LevelsPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+final class _LevelsPageState extends ConsumerState<LevelsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final _ = ref.read(levelsControllerProvider.notifier);
+    final controller = ref.read(levelsControllerProvider.notifier);
     final asyncValue = ref.watch(levelsControllerProvider);
 
     return Scaffold(
-      key: _scaffoldKey,
-
       appBar: AppBar(
         centerTitle: false,
         automaticallyImplyLeading: false,
@@ -40,19 +38,19 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
         titleSpacing: 8.0,
         title: Text('levels.title'.tr()),
 
-        leadingWidth: 48.0,
+        leadingWidth: 60.0,
         leading: const PopButton(),
       ),
 
       body: SafeArea(
         child: asyncValue.when(
           data: (data) {
-            final (:levels, :currentLevel) = data;
+            final LevelsData(:levels, :currentLevel) = data;
 
             return GridView.builder(
               padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 8.0,
+                horizontal: 16.0,
+                vertical: 12.0,
               ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
@@ -88,15 +86,15 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
                         width: 1.0,
                       ),
                     ),
-                    textStyle: WidgetStateProperty.resolveWith(
-                      (states) => theme.textTheme.bodyMedium?.copyWith(
+                    textStyle: WidgetStateProperty.resolveWith((states) {
+                      return theme.textTheme.bodyMedium?.copyWith(
                         color: states.contains(WidgetState.disabled)
                             ? theme.colorScheme.onSurfaceVariant.withValues(
                                 alpha: 0.25,
                               )
                             : theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
+                      );
+                    }),
                   ),
 
                   icon: Text('${index + 1}'),
@@ -104,11 +102,16 @@ final class LevelsPageState extends ConsumerState<LevelsPage> {
               },
             );
           },
-          error: (e, s) {
-            return Text('levels.error_loading_all'.tr()).centered();
+          error: (e, _) {
+            return LevelsPageError(
+              onRetry: () async {
+                await controller.refresh();
+              },
+              error: e,
+            );
           },
           loading: () {
-            return const CircularProgressIndicator.adaptive().centered();
+            return const LevelsPageLoader();
           },
         ),
       ),

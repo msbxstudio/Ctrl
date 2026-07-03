@@ -9,11 +9,11 @@ abstract class Level {
 
   final LevelKeyboard keyboard;
 
-  final Question question;
+  final LevelQuestion question;
 
   final String answer;
 
-  final String? hint;
+  final LevelHint? hint;
 
   final List<String> options;
 
@@ -31,38 +31,38 @@ abstract class Level {
   });
 }
 
-/// Defines the type of level, which can be used to categorize levels and determine their behavior.
+/// Available puzzle categories.
 enum LevelType {
-  /// A level that requires the player to input a command or answer based on a question.
+  /// Find or repair a syntax error.
+  syntax,
+
+  /// Predict the output of a code snippet.
   outputPrediction,
 
-  /// A level that requires the player to identify a missing symbol in a command or code snippet.
-  missingSymbol,
-
-  /// A level that involves debugging a piece of code or identifying errors.
-  debug,
-
-  /// A level that requires logical reasoning to solve a problem or answer a question.
+  /// Solve a programming logic challenge.
   logic,
 
-  /// A level that involves uncovering hidden commands or features.
-  hiddenCommand,
+  /// Discover a hidden word or command.
+  hiddenWord,
 
-  /// A level that requires the player to use a specific keyboard layout to input their answer.
+  /// Analyze algorithm complexity.
   complexity,
 }
 
-/// Defines the type of keyboard layout to be used for a level.
+/// Available custom keyboard layouts.
 enum LevelKeyboard {
-  /// A keyboard layout that includes only numeric keys (0-9).
-  numeric,
-
-  /// A keyboard layout that includes symbols and special characters.
+  /// Symbols and punctuation.
   symbol,
 
-  /// A keyboard layout that includes alphabetic characters (A-Z).
-  character,
+  /// Numeric values.
+  numeric,
 
-  /// A keyboard layout that includes complex keys and combinations.
+  /// Characters used in hidden-word puzzles.
+  hiddenWord,
+
+  /// Boolean values (`true` / `false`).
+  boolean,
+
+  /// Complexity notation tokens.
   complexity,
 }

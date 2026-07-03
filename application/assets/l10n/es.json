@@ -49,7 +49,9 @@
       "change_username": "Cambiar nombre"
     },
     "preferences": {
-      "language": "Idioma"
+      "language": "Idioma",
+      "dark_mode": "Modo oscuro",
+      "sound_effects": "Efectos de sonido"
     },
     "privacy": {
       "privacy_policy": "Política de privacidad",
@@ -78,44 +80,108 @@
     "error_loading": "Error al cargar el nivel",
     "error_loading_all": "Error al cargar los niveles",
     "error_checking": "Error al verificar la respuesta",
-    "14": {
-      "question": "Array con 5 elementos. Último índice."
-    },
-    "15": {
-      "question": "Cadena 'CTRL'. Longitud."
-    },
-    "16": {
-      "question": "Comando para verificar el estado actual del sistema."
-    },
-    "17": {
-      "question": "Comando para iniciar sesión en el sistema."
-    },
-    "18": {
-      "question": "Comando para salir de una función y opcionalmente devolver un valor"
-    },
-    "21": {
-      "question": "Bucle de 4 iteraciones. Incrementar en 1 cada iteración. Resultado"
-    },
-    "22": {
-      "question": "Array [10,20,30]. Valor en el índice 1"
-    },
-    "23": {
-      "question": "Acceder a un array por índice"
-    },
-    "24": {
-      "question": "Recorrer un array una vez"
-    },
-    "25": {
-      "question": "Dos bucles anidados"
-    },
-    "26": {
-      "question": "Búsqueda binaria"
-    },
-    "27": {
-      "question": "Ordenamiento por mezcla"
+    "29": {
+      "question": "Arreglo de 5 elementos. Último índice."
     },
     "30": {
-      "question": "Si un array tiene 10 elementos, ¿cuántos índices válidos tiene?"
+      "question": "Cadena 'CTRL'. Longitud."
+    },
+    "31": {
+      "question": "Arreglo [10,20,30]. Valor en el índice 1."
+    },
+    "32": {
+      "question": "Si un arreglo tiene 10 elementos, ¿cuántos índices válidos tiene?"
+    },
+    "33": {
+      "question": "Comando para verificar el estado actual del sistema."
+    },
+    "34": {
+      "question": "Comando para iniciar sesión en el sistema."
+    },
+    "35": {
+      "question": "Comando para salir de una función y opcionalmente retornar un valor."
+    },
+    "60": {
+      "question": "Si todos los cuadrados son rectángulos y esta figura es un cuadrado, ¿es un rectángulo?"
+    },
+    "61": {
+      "question": "Si A implica B y B implica C, ¿A implica C?"
+    },
+    "62": {
+      "question": "¿NOT(true AND false) es igual a true?"
+    },
+    "63": {
+      "question": "Acertijo de los interruptores: ¿puedes garantizar todos los mapeos en un solo intento?"
+    },
+    "64": {
+      "question": "Condición de carrera (race condition) sin bloqueos (locks): ¿el resultado es determinista?"
+    },
+    "65": {
+      "question": "Dos referencias apuntan al mismo objeto; ¿cuántos objetos existen?"
+    },
+    "66": {
+      "question": "¿Cuánto es 3^2 + 1?"
+    },
+    "67": {
+      "question": "Bucle de 4 iteraciones. Incremento de 1 en cada iteración. Resultado."
+    },
+    "69": {
+      "question": "Bucle doble de 2x2. Conteo de impresiones."
+    },
+    "70": {
+      "question": "Cuenta las vocales en ALGORITHM."
+    },
+    "71": {
+      "question": "Encuentra el mínimo en [5,2,9,1,6]."
+    },
+    "75": {
+      "question": "¿Qué principio SOLID establece que una clase debe tener una única razón para cambiar?",
+      "hint": "3 letras"
+    },
+    "76": {
+      "question": "¿Qué principio permite ocultar el estado interno y requerir que toda interacción sea a través de métodos?"
+    },
+    "77": {
+      "question": "Invertir la palabra: SOLID."
+    },
+    "78": {
+      "question": "¿Qué patrón coincide con secuencias de dígitos?"
+    },
+    "79": {
+      "question": "¿Qué cláusula filtra resultados agrupados?"
+    },
+    "80": {
+      "question": "¿Qué cláusula agrupa filas?"
+    },
+    "81": {
+      "question": "Recorrido que visita todos los nodos nivel por nivel."
+    },
+    "82": {
+      "question": "Recorrido que profundiza antes de ir a lo ancho."
+    },
+    "83": {
+      "question": "Acrónimo de los principios: S O L I D."
+    },
+    "84": {
+      "question": "Acceder a un arreglo por índice."
+    },
+    "85": {
+      "question": "Recorrer un arreglo una sola vez."
+    },
+    "86": {
+      "question": "Escaneo lineal de un arreglo de tamaño n."
+    },
+    "87": {
+      "question": "Búsqueda binaria."
+    },
+    "88": {
+      "question": "Dos bucles anidados."
+    },
+    "89": {
+      "question": "Ordenamiento por mezcla (Merge sort)."
+    },
+    "90": {
+      "question": "Complejidad de Merge sort."
     }
   },
   "dialogs": {
@@ -146,6 +212,8 @@
     }
   },
   "snackbar": {
-    "thank_you": "¡Gracias por tu apoyo!"
+    "purchase_success": "¡Gracias por tu apoyo!",
+    "purchase_failed": "Error al completar la compra.",
+    "purchase_canceled": "Compra cancelada."
   }
 }

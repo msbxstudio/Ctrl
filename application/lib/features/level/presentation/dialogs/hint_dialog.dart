@@ -32,7 +32,7 @@ Future<void> showHintDialog(
         Text(
           hint,
 
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           style: Theme.of(
             context,
           ).textTheme.headlineSmall?.copyWith(height: 1.5),

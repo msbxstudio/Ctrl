@@ -44,7 +44,7 @@ final class PopButton extends ConsumerWidget {
           color: theme.colorScheme.outline,
         ),
       ),
-    ).aligned(Alignment.centerLeft);
+    ).aligned(Alignment.centerRight);
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
 
@@ -9,15 +10,18 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 Future<void> showLevelCompletedDialog(
   BuildContext context, {
+  bool soundEffects = true,
   bool rootNavigator = true,
 }) {
-  AudioPlayer()
-      .play(
-        AssetSource('audio/success.mp3'),
-        mode: PlayerMode.lowLatency,
-        volume: 0.2,
-      )
-      .ignore();
+  if (soundEffects) {
+    AudioPlayer()
+        .play(
+          AssetSource('audio/success.mp3'),
+          mode: PlayerMode.lowLatency,
+          volume: 0.2,
+        )
+        .ignore();
+  }
 
   return showAppDialog(
     context,

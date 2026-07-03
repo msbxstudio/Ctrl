@@ -1,4 +1,6 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/app/presentation/views/main_page/main_page_error.dart';
+import 'package:ctrl/app/presentation/views/main_page/main_page_loader.dart';
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/utils/index.dart';
 import 'package:ctrl/features/level/index.dart';
@@ -23,8 +25,6 @@ final class MainPage extends ConsumerStatefulWidget {
 }
 
 final class _MainPageState extends ConsumerState<MainPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,141 +32,134 @@ final class _MainPageState extends ConsumerState<MainPage> {
     final controller = ref.read(mainControllerProvider.notifier);
     final asyncValue = ref.watch(mainControllerProvider);
 
-    return Scaffold(
-      key: scaffoldKey,
+    return asyncValue.when(
+      data: (data) {
+        final MainData(:player, :currentLevel, :solvedPuzzles, :averageTime) =
+            data;
 
-      appBar: AppBar(
-        actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-        actions: asyncValue.hasValue
-            ? [
-                IconButton(
-                  onPressed: () async {
-                    await ref
-                        .read(goRouterProvider)
-                        .push(SettingsPage.routePath);
-                    await controller.refresh();
-                  },
+        return Scaffold(
+          appBar: AppBar(
+            actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await ref.read(goRouterProvider).push(SettingsPage.routePath);
+                  await controller.refresh();
+                },
 
-                  tooltip: 'home.settings_tooltip'.tr(),
-                  icon: Icon(
-                    LucideIcons.settings,
-                    color: theme.colorScheme.outline,
-                  ),
+                tooltip: 'home.settings_tooltip'.tr(),
+                icon: Icon(
+                  LucideIcons.settings,
+                  color: theme.colorScheme.outline,
                 ),
-              ]
-            : [],
+              ),
+            ],
 
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(24.0),
-          child: asyncValue.hasValue
-              ? Builder(
-                  builder: (_) {
-                    final MainData(:player) = asyncValue.value!;
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(24.0),
+              child: greeting(
+                player.name,
+              ).padded(const EdgeInsets.symmetric(horizontal: 16.0)),
+            ),
+          ),
 
-                    return greeting(
-                      player.name,
-                    ).padded(const EdgeInsets.symmetric(horizontal: 16.0));
-                  },
-                )
-              : const SizedBox.shrink(),
-        ),
-      ),
-
-      body: SafeArea(
-        child: asyncValue.when(
-          data: (data) {
-            final MainData(:player, :currentLevel, :averageTime) = data;
-
-            return RefreshIndicator.adaptive(
-              onRefresh: () async {
-                await controller.refresh();
-              },
+          body: SafeArea(
+            child: RefreshIndicator.adaptive(
+              onRefresh: controller.refresh,
 
               child: ScrollableFilledView(
-                child:
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
+                child: Column(
+                  children: [
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      spacing: 8.0,
+
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          spacing: 8.0,
-
-                          children: [
-                            Text(
-                              'CTRL by MSBX',
-                              textAlign: TextAlign.end,
-                              style: theme.textTheme.labelLarge?.copyWith(
-                                color: theme.colorScheme.tertiary.withValues(
-                                  alpha: 0.75,
-                                ),
-                              ),
+                        Text(
+                          'CTRL by MSBX',
+                          textAlign: TextAlign.end,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.tertiary.withValues(
+                              alpha: 0.75,
                             ),
-                            hero(currentLevel: currentLevel),
+                          ),
+                        ),
+                        hero(
+                          currentLevel: currentLevel,
+                          solvedPuzzles: solvedPuzzles,
+                        ),
 
-                            const Separator(verticalIndent: 8.0),
+                        const Separator(verticalIndent: 8.0),
 
-                            Row(
-                              spacing: 12.0,
-                              children: [
-                                button(
-                                  label: 'home.buttons.levels'.tr(),
-                                  icon: LucideIcons.grip,
-                                  route: '/levels',
-
-                                  controller: controller,
-                                  highlight: false,
-                                ).expand(),
-                                button(
-                                  label: 'home.buttons.play'.tr(),
-                                  icon: LucideIcons.play,
-                                  route: '/levels/${currentLevel.id}',
-
-                                  controller: controller,
-                                  highlight: true,
-                                ).expand(),
-                              ],
-                            ),
-                          ],
-                        ).expand(),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           spacing: 12.0,
-
                           children: [
-                            metric(
-                              icon: Symbols.timer,
-                              label: 'home.metrics.avg_time'.tr(),
-                              value: '00:00',
+                            button(
+                              label: 'home.buttons.levels'.tr(),
+                              icon: LucideIcons.grip,
+                              route: '/levels',
+
+                              controller: controller,
                               highlight: false,
                             ).expand(),
-                            metric(
-                              icon: Symbols.local_fire_department,
-                              label: 'home.metrics.streak'.tr(),
-                              value: 'home.metrics.days'.tr(
-                                namedArgs: {'count': '${player.streakDays}'},
-                              ),
+                            button(
+                              label: 'home.buttons.play'.tr(),
+                              icon: LucideIcons.play,
+                              route: '/levels/${currentLevel.id}',
+
+                              controller: controller,
                               highlight: true,
                             ).expand(),
                           ],
                         ),
                       ],
-                    ).padded(
-                      const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
-                      ),
+                    ).expand(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 12.0,
+
+                      children: [
+                        metric(
+                          icon: Symbols.timer,
+                          label: 'home.metrics.avg_time'.tr(),
+                          value: formatDuration(averageTime),
+                          highlight: false,
+                        ).expand(),
+                        metric(
+                          icon: Symbols.local_fire_department,
+                          label: 'home.metrics.streak'.tr(),
+                          value: 'home.metrics.days'.tr(
+                            namedArgs: {'count': '${player.streakDays}'},
+                          ),
+                          highlight: true,
+                        ).expand(),
+                      ],
                     ),
+                  ],
+                ),
               ),
-            );
+            ),
+          ),
+        );
+      },
+
+      error: (e, _) {
+        return MainPageError(
+          onRetry: () async {
+            await controller.refresh();
           },
-          error: (_, _) {
-            return Text('home.error'.tr()).centered();
-          },
-          loading: () {
-            return const CircularProgressIndicator.adaptive().centered();
-          },
-        ),
-      ),
+          error: e,
+        );
+      },
+
+      loading: () {
+        return const MainPageLoader();
+      },
     );
   }
 
@@ -200,7 +193,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget hero({required Level currentLevel}) {
+  Widget hero({required Level currentLevel, required int solvedPuzzles}) {
     final theme = Theme.of(context);
 
     return card(
@@ -259,7 +252,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
               Text('home.progress.title'.tr()),
               Text(
                 'home.progress.puzzles_solved'.tr(
-                  namedArgs: {'count': '${currentLevel.id - 1}'},
+                  namedArgs: {'count': '$solvedPuzzles'},
                 ),
               ),
             ],
@@ -344,5 +337,14 @@ final class _MainPageState extends ConsumerState<MainPage> {
         ],
       ),
     );
+  }
+
+  String formatDuration(int milliseconds) {
+    final duration = Duration(milliseconds: milliseconds);
+
+    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    return '$minutes:$seconds';
   }
 }

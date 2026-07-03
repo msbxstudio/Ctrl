@@ -46,10 +46,12 @@
       "danger_zone": "Danger Zone"
     },
     "account": {
-      "change_username": "Change name"
+      "change_username": "Change Name"
     },
     "preferences": {
-      "language": "Language"
+      "language": "Language",
+      "dark_mode": "Dark Mode",
+      "sound_effects": "Sound Effects"
     },
     "privacy": {
       "privacy_policy": "Privacy Policy",
@@ -78,44 +80,111 @@
     "error_loading": "Error loading level",
     "error_loading_all": "Error loading levels",
     "error_checking": "Error checking answer",
-    "14": {
+    "29": {
       "question": "Array with 5 elements. Last index."
     },
-    "15": {
+    "30": {
       "question": "String 'CTRL'. Length."
     },
-    "16": {
-      "question": "Command to check the current status of the system."
-    },
-    "17": {
-      "question": "Command to log in to the system."
-    },
-    "18": {
-      "question": "Command to exit a function and optionally return a value"
-    },
-    "21": {
-      "question": "Loop of 4 iterations. Increment by 1 each iteration. Result"
-    },
-    "22": {
+    "31": {
       "question": "Array [10,20,30]. Value at index 1"
     },
-    "23": {
+    "32": {
+      "question": "If an array has 10 elements, how many valid indices does it have?"
+    },
+    "33": {
+      "question": "Command to check the current status of the system."
+    },
+    "34": {
+      "question": "Command to log in to the system."
+    },
+    "35": {
+      "question": "Command to exit a function and optionally return a value"
+    },
+    "60": {
+      "question": "If all squares are rectangles and this shape is a square, is it a rectangle?"
+    },
+    "61": {
+      "question": "If A implies B and B implies C, does A imply C?"
+    },
+    "62": {
+      "question": "NOT(true AND false) equals true?"
+    },
+    "63": {
+      "question": "A switch puzzle: can you guarantee all mappings in one try?"
+    },
+    "64": {
+      "question": "Race condition without locks: is result deterministic?"
+    },
+    "65": {
+      "question": "Two references point to same object; how many objects exist?"
+    },
+    "66": {
+      "question": "What is 3^2 + 1?"
+    },
+    "67": {
+      "question": "Loop of 4 iterations. Increment by 1 each iteration. Result"
+    },
+    "69": {
+      "question": "double loop 2x2 prints count"
+    },
+    "70": {
+      "question": "Count vowels in ALGORITHM"
+    },
+    "71": {
+      "question": "Find minimum in [5,2,9,1,6]"
+    },
+    "75": {
+      "question": "Which SOLID principle states a class should have only one reason to change?",
+      "hint": "3 letters"
+    },
+    "76": {
+      "question": "Which principle allows hiding internal state and requiring all interaction through methods?",
+      "hint": "3 letters"
+    },
+    "77": {
+      "question": "Reverse the word: SOLID"
+    },
+    "78": {
+      "question": "Which pattern matches digit sequences?"
+    },
+    "79": {
+      "question": "Which clause filters grouped results?"
+    },
+    "80": {
+      "question": "Which clause groups rows?"
+    },
+    "81": {
+      "question": "Traversal visiting all nodes level by level",
+      "hint": "3 letters"
+    },
+    "82": {
+      "question": "Traversal going deep before breadth",
+      "hint": "3 letters"
+    },
+    "83": {
+      "question": "Acronym for principles: S O L I D"
+    },
+    "84": {
       "question": "Access an array by index"
     },
-    "24": {
+    "85": {
       "question": "Traverse an array once"
     },
-    "25": {
-      "question": "Two nested loops"
+    "86": {
+      "question": "Linear scan of array of size n"
     },
-    "26": {
+    "87": {
       "question": "Binary search"
     },
-    "27": {
+    "88": {
+      "question": "Two nested loops"
+    },
+    "89": {
       "question": "Merge sort"
     },
-    "30": {
-      "question": "If an array has 10 elements, how many valid indices does it have?"
+    "90": {
+      "question": "Merge sort complexity"
     }
   },
   "dialogs": {
@@ -146,6 +215,8 @@
     }
   },
   "snackbar": {
-    "thank_you": "Thank you for your support!"
+    "purchase_success": "Thank you for your support!",
+    "purchase_failed": "Failed to complete purchase.",
+    "purchase_canceled": "Purchase canceled."
   }
 }

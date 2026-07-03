@@ -114,4 +114,55 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       throw const UnknownException('Failed to update level progress');
     }
   }
+
+  @override
+  Future<int> averageTime() async {
+    try {
+      final result = await _service.query(
+        'level_progress',
+        columns: ['AVG(time_ms) AS average_time'],
+      );
+
+      if (result.isEmpty) {
+        throw const NotFoundException('No level progresses found');
+      }
+
+      final averageTime = result.first['average_time'] as double?;
+
+      return averageTime?.round() ?? 0;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to calculate average time');
+    }
+  }
+
+  @override
+  Future<int> count({bool? completed, bool? distinct}) async {
+    try {
+      final result = await _service.query(
+        'level_progress',
+        columns: ['COUNT(*) AS count'],
+        where: completed != null ? 'is_completed = ?' : null,
+        whereArgs: completed != null ? [completed ? 1 : 0] : null,
+        distinct: distinct ?? false,
+      );
+
+      if (result.isEmpty) {
+        throw const NotFoundException('No level progresses found');
+      }
+
+      final count = result.first['count'] as int?;
+
+      return count ?? 0;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to count level progresses');
+    }
+  }
 }

@@ -122,6 +122,7 @@ final class DatabaseService extends AppService<Database> {
         ...data,
         'question': jsonEncode(data['question']),
         'options': jsonEncode(data['options']),
+        'hint': data['hint'] != null ? jsonEncode(data['hint']) : null,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
 

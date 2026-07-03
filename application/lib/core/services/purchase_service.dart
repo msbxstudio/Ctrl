@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ctrl/core/exceptions/index.dart';
 import 'package:ctrl/core/utils/index.dart';
 
 import 'package:flutter/services.dart';
@@ -47,8 +48,8 @@ final class PurchaseService extends AppService<InAppPurchase> {
 
     Debugger.log('Products found: ${response.productDetails.length}');
 
-    if (response.error != null) {
-      Debugger.error(response.error!.message);
+    if (response.error is IAPError) {
+      throw const PurchaseException('Failed to query product details');
     }
 
     if (response.productDetails.isEmpty) {
@@ -76,9 +77,10 @@ final class PurchaseService extends AppService<InAppPurchase> {
 
       return false;
     } catch (e) {
-      Debugger.error('Purchase error: $e');
-      return false;
+      Debugger.error('Purchase failed: $e');
     }
+
+    return false;
   }
 
   /// Completes a purchase by acknowledging it with the underlying platform's billing system.

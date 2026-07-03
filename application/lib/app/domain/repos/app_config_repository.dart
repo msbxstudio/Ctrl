@@ -9,5 +9,5 @@ abstract class AppConfigRepository extends StateNotifier<AppConfig> {
 
   void setLocale(String code);
 
-  void setNotifications(bool enabled);
+  void setSoundEffects(bool enabled);
 }
