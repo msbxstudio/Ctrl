@@ -43,25 +43,35 @@ final class PurchaseService extends AppService<InAppPurchase> {
   }
 
   /// Initiates the purchase flow for a consumable or non-consumable product.
-  Future<bool> purchase(String productId, {bool consumable = true}) async {
-    final response = await service!.queryProductDetails({productId});
+  Future<void> purchase(String productId, {bool consumable = true}) async {
+    if (!await service!.isAvailable()) {
+      throw const PurchaseException(
+        'In-app purchases are not available on this device',
+      );
+    }
 
-    Debugger.log('Products found: ${response.productDetails.length}');
+    final response = await service!.queryProductDetails({productId});
 
     if (response.error is IAPError) {
       throw const PurchaseException('Failed to query product details');
     }
 
     if (response.productDetails.isEmpty) {
-      return false;
+      throw const PurchaseException(
+        'No product details found for the given product ID',
+      );
     }
 
     final param = PurchaseParam(productDetails: response.productDetails.first);
 
     try {
-      return consumable
+      final result = consumable
           ? await service!.buyConsumable(purchaseParam: param)
           : await service!.buyNonConsumable(purchaseParam: param);
+
+      if (!result) {
+        throw const PurchaseException('Purchase failed');
+      }
     } on PlatformException catch (e) {
       if (e.code == 'storekit_duplicate_product_object') {
         // On iOS, fetch unfinished transactions from the payment queue directly.
@@ -74,13 +84,10 @@ final class PurchaseService extends AppService<InAppPurchase> {
           }
         }
       }
-
-      return false;
     } catch (e) {
       Debugger.error('Purchase failed: $e');
+      rethrow;
     }
-
-    return false;
   }
 
   /// Completes a purchase by acknowledging it with the underlying platform's billing system.
