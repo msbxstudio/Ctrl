@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 Future<T?> showAppModal<T>(
   BuildContext context, {
   required Widget child,
+  BoxConstraints? constraints,
   bool dismissible = true,
+  bool useSafeArea = false,
   bool rootNavigator = true,
   bool scrollControlled = true,
 }) {
@@ -13,6 +15,9 @@ Future<T?> showAppModal<T>(
   return showModalBottomSheet<T>(
     context: context,
 
+    constraints: constraints,
+
+    useSafeArea: useSafeArea,
     isDismissible: dismissible,
     useRootNavigator: rootNavigator,
     isScrollControlled: scrollControlled,

@@ -6,6 +6,11 @@ extension DateTimeX on DateTime {
     return year == now.year && month == now.month && day == now.day;
   }
 
+  DateTime get date => DateTime(year, month, day);
+
+  DateTime get time =>
+      DateTime(0, 1, 1, hour, minute, second, millisecond, microsecond);
+
   /// Returns a string representation of the date in `dd-MM-yyyy` format.
   ///
   /// Example:

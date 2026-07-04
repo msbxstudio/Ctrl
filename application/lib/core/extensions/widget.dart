@@ -28,7 +28,33 @@ extension WidgetX on Widget {
     return Padding(padding: margin, child: this);
   }
 
-  Widget aligned(AlignmentGeometry aligment) {
-    return Align(alignment: aligment, child: this);
+  Widget aligned(
+    AlignmentGeometry aligment, {
+    double? widthFactor,
+    double? heightFactor,
+  }) {
+    return Align(
+      alignment: aligment,
+      widthFactor: widthFactor,
+      heightFactor: heightFactor,
+      child: this,
+    );
+  }
+
+  Widget constrained({
+    double minWidth = 0.0,
+    double maxWidth = double.infinity,
+    double minHeight = 0.0,
+    double maxHeight = double.infinity,
+  }) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight,
+      ),
+      child: this,
+    );
   }
 }

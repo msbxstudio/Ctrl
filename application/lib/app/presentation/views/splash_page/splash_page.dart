@@ -11,14 +11,12 @@ final class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
+  ConsumerState createState() {
     return _SplashPageState();
   }
 }
 
 final class _SplashPageState extends ConsumerState<SplashPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -40,8 +38,6 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
     final asyncValue = ref.watch(splashControllerProvider);
 
     return Scaffold(
-      key: scaffoldKey,
-
       body: AnimatedLogo(enabled: asyncValue.isLoading).centered(),
     );
   }

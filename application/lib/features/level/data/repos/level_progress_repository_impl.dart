@@ -60,7 +60,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       final id = await _service.insert('level_progress', {
         'level_id': levelId,
         'attempts': attempts,
-        'ellapsed_time': ellapsedTime,
+        'time_ms': ellapsedTime,
         'is_completed': 0,
       });
 
@@ -76,9 +76,10 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
 
   @override
   Future<LevelProgress> update(
-    String id, {
+    int id, {
     int? attempts,
     int? ellapsedTime,
+    bool? isCompleted,
   }) async {
     final data = <String, Object?>{};
 
@@ -88,25 +89,80 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       }
 
       if (ellapsedTime != null) {
-        data['ellapsed_time'] = ellapsedTime;
+        data['time_ms'] = ellapsedTime;
       }
 
-      if (data.isEmpty) return await getOne(id: int.parse(id));
+      if (isCompleted != null) {
+        data['is_completed'] = isCompleted ? 1 : 0;
+      }
 
-      final index = await _service.update(
+      if (data.isEmpty) return await getOne(id: id);
+
+      await _service.update(
         'level_progress',
         data,
         where: 'id = ?',
         whereArgs: [id],
       );
 
-      return await getOne(id: index);
+      return await getOne(id: id);
     } catch (e) {
       if (e is AppException) {
         rethrow;
       }
 
       throw const UnknownException('Failed to update level progress');
+    }
+  }
+
+  @override
+  Future<int> averageTime() async {
+    try {
+      final result = await _service.query(
+        'level_progress',
+        columns: ['AVG(time_ms) AS average_time'],
+      );
+
+      if (result.isEmpty) {
+        throw const NotFoundException('No level progresses found');
+      }
+
+      final averageTime = result.first['average_time'] as double?;
+
+      return averageTime?.round() ?? 0;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to calculate average time');
+    }
+  }
+
+  @override
+  Future<int> count({bool? completed, bool? distinct}) async {
+    try {
+      final result = await _service.query(
+        'level_progress',
+        columns: ['COUNT(*) AS count'],
+        where: completed != null ? 'is_completed = ?' : null,
+        whereArgs: completed != null ? [completed ? 1 : 0] : null,
+        distinct: distinct ?? false,
+      );
+
+      if (result.isEmpty) {
+        throw const NotFoundException('No level progresses found');
+      }
+
+      final count = result.first['count'] as int?;
+
+      return count ?? 0;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to count level progresses');
     }
   }
 }

@@ -120,7 +120,9 @@ final class DatabaseService extends AppService<Database> {
     for (final data in jsonData) {
       await insert('level', <String, dynamic>{
         ...data,
+        'question': jsonEncode(data['question']),
         'options': jsonEncode(data['options']),
+        'hint': data['hint'] != null ? jsonEncode(data['hint']) : null,
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
 
@@ -128,7 +130,6 @@ final class DatabaseService extends AppService<Database> {
     await insert('player', {
       'id': 1,
       'name': 'Player',
-      'last_active_at': DateTime.now().toIso8601String(),
     }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 }
@@ -144,7 +145,7 @@ final class _DatabaseMigration {
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         type TEXT NOT NULL,
         keyboard TEXT NOT NULL,
-        question TEXT NOT NULL,
+        question TEXT NOT NULL DEFAULT '{}',
         answer TEXT NOT NULL,
         hint TEXT NULL,
         options TEXT NOT NULL DEFAULT '[]'
@@ -156,7 +157,6 @@ final class _DatabaseMigration {
       CREATE TABLE IF NOT EXISTS level_progress (
         id INTEGER PRIMARY KEY,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at TEXT NULL,
         attempts INTEGER NOT NULL DEFAULT 0,
         time_ms INTEGER NULL,
         is_completed INTEGER NOT NULL DEFAULT 0,

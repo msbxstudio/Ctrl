@@ -69,7 +69,7 @@ extension AppThemeData on ThemeData {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(
-            const Size(double.minPositive, 44),
+            const Size(double.minPositive, 44.0),
           ),
           side: WidgetStateProperty.resolveWith(
             (states) => BorderSide(

@@ -11,11 +11,22 @@ final class SettingsController extends AutoDisposeAsyncNotifier<SettingsData> {
   @override
   Future<SettingsData> build() async {
     final player = await ref.read(playerRepositoryProvider).get();
-    return (player: player);
+    final appConfig = ref.read(appConfigRepositoryProvider);
+
+    return (
+      player: player,
+      langCode: appConfig.locale.languageCode.toUpperCase(),
+      soundEffects: appConfig.soundEffects,
+    );
   }
 
   Future<void> refresh() async {
     ref.invalidateSelf();
+  }
+
+  Future<void> updateName({required String name}) async {
+    await ref.read(playerRepositoryProvider).update(name: name);
+    await refresh();
   }
 
   Future<void> updateLanguage(
@@ -28,10 +39,10 @@ final class SettingsController extends AutoDisposeAsyncNotifier<SettingsData> {
     await refresh();
   }
 
-  Future<void> updateName({required String name}) async {
-    await ref.read(playerRepositoryProvider).update(name: name);
+  Future<void> updateSound({required bool sound}) async {
+    ref.read(appConfigRepositoryProvider.notifier).setSoundEffects(sound);
     await refresh();
   }
 }
 
-typedef SettingsData = ({Player player});
+typedef SettingsData = ({Player player, String langCode, bool soundEffects});

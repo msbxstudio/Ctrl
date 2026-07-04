@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
@@ -13,16 +15,19 @@ Future<void> showHintDialog(
   bool rootNavigator = true,
   bool scrollControlled = true,
 }) {
-  final width = MediaQuery.of(context).size.width * 0.80;
-  final height = MediaQuery.of(context).size.height * 0.45;
+  final size = MediaQuery.of(context).size;
+
+  final width = min(size.width * 0.80, 400.0);
+  // final height = min(size.width * 0.45, 400.0);
 
   return showAppDialog(
     context,
+
     constraints: BoxConstraints(
       maxWidth: width,
       minWidth: width,
-      maxHeight: height,
-      minHeight: height,
+      maxHeight: width,
+      minHeight: width,
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +36,11 @@ Future<void> showHintDialog(
       children: [
         Text(
           hint,
-          style: Theme.of(context).textTheme.headlineSmall,
+
+          textAlign: TextAlign.start,
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(height: 1.5),
         ).centered().expand(),
 
         ...[
@@ -48,7 +57,7 @@ Future<void> showHintDialog(
               ),
             ),
 
-            child: Text('actions.common.ok'.tr()),
+            child: Text('actions.common.close'.tr()),
           ).aligned(Alignment.center),
         ].divide(const SizedBox(height: 16.0)),
       ],

@@ -43,4 +43,19 @@ final class LevelRepositoryImpl implements LevelRepository {
       throw const UnknownException('Failed to load level');
     }
   }
+
+  @override
+  Future<int> count() async {
+    try {
+      final result = await _service.query('level', columns: const ['id']);
+
+      return result.length;
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to count levels');
+    }
+  }
 }

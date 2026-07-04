@@ -14,6 +14,8 @@ Future<String?> showChoiceLanguageModal(
 }) {
   return showAppModal<String?>(
     context,
+    useSafeArea: true,
+    constraints: const BoxConstraints(maxWidth: 400.0),
 
     child: RadioGroup<String>(
       groupValue: initialValue,

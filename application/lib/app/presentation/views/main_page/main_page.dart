@@ -1,4 +1,6 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/app/presentation/views/main_page/main_page_error.dart';
+import 'package:ctrl/app/presentation/views/main_page/main_page_loader.dart';
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/core/utils/index.dart';
 import 'package:ctrl/features/level/index.dart';
@@ -17,14 +19,12 @@ final class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
 
   @override
-  ConsumerState<MainPage> createState() {
+  ConsumerState createState() {
     return _MainPageState();
   }
 }
 
 final class _MainPageState extends ConsumerState<MainPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,59 +32,51 @@ final class _MainPageState extends ConsumerState<MainPage> {
     final controller = ref.read(mainControllerProvider.notifier);
     final asyncValue = ref.watch(mainControllerProvider);
 
-    return Scaffold(
-      key: scaffoldKey,
+    return asyncValue.when(
+      data: (data) {
+        final MainData(:player, :currentLevel, :solvedPuzzles, :averageTime) =
+            data;
 
-      appBar: AppBar(
-        actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-        actions: asyncValue.hasValue
-            ? [
-                IconButton(
-                  onPressed: () async {
-                    await ref
-                        .read(goRouterProvider)
-                        .push(SettingsPage.routePath);
-                    await controller.refresh();
-                  },
+        return Scaffold(
+          appBar: AppBar(
+            actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await ref.read(goRouterProvider).push(SettingsPage.routePath);
+                  await controller.refresh();
+                },
 
-                  tooltip: 'home.settings_tooltip'.tr(),
-                  icon: Icon(
-                    LucideIcons.settings,
-                    color: theme.colorScheme.outline,
-                  ),
+                tooltip: 'home.settings_tooltip'.tr(),
+                icon: Icon(
+                  LucideIcons.settings,
+                  color: theme.colorScheme.outline,
                 ),
-              ]
-            : [],
+              ),
+            ],
 
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(24.0),
-          child: asyncValue.hasValue
-              ? Builder(
-                  builder: (_) {
-                    final MainData(:player) = asyncValue.value!;
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(24.0),
+              child: greeting(player.name),
+            ),
+          ),
 
-                    return greeting(
-                      player.name,
-                    ).padded(const EdgeInsets.symmetric(horizontal: 16.0));
-                  },
-                )
-              : const SizedBox.shrink(),
-        ),
-      ),
+          body: SafeArea(
+            child: RefreshIndicator.adaptive(
+              onRefresh: controller.refresh,
 
-      body: SafeArea(
-        child: asyncValue.when(
-          data: (data) {
-            final MainData(:player, :currentLevel, :averageTime) = data;
+              child: LayoutBuilder(
+                builder: (_, constraints) {
+                  final width = constraints.maxWidth;
+                  final remaining = width - Breakpoints.small;
 
-            return RefreshIndicator.adaptive(
-              onRefresh: () async {
-                await controller.refresh();
-              },
+                  return ScrollableFilledView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
+                      vertical: 12.0,
+                    ),
 
-              child: ScrollableFilledView(
-                child:
-                    Column(
+                    child: Column(
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,16 +84,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
                           spacing: 8.0,
 
                           children: [
-                            Text(
-                              'CTRL by MSBX',
-                              textAlign: TextAlign.end,
-                              style: theme.textTheme.labelLarge?.copyWith(
-                                color: theme.colorScheme.tertiary.withValues(
-                                  alpha: 0.75,
-                                ),
-                              ),
+                            hero(
+                              currentLevel: currentLevel,
+                              solvedPuzzles: solvedPuzzles,
                             ),
-                            hero(currentLevel: currentLevel),
 
                             const Separator(verticalIndent: 8.0),
 
@@ -136,7 +122,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                             metric(
                               icon: Symbols.timer,
                               label: 'home.metrics.avg_time'.tr(),
-                              value: '00:00',
+                              value: formatDuration(averageTime),
                               highlight: false,
                             ).expand(),
                             metric(
@@ -150,23 +136,27 @@ final class _MainPageState extends ConsumerState<MainPage> {
                           ],
                         ),
                       ],
-                    ).padded(
-                      const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
-                      ),
                     ),
+                  );
+                },
               ),
-            );
+            ),
+          ),
+        );
+      },
+
+      error: (e, _) {
+        return MainPageError(
+          onRetry: () async {
+            await controller.refresh();
           },
-          error: (_, _) {
-            return Text('home.error'.tr()).centered();
-          },
-          loading: () {
-            return const CircularProgressIndicator.adaptive().centered();
-          },
-        ),
-      ),
+          error: e,
+        );
+      },
+
+      loading: () {
+        return const MainPageLoader();
+      },
     );
   }
 
@@ -175,8 +165,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
           'home.greeting'.tr(namedArgs: {'name': name}),
           style: Theme.of(context).textTheme.titleLarge,
         )
+        .padded(const EdgeInsets.symmetric(horizontal: 16.0))
         .aligned(Alignment.centerLeft)
-        .padded(const EdgeInsets.symmetric(horizontal: 8.0));
+        .constrained(maxWidth: Breakpoints.small)
+        .centered();
   }
 
   Widget card({
@@ -200,7 +192,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget hero({required Level currentLevel}) {
+  Widget hero({required Level currentLevel, required int solvedPuzzles}) {
     final theme = Theme.of(context);
 
     return card(
@@ -259,7 +251,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
               Text('home.progress.title'.tr()),
               Text(
                 'home.progress.puzzles_solved'.tr(
-                  namedArgs: {'count': '${currentLevel.id - 1}'},
+                  namedArgs: {'count': '$solvedPuzzles'},
                 ),
               ),
             ],
@@ -344,5 +336,14 @@ final class _MainPageState extends ConsumerState<MainPage> {
         ],
       ),
     );
+  }
+
+  String formatDuration(int milliseconds) {
+    final duration = Duration(milliseconds: milliseconds);
+
+    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    return '$minutes:$seconds';
   }
 }

@@ -18,24 +18,33 @@ final class LevelModel extends Level {
     return LevelModel(
       json['id'] as int,
 
-      question: json['question'],
+      question: LevelQuestionModel.fromJson(
+        jsonDecode(json['question']) as Map<String, dynamic>,
+      ),
+      hint: json['hint'] != null
+          ? LevelHintModel.fromJson(
+              jsonDecode(json['hint']) as Map<String, dynamic>,
+            )
+          : null,
+
       answer: json['answer'],
-      hint: json['hint'],
 
       type: switch (json['type']) {
-        'missing_symbol' => LevelType.missingSymbol,
-        'debug' => LevelType.debug,
+        'syntax' => LevelType.syntax,
+        'output_prediction' => LevelType.outputPrediction,
         'logic' => LevelType.logic,
-        'hidden_command' => LevelType.hiddenCommand,
+        'hidden_word' => LevelType.hiddenWord,
         'complexity' => LevelType.complexity,
-        _ => LevelType.outputPrediction,
+        _ => throw const FormatException('Invalid level type'),
       },
 
       keyboard: switch (json['keyboard']) {
         'symbol' => LevelKeyboard.symbol,
-        'character' => LevelKeyboard.character,
+        'numeric' => LevelKeyboard.numeric,
+        'hidden_word' => LevelKeyboard.hiddenWord,
+        'boolean' => LevelKeyboard.boolean,
         'complexity' => LevelKeyboard.complexity,
-        _ => LevelKeyboard.numeric,
+        _ => throw const FormatException('Invalid keyboard type'),
       },
 
       options: (jsonDecode(json['options']) as List).map((e) => '$e').toList(),
@@ -45,23 +54,27 @@ final class LevelModel extends Level {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'answer': answer,
+
       'type': switch (type) {
-        LevelType.missingSymbol => 'missing_symbol',
-        LevelType.debug => 'debug',
+        LevelType.syntax => 'syntax',
+        LevelType.outputPrediction => 'output_prediction',
         LevelType.logic => 'logic',
-        LevelType.hiddenCommand => 'hidden_command',
+        LevelType.hiddenWord => 'hidden_word',
         LevelType.complexity => 'complexity',
-        _ => 'output_prediction',
       },
       'keyboard': switch (keyboard) {
         LevelKeyboard.symbol => 'symbol',
-        LevelKeyboard.character => 'character',
+        LevelKeyboard.numeric => 'numeric',
+        LevelKeyboard.hiddenWord => 'hidden_word',
+        LevelKeyboard.boolean => 'boolean',
         LevelKeyboard.complexity => 'complexity',
-        _ => 'numeric',
       },
-      'question': question,
-      'answer': answer,
-      'hint': hint,
+
+      'question': jsonEncode((question as LevelQuestionModel).toJson()),
+      'hint': hint != null
+          ? jsonEncode((hint as LevelHintModel).toJson())
+          : null,
       'options': jsonEncode(options),
     };
   }

@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
 
@@ -9,16 +10,18 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 Future<void> showLevelCompletedDialog(
   BuildContext context, {
-  required String hint,
+  bool soundEffects = true,
   bool rootNavigator = true,
 }) {
-  AudioPlayer()
-      .play(
-        AssetSource('audio/success.mp3'),
-        mode: PlayerMode.lowLatency,
-        volume: 0.7,
-      )
-      .ignore();
+  if (soundEffects) {
+    AudioPlayer()
+        .play(
+          AssetSource('audio/success.mp3'),
+          mode: PlayerMode.lowLatency,
+          volume: 0.2,
+        )
+        .ignore();
+  }
 
   return showAppDialog(
     context,
@@ -53,8 +56,19 @@ Future<void> showLevelCompletedDialog(
 
               const SizedBox(height: 16.0),
 
-              Text(hint, style: Theme.of(context).textTheme.headlineMedium),
-              Text(hint, style: Theme.of(context).textTheme.bodyLarge),
+              Text(
+                'dialogs.level.completed.title'.tr(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+
+              const SizedBox(height: 4.0),
+
+              Text(
+                'dialogs.level.completed.description'.tr(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
             ],
           ).expand(),
 
@@ -63,10 +77,10 @@ Future<void> showLevelCompletedDialog(
               Navigator.of(context).pop();
             },
 
-            child: Text('actions.common.ok'.tr()),
+            child: Text('actions.common.next'.tr()),
           ).aligned(Alignment.center),
         ],
-      ),
+      ).padded(const EdgeInsets.symmetric(horizontal: 24.0)),
     ),
   );
 }
