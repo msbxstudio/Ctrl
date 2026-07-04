@@ -1,4 +1,5 @@
 import 'package:ctrl/app/index.dart';
+import 'package:ctrl/core/utils/index.dart';
 import 'package:ctrl/features/level/index.dart';
 import 'package:ctrl/shared/widgets/index.dart';
 
@@ -38,8 +39,8 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
         titleSpacing: 8.0,
         title: Text('levels.title'.tr()),
 
-        leadingWidth: 60.0,
-        leading: const PopButton(),
+        leadingWidth: 64.0,
+        leading: const PopButton.back(),
       ),
 
       body: SafeArea(
@@ -47,57 +48,65 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
           data: (data) {
             final LevelsData(:levels, :currentLevel) = data;
 
-            return GridView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 12.0,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
-                childAspectRatio: 1.0,
-              ),
+            return LayoutBuilder(
+              builder: (_, constraints) {
+                final width = constraints.maxWidth;
+                final remaining = width - Breakpoints.small;
 
-              itemCount: levels.length,
-              itemBuilder: (_, index) {
-                final level = levels[index];
-
-                return IconButton(
-                  onPressed: index + 1 <= currentLevel.id
-                      ? () async {
-                          await ref
-                              .read(goRouterProvider)
-                              .push('/levels/${level.id}');
-                        }
-                      : null,
-
-                  style: theme.iconButtonTheme.style?.copyWith(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    side: WidgetStateProperty.all(
-                      BorderSide(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.outlineVariant.withValues(alpha: 0.5),
-                        width: 1.0,
-                      ),
-                    ),
-                    textStyle: WidgetStateProperty.resolveWith((states) {
-                      return theme.textTheme.bodyMedium?.copyWith(
-                        color: states.contains(WidgetState.disabled)
-                            ? theme.colorScheme.onSurfaceVariant.withValues(
-                                alpha: 0.25,
-                              )
-                            : theme.colorScheme.onSurfaceVariant,
-                      );
-                    }),
+                return GridView.builder(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
+                    vertical: 12.0,
                   ),
 
-                  icon: Text('${index + 1}'),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    crossAxisSpacing: 12.0,
+                    mainAxisSpacing: 12.0,
+                    childAspectRatio: 1.0,
+                  ),
+
+                  itemCount: levels.length,
+                  itemBuilder: (_, index) {
+                    final level = levels[index];
+
+                    return IconButton(
+                      onPressed: index + 1 <= currentLevel.id
+                          ? () async {
+                              await ref
+                                  .read(goRouterProvider)
+                                  .push('/levels/${level.id}');
+                            }
+                          : null,
+
+                      style: theme.iconButtonTheme.style?.copyWith(
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        side: WidgetStateProperty.all(
+                          BorderSide(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+                            width: 1.0,
+                          ),
+                        ),
+                        textStyle: WidgetStateProperty.resolveWith((states) {
+                          return theme.textTheme.bodyMedium?.copyWith(
+                            color: states.contains(WidgetState.disabled)
+                                ? theme.colorScheme.onSurfaceVariant.withValues(
+                                    alpha: 0.25,
+                                  )
+                                : theme.colorScheme.onSurfaceVariant,
+                          );
+                        }),
+                      ),
+
+                      icon: Text('${index + 1}'),
+                    );
+                  },
                 );
               },
             );

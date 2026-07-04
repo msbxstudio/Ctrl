@@ -78,125 +78,136 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
             titleSpacing: 8.0,
             title: Text('settings.title'.tr()),
 
-            leadingWidth: 60.0,
-            leading: const PopButton(),
+            leadingWidth: 64.0,
+            leading: const PopButton.back(),
           ),
           body: SafeArea(
             child: RefreshIndicator.adaptive(
               onRefresh: controller.refresh,
 
-              child: ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
+              child: LayoutBuilder(
+                builder: (_, constraints) {
+                  final width = constraints.maxWidth;
+                  final remaining = width - Breakpoints.small;
 
-                children: [
-                  SettingsSection(
-                    title: 'settings.sections.account'.tr(),
-                    actions: [
-                      SettingsAction.tile(
-                        onPressed: () {
-                          handleChangeName(controller, player);
-                        },
+                  return ListView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
+                      vertical: 12.0,
+                    ),
 
-                        title: 'settings.account.change_username'.tr(),
-                        trailing: Text(player.name),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 28.0),
-
-                  SettingsSection(
-                    title: 'settings.sections.preferences'.tr(),
-                    actions: [
-                      SettingsAction.tile(
-                        onPressed: () {
-                          handleChangeLang(controller);
-                        },
-
-                        title: 'settings.preferences.language'.tr(),
-                        trailing: Text(langCode),
-                      ),
-                      SettingsAction.toggle(
-                        onChanged: (value) async {
-                          await controller.updateSound(sound: value);
-                        },
-
-                        title: 'settings.preferences.sound_effects'.tr(),
-                        value: soundEffects,
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24.0),
-
-                  SettingsSection(
-                    title: 'settings.sections.privacy'.tr(),
-                    actions: _legalOptions
-                        .map(
-                          (e) => SettingsAction.link(
-                            uri: Uri.parse(e.source),
-                            title: e.key.tr(),
-                          ),
-                        )
-                        .toList(),
-                  ),
-
-                  const SizedBox(height: 24.0),
-
-                  SettingsSection(
-                    title: 'settings.sections.donations'.tr(),
-                    actions: _donationOptions
-                        .map(
-                          (e) => SettingsAction.tile(
-                            onPressed: () async {
-                              try {
-                                await PurchaseService.instance.purchase(e.code);
-                              } catch (_) {
-                                showSnackbar(
-                                  context,
-                                  'snackbar.purchase_failed'.tr(),
-                                  behavior: SnackBarBehavior.fixed,
-                                );
-                              }
+                    children: [
+                      SettingsSection(
+                        title: 'settings.sections.account'.tr(),
+                        actions: [
+                          SettingsAction.tile(
+                            onPressed: () {
+                              handleChangeName(controller, player);
                             },
 
-                            leading: SvgPicture.asset(
-                              e.picture,
-                              width: 20.0,
-                              height: 20.0,
-                            ),
-                            trailing: Text('\$${e.price.toStringAsFixed(2)}'),
-
-                            title: e.key.tr(),
-                            showIcon: false,
+                            title: 'settings.account.change_username'.tr(),
+                            trailing: Text(player.name),
                           ),
-                        )
-                        .toList(),
-                  ),
+                        ],
+                      ),
 
-                  const Separator(verticalIndent: 24.0),
+                      const SizedBox(height: 28.0),
 
-                  ...[
-                    Text('settings.sections.danger_zone'.tr()),
-                    FilledButton.tonal(
-                      onPressed: handleEraseData,
+                      SettingsSection(
+                        title: 'settings.sections.preferences'.tr(),
+                        actions: [
+                          SettingsAction.tile(
+                            onPressed: () {
+                              handleChangeLang(controller);
+                            },
 
-                      style: Theme.of(context).filledButtonTheme.style
-                          ?.copyWith(
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                            title: 'settings.preferences.language'.tr(),
+                            trailing: Text(langCode),
+                          ),
+                          SettingsAction.toggle(
+                            onChanged: (value) async {
+                              await controller.updateSound(sound: value);
+                            },
+
+                            title: 'settings.preferences.sound_effects'.tr(),
+                            value: soundEffects,
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 24.0),
+
+                      SettingsSection(
+                        title: 'settings.sections.privacy'.tr(),
+                        actions: _legalOptions
+                            .map(
+                              (e) => SettingsAction.link(
+                                uri: Uri.parse(e.source),
+                                title: e.key.tr(),
                               ),
-                            ),
-                          ),
+                            )
+                            .toList(),
+                      ),
 
-                      child: Text('settings.danger_zone.erase_all'.tr()),
-                    ),
-                  ].divide(const SizedBox(height: 8.0)),
-                ],
+                      const SizedBox(height: 24.0),
+
+                      SettingsSection(
+                        title: 'settings.sections.donations'.tr(),
+                        actions: _donationOptions
+                            .map(
+                              (e) => SettingsAction.tile(
+                                onPressed: () async {
+                                  try {
+                                    await PurchaseService.instance.purchase(
+                                      e.code,
+                                    );
+                                  } catch (_) {
+                                    showSnackbar(
+                                      context,
+                                      'snackbar.purchase_failed'.tr(),
+                                      behavior: SnackBarBehavior.fixed,
+                                    );
+                                  }
+                                },
+
+                                leading: SvgPicture.asset(
+                                  e.picture,
+                                  width: 20.0,
+                                  height: 20.0,
+                                ),
+                                trailing: Text(
+                                  '\$${e.price.toStringAsFixed(2)}',
+                                ),
+
+                                title: e.key.tr(),
+                                showIcon: false,
+                              ),
+                            )
+                            .toList(),
+                      ),
+
+                      const Separator(verticalIndent: 24.0),
+
+                      ...[
+                        Text('settings.sections.danger_zone'.tr()),
+                        FilledButton.tonal(
+                          onPressed: handleEraseData,
+
+                          style: Theme.of(context).filledButtonTheme.style
+                              ?.copyWith(
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+
+                          child: Text('settings.danger_zone.erase_all'.tr()),
+                        ),
+                      ].divide(const SizedBox(height: 8.0)),
+                    ],
+                  );
+                },
               ),
             ),
           ),

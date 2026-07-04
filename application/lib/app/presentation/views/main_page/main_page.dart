@@ -57,9 +57,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
 
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(24.0),
-              child: greeting(
-                player.name,
-              ).padded(const EdgeInsets.symmetric(horizontal: 16.0)),
+              child: greeting(player.name),
             ),
           ),
 
@@ -67,81 +65,80 @@ final class _MainPageState extends ConsumerState<MainPage> {
             child: RefreshIndicator.adaptive(
               onRefresh: controller.refresh,
 
-              child: ScrollableFilledView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
-                child: Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 8.0,
+              child: LayoutBuilder(
+                builder: (_, constraints) {
+                  final width = constraints.maxWidth;
+                  final remaining = width - Breakpoints.small;
 
+                  return ScrollableFilledView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
+                      vertical: 12.0,
+                    ),
+
+                    child: Column(
                       children: [
-                        Text(
-                          'CTRL by MSBX',
-                          textAlign: TextAlign.end,
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.tertiary.withValues(
-                              alpha: 0.75,
-                            ),
-                          ),
-                        ),
-                        hero(
-                          currentLevel: currentLevel,
-                          solvedPuzzles: solvedPuzzles,
-                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          spacing: 8.0,
 
-                        const Separator(verticalIndent: 8.0),
-
-                        Row(
-                          spacing: 12.0,
                           children: [
-                            button(
-                              label: 'home.buttons.levels'.tr(),
-                              icon: LucideIcons.grip,
-                              route: '/levels',
+                            hero(
+                              currentLevel: currentLevel,
+                              solvedPuzzles: solvedPuzzles,
+                            ),
 
-                              controller: controller,
+                            const Separator(verticalIndent: 8.0),
+
+                            Row(
+                              spacing: 12.0,
+                              children: [
+                                button(
+                                  label: 'home.buttons.levels'.tr(),
+                                  icon: LucideIcons.grip,
+                                  route: '/levels',
+
+                                  controller: controller,
+                                  highlight: false,
+                                ).expand(),
+                                button(
+                                  label: 'home.buttons.play'.tr(),
+                                  icon: LucideIcons.play,
+                                  route: '/levels/${currentLevel.id}',
+
+                                  controller: controller,
+                                  highlight: true,
+                                ).expand(),
+                              ],
+                            ),
+                          ],
+                        ).expand(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 12.0,
+
+                          children: [
+                            metric(
+                              icon: Symbols.timer,
+                              label: 'home.metrics.avg_time'.tr(),
+                              value: formatDuration(averageTime),
                               highlight: false,
                             ).expand(),
-                            button(
-                              label: 'home.buttons.play'.tr(),
-                              icon: LucideIcons.play,
-                              route: '/levels/${currentLevel.id}',
-
-                              controller: controller,
+                            metric(
+                              icon: Symbols.local_fire_department,
+                              label: 'home.metrics.streak'.tr(),
+                              value: 'home.metrics.days'.tr(
+                                namedArgs: {'count': '${player.streakDays}'},
+                              ),
                               highlight: true,
                             ).expand(),
                           ],
                         ),
                       ],
-                    ).expand(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      spacing: 12.0,
-
-                      children: [
-                        metric(
-                          icon: Symbols.timer,
-                          label: 'home.metrics.avg_time'.tr(),
-                          value: formatDuration(averageTime),
-                          highlight: false,
-                        ).expand(),
-                        metric(
-                          icon: Symbols.local_fire_department,
-                          label: 'home.metrics.streak'.tr(),
-                          value: 'home.metrics.days'.tr(
-                            namedArgs: {'count': '${player.streakDays}'},
-                          ),
-                          highlight: true,
-                        ).expand(),
-                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ),
@@ -168,8 +165,10 @@ final class _MainPageState extends ConsumerState<MainPage> {
           'home.greeting'.tr(namedArgs: {'name': name}),
           style: Theme.of(context).textTheme.titleLarge,
         )
+        .padded(const EdgeInsets.symmetric(horizontal: 16.0))
         .aligned(Alignment.centerLeft)
-        .padded(const EdgeInsets.symmetric(horizontal: 8.0));
+        .constrained(maxWidth: Breakpoints.small)
+        .centered();
   }
 
   Widget card({

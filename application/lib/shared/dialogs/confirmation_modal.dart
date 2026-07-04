@@ -16,6 +16,8 @@ Future<bool?> showConfirmationModal(
 }) {
   return showAppModal<bool?>(
     context,
+    useSafeArea: true,
+    constraints: const BoxConstraints(maxWidth: 400.0),
 
     child: Column(
       mainAxisSize: MainAxisSize.min,

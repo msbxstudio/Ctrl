@@ -14,6 +14,7 @@ final class LevelInput extends ConsumerWidget {
   final TextEditingController controller;
 
   final List<String> items;
+  final EdgeInsetsGeometry? padding;
 
   const LevelInput({
     super.key,
@@ -22,6 +23,7 @@ final class LevelInput extends ConsumerWidget {
     required this.onAdd,
     required this.controller,
     required this.items,
+    this.padding,
   }) : assert(items.length == 10, 'Items list must have 10 items');
 
   @override
@@ -119,6 +121,6 @@ final class LevelInput extends ConsumerWidget {
           ],
         ),
       ),
-    ).padded(const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0));
+    ).padded(padding ?? EdgeInsets.zero);
   }
 }

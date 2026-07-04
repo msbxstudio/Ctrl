@@ -9,23 +9,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 final class PopButton extends ConsumerWidget {
-  final PopButtonType type;
   final dynamic argument;
   final bool enabled;
 
-  const PopButton({
-    super.key,
-    this.type = PopButtonType.back,
-    this.argument,
-    this.enabled = true,
-  });
+  final _PopButtonType _type;
+
+  const PopButton.back({super.key, this.argument, this.enabled = true})
+    : _type = _PopButtonType.back;
+
+  const PopButton.close({super.key, this.argument, this.enabled = true})
+    : _type = _PopButtonType.close;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Tooltip(
-      message: type == PopButtonType.back
+      message: _type == _PopButtonType.back
           ? 'actions.common.back'.tr()
           : 'actions.common.close'.tr(),
 
@@ -34,12 +34,10 @@ final class PopButton extends ConsumerWidget {
             ? () => ref.read(goRouterProvider).pop(argument)
             : null,
 
-        // style: theme.iconButtonTheme.style?.copyWith(
-        //   splashFactory: NoSplash.splashFactory,
-        //   overlayColor: WidgetStateProperty.all(Colors.transparent),
-        // ),
         icon: Icon(
-          type == PopButtonType.back ? LucideIcons.chevronLeft : LucideIcons.x,
+          _type == _PopButtonType.back
+              ? LucideIcons.chevronLeft
+              : LucideIcons.x,
           size: 24.0,
           color: theme.colorScheme.outline,
         ),
@@ -48,4 +46,4 @@ final class PopButton extends ConsumerWidget {
   }
 }
 
-enum PopButtonType { back, close }
+enum _PopButtonType { back, close }

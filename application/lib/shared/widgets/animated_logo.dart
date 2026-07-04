@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,7 +10,7 @@ final class AnimatedLogo extends ConsumerStatefulWidget {
   const AnimatedLogo({super.key, this.enabled = true});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
+  ConsumerState createState() {
     return _AnimatedLogoState();
   }
 }
@@ -57,6 +59,6 @@ final class _AnimatedLogoState extends ConsumerState<AnimatedLogo>
   /// Uses about 40% of that dimension for consistent scaling.
   double calculateSize(BuildContext context) {
     final shortestSide = MediaQuery.of(context).size.shortestSide;
-    return shortestSide * 0.3;
+    return min(shortestSide * 0.3, 300.0);
   }
 }

@@ -20,6 +20,8 @@ Future<String?> showChangeUsernameModal(
 
   return showAppModal<String?>(
     context,
+    useSafeArea: true,
+    constraints: const BoxConstraints(maxWidth: 400.0),
 
     child: Form(
       key: formKey,

@@ -35,7 +35,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
     ref.listenManual(checkAnswerMutationProvider, (prev, next) {
       if (prev?.hasError != true && next.hasError) {
-        showSnackbar(context, next.error ?? 'levels.error_checking'.tr());
+        showSnackbar(
+          context,
+          next.error ?? 'levels.error_checking'.tr(),
+          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        );
       }
     });
   }
@@ -61,12 +65,13 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
             automaticallyImplyLeading: false,
             automaticallyImplyActions: false,
 
-            titleSpacing: 8.0,
+            titleSpacing: 12.0,
             title: Text('levels.level'.tr(namedArgs: {'id': '${level.id}'})),
 
-            leadingWidth: 60.0,
-            leading: const PopButton(),
+            leadingWidth: 64.0,
+            leading: const PopButton.back(),
 
+            actionsPadding: const EdgeInsets.only(right: 18.0),
             actions: [
               IconButton(
                 onPressed: () async {
@@ -84,57 +89,70 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
             ],
           ),
 
-          body: Center(
-            child: Text(
-              level.question.resolve(),
-              textAlign: level.question.type == QuestionType.code
-                  ? TextAlign.start
-                  : TextAlign.center,
-            ),
-          ).padded(const EdgeInsets.symmetric(horizontal: 64.0)),
+          body:
+              Text(
+                    level.question.resolve(),
+                    textAlign: level.question.type == QuestionType.code
+                        ? TextAlign.start
+                        : TextAlign.center,
+                  )
+                  .constrained(maxWidth: 600.0)
+                  .centered()
+                  .padded(const EdgeInsets.symmetric(horizontal: 64.0)),
 
-          bottomNavigationBar: LevelInput(
-            onSubmit: () async {
-              final match = await controller.checkAnswer(
-                answerFieldController.text,
-              );
+          bottomNavigationBar:
+              LevelInput(
+                    onSubmit: () async {
+                      final match = await controller.checkAnswer(
+                        answerFieldController.text,
+                      );
 
-              if (!match) {
-                showSnackbar(context, 'levels.wrong_answer'.tr());
-                return;
-              }
+                      if (!match) {
+                        showSnackbar(
+                          context,
+                          'levels.wrong_answer'.tr(),
+                          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                        );
+                        return;
+                      }
 
-              final soundEffects = ref
-                  .read(appConfigRepositoryProvider)
-                  .soundEffects;
+                      final soundEffects = ref
+                          .read(appConfigRepositoryProvider)
+                          .soundEffects;
 
-              await showLevelCompletedDialog(
-                context,
-                soundEffects: soundEffects,
-                rootNavigator: false,
-              );
+                      await showLevelCompletedDialog(
+                        context,
+                        soundEffects: soundEffects,
+                        rootNavigator: false,
+                      );
 
-              answerFieldController.clear();
+                      answerFieldController.clear();
 
-              if (level.id < count) {
-                await ref
-                    .read(goRouterProvider)
-                    .replace('/levels/${level.id + 1}');
-              } else {
-                ref.read(goRouterProvider).pop(true);
-              }
-            },
-            onAdd: (char) {
-              addItem(char);
-            },
-            onClear: () {
-              clearAnswer();
-            },
+                      if (level.id < count) {
+                        await ref
+                            .read(goRouterProvider)
+                            .replace('/levels/${level.id + 1}');
+                      } else {
+                        ref.read(goRouterProvider).pop(true);
+                      }
+                    },
+                    onAdd: (char) {
+                      addItem(char);
+                    },
+                    onClear: () {
+                      clearAnswer();
+                    },
 
-            controller: answerFieldController,
-            items: level.options,
-          ).dismissKeyboard(context),
-        );
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    ),
+                    controller: answerFieldController,
+                    items: level.options,
+                  )
+                  .constrained(maxWidth: Breakpoints.small)
+                  .aligned(Alignment.center, heightFactor: 1.0),
+        ).dismissKeyboard(context);
       },
 
       loading: () {
