@@ -1,15 +1,13 @@
-// ignore_for_file: unnecessary_import
-
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
-// import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:msbx/msbx.dart';
 
 import 'package:ctrl/app/router.dart';
-// import 'package:ctrl/core/services.dart';
-// import 'package:ctrl/core/utils.dart';
+import 'package:ctrl/core/services.dart';
 import 'package:ctrl/shared/themes.dart';
 
 final class MainApp extends ConsumerStatefulWidget {
@@ -29,16 +27,16 @@ final class _MainAppState extends ConsumerState<MainApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await DatabaseService.setup();
-      // await PurchaseService.setup(
-      //   onDone: () {
-      //     Debugger.log('Purchase stream finished');
-      //   },
-      //   onData: _handlePurchase,
-      //   onError: (error) {
-      //     Debugger.error('Purchase stream error: $error');
-      //   },
-      // );
+      await DatabaseService.initialize();
+      await PurchaseService.initialize(
+        onDone: () {
+          Debugger.log('Purchase stream finished');
+        },
+        onData: _handlePurchase,
+        onError: (error) {
+          Debugger.error('Purchase stream error: $error');
+        },
+      );
     });
   }
 
@@ -68,35 +66,35 @@ final class _MainAppState extends ConsumerState<MainApp> {
     );
   }
 
-  // Future<void> _handlePurchase(PurchaseDetails purchase) async {
-  //   Debugger.log('Purchase status: ${purchase.status}');
+  Future<void> _handlePurchase(PurchaseDetails purchase) async {
+    Debugger.log('Purchase status: ${purchase.status}');
 
-  //   switch (purchase.status) {
-  //     case PurchaseStatus.pending:
-  //       break;
+    switch (purchase.status) {
+      case PurchaseStatus.pending:
+        break;
 
-  //     case PurchaseStatus.canceled:
-  //       messengerKey.currentState?.showSnackBar(
-  //         SnackBar(content: Text('snackbar.purchase_canceled'.tr())),
-  //       );
-  //       break;
+      case PurchaseStatus.canceled:
+        _messengerKey.currentState?.showSnackBar(
+          SnackBar(content: Text('snackbar.purchase_canceled'.tr())),
+        );
+        break;
 
-  //     case PurchaseStatus.error:
-  //       messengerKey.currentState?.showSnackBar(
-  //         SnackBar(content: Text('snackbar.purchase_failed'.tr())),
-  //       );
-  //       break;
+      case PurchaseStatus.error:
+        _messengerKey.currentState?.showSnackBar(
+          SnackBar(content: Text('snackbar.purchase_failed'.tr())),
+        );
+        break;
 
-  //     default:
-  //       await PurchaseService.instance.complete(purchase);
+      default:
+        await PurchaseService.instance.complete(purchase);
 
-  //       messengerKey.currentState?.showSnackBar(
-  //         SnackBar(content: Text('snackbar.purchase_success'.tr())),
-  //       );
-  //   }
+        _messengerKey.currentState?.showSnackBar(
+          SnackBar(content: Text('snackbar.purchase_success'.tr())),
+        );
+    }
 
-  //   if (purchase.pendingCompletePurchase) {
-  //     await PurchaseService.instance.complete(purchase);
-  //   }
-  // }
+    if (purchase.pendingCompletePurchase) {
+      await PurchaseService.instance.complete(purchase);
+    }
+  }
 }

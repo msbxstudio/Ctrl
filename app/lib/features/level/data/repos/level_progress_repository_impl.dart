@@ -1,12 +1,13 @@
+import 'package:msbx/msbx.dart';
+
 import 'package:ctrl/core/exceptions.dart';
 import 'package:ctrl/core/services.dart';
-import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelProgressRepositoryImpl implements LevelProgressRepository {
-  final DatabaseService _service;
+  const new(this._service);
 
-  const LevelProgressRepositoryImpl(this._service);
+  final DatabaseService _service;
 
   @override
   Future<List<LevelProgress>> getAll() async {
