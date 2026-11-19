@@ -1,12 +1,13 @@
 import 'dart:math';
 
-import 'package:ctrl/core/extensions/index.dart';
-import 'package:ctrl/shared/dialogs/index.dart';
-import 'package:ctrl/shared/widgets.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:msbx/msbx.dart';
 
-import 'package:flutter/material.dart';
+import 'package:ctrl/shared/dialogs.dart';
+import 'package:ctrl/shared/widgets.dart';
 
 Future<void> showHintDialog(
   BuildContext context, {
@@ -38,9 +39,8 @@ Future<void> showHintDialog(
           hint,
 
           textAlign: TextAlign.start,
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(height: 1.5),
+          style: Theme.of(context).textTheme.headlineSmall
+              ?.copyWith(height: 1.5),
         ).centered().expand(),
 
         ...[

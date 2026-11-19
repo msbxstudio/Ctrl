@@ -1,9 +1,10 @@
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:msbx/msbx.dart';
 
-import 'package:ctrl/core/extensions/index.dart';
-import 'package:ctrl/shared/dialogs/index.dart';
+import 'package:ctrl/shared/dialogs.dart';
 
 final _languages = const [
   {'title': 'Español', 'code': 'es'},

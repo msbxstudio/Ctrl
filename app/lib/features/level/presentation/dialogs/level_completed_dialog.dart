@@ -1,12 +1,12 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
-import 'package:ctrl/core/extensions/index.dart';
-import 'package:ctrl/shared/dialogs/index.dart';
-
-import 'package:easy_localization/easy_localization.dart';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:msbx/msbx.dart';
+
+import 'package:ctrl/shared/dialogs.dart';
 
 Future<void> showLevelCompletedDialog(
   BuildContext context, {

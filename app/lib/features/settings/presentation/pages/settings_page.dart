@@ -9,7 +9,7 @@ import 'package:msbx/msbx.dart';
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/player.dart';
 import 'package:ctrl/features/settings.dart';
-import 'package:ctrl/shared/dialogs/index.dart';
+import 'package:ctrl/shared/dialogs.dart';
 import 'package:ctrl/shared/widgets.dart';
 
 import 'settings_page_error.dart';

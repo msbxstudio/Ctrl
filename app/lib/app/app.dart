@@ -10,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:ctrl/app/router.dart';
 // import 'package:ctrl/core/services.dart';
 // import 'package:ctrl/core/utils.dart';
-import 'package:ctrl/shared/theme/index.dart';
+import 'package:ctrl/shared/themes.dart';
 
 final class MainApp extends ConsumerStatefulWidget {
   const new({super.key});

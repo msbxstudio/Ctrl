@@ -1,6 +1,8 @@
-import 'package:ctrl/core/extensions/index.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:msbx/msbx.dart';
 
 import 'app_modal.dart';
 
@@ -30,9 +32,8 @@ Future<bool?> showConfirmationModal(
         Text(
           title,
           textAlign: TextAlign.center,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
         ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),
 
         const SizedBox(height: 12.0),
@@ -40,9 +41,8 @@ Future<bool?> showConfirmationModal(
         if (description != null) ...[
           Text(
             description,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.outline,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge
+                ?.copyWith(color: Theme.of(context).colorScheme.outline),
           ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),
 
           const SizedBox(height: 12.0),
@@ -60,9 +60,8 @@ Future<bool?> showConfirmationModal(
 
               style:
                   primaryButtonStyle ??
-                  Theme.of(context).filledButtonTheme.style?.copyWith(
-                    elevation: WidgetStateProperty.all(0.0),
-                  ),
+                  Theme.of(context).filledButtonTheme.style
+                      ?.copyWith(elevation: WidgetStateProperty.all(0.0)),
 
               child: Text(primaryButtonText ?? 'actions.common.confirm'.tr()),
             ).expand(),
@@ -73,9 +72,8 @@ Future<bool?> showConfirmationModal(
 
               style:
                   secondaryButtonStyle ??
-                  Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                    elevation: WidgetStateProperty.all(0.0),
-                  ),
+                  Theme.of(context).elevatedButtonTheme.style
+                      ?.copyWith(elevation: WidgetStateProperty.all(0.0)),
 
               child: Text(secondaryButtonText ?? 'actions.common.cancel'.tr()),
             ).expand(),

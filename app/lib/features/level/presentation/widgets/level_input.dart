@@ -1,10 +1,22 @@
-import 'package:ctrl/core/extensions/index.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:msbx/msbx.dart';
 
 final class LevelInput extends ConsumerWidget {
+  const new({
+    super.key,
+    required this.onSubmit,
+    required this.onClear,
+    required this.onAdd,
+    required this.controller,
+    required this.items,
+    this.padding,
+  }) : assert(items.length == 10, 'Items list must have 10 items');
+
   final void Function() onSubmit;
 
   final void Function(String) onAdd;
@@ -15,16 +27,6 @@ final class LevelInput extends ConsumerWidget {
 
   final List<String> items;
   final EdgeInsetsGeometry? padding;
-
-  const LevelInput({
-    super.key,
-    required this.onSubmit,
-    required this.onClear,
-    required this.onAdd,
-    required this.controller,
-    required this.items,
-    this.padding,
-  }) : assert(items.length == 10, 'Items list must have 10 items');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
