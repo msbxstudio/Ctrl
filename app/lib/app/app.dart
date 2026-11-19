@@ -1,57 +1,59 @@
-import 'package:ctrl/app/index.dart';
-import 'package:ctrl/core/services/index.dart';
-import 'package:ctrl/core/utils/index.dart';
+// ignore_for_file: unnecessary_import
+
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
+// import 'package:in_app_purchase/in_app_purchase.dart';
+
+import 'package:ctrl/app/router.dart';
+// import 'package:ctrl/core/services.dart';
+// import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/shared/theme/index.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:in_app_purchase/in_app_purchase.dart';
-
 final class MainApp extends ConsumerStatefulWidget {
-  const MainApp({super.key});
+  const new({super.key});
 
   @override
-  ConsumerState createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _MainAppState();
   }
 }
 
 final class _MainAppState extends ConsumerState<MainApp> {
-  final messengerKey = GlobalKey<ScaffoldMessengerState>();
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      DatabaseService.instance.initialize();
-      PurchaseService.instance.initialize(
-        onDone: () {
-          Debugger.log('Purchase stream finished');
-        },
-        onData: _handlePurchase,
-        onError: (error) {
-          Debugger.error('Purchase stream error: $error');
-        },
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // await DatabaseService.setup();
+      // await PurchaseService.setup(
+      //   onDone: () {
+      //     Debugger.log('Purchase stream finished');
+      //   },
+      //   onData: _handlePurchase,
+      //   onError: (error) {
+      //     Debugger.error('Purchase stream error: $error');
+      //   },
+      // );
     });
   }
 
   @override
   void dispose() {
-    DatabaseService.instance.dispose();
+    // DatabaseService.instance.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final router = ref.watch(goRouterProvider);
+    final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      scaffoldMessengerKey: messengerKey,
+      scaffoldMessengerKey: _messengerKey,
       debugShowCheckedModeBanner: false,
       title: 'CTRL',
 
@@ -66,35 +68,35 @@ final class _MainAppState extends ConsumerState<MainApp> {
     );
   }
 
-  Future<void> _handlePurchase(PurchaseDetails purchase) async {
-    Debugger.log('Purchase status: ${purchase.status}');
+  // Future<void> _handlePurchase(PurchaseDetails purchase) async {
+  //   Debugger.log('Purchase status: ${purchase.status}');
 
-    switch (purchase.status) {
-      case PurchaseStatus.pending:
-        break;
+  //   switch (purchase.status) {
+  //     case PurchaseStatus.pending:
+  //       break;
 
-      case PurchaseStatus.canceled:
-        messengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('snackbar.purchase_canceled'.tr())),
-        );
-        break;
+  //     case PurchaseStatus.canceled:
+  //       messengerKey.currentState?.showSnackBar(
+  //         SnackBar(content: Text('snackbar.purchase_canceled'.tr())),
+  //       );
+  //       break;
 
-      case PurchaseStatus.error:
-        messengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('snackbar.purchase_failed'.tr())),
-        );
-        break;
+  //     case PurchaseStatus.error:
+  //       messengerKey.currentState?.showSnackBar(
+  //         SnackBar(content: Text('snackbar.purchase_failed'.tr())),
+  //       );
+  //       break;
 
-      default:
-        await PurchaseService.instance.complete(purchase);
+  //     default:
+  //       await PurchaseService.instance.complete(purchase);
 
-        messengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text('snackbar.purchase_success'.tr())),
-        );
-    }
+  //       messengerKey.currentState?.showSnackBar(
+  //         SnackBar(content: Text('snackbar.purchase_success'.tr())),
+  //       );
+  //   }
 
-    if (purchase.pendingCompletePurchase) {
-      await PurchaseService.instance.complete(purchase);
-    }
-  }
+  //   if (purchase.pendingCompletePurchase) {
+  //     await PurchaseService.instance.complete(purchase);
+  //   }
+  // }
 }

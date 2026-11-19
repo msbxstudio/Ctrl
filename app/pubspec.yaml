@@ -19,7 +19,13 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.2.1+20260705
 
 environment:
-  sdk: ^3.11.1
+  # Minimum supported Dart SDK version and compatible future releases.
+  # The caret constraint allows versions >=3.13.4 and <4.0.0.
+  sdk: ^3.13.4
+
+  # Minimum required Flutter SDK version.
+  # No explicit upper bound is defined.
+  flutter: ">=1.17.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,6 +41,21 @@ dependencies:
     # Official Flutter localization support for Material, Cupertino and Widgets.
   flutter_localizations:
     sdk: flutter
+
+  msbx:
+    path: ../../MSBX
+
+  # ---------------------------------------------------------------------------
+  # UI & Design System
+  # ---------------------------------------------------------------------------
+
+  # Provides additional Material Design components and UI utilities.
+  # Extends the available Material-based interface functionality.
+  material_ui: ^1.7.0
+
+  # Provides additional Cupertino-style components and UI utilities.
+  # Supports the development of interfaces following iOS design conventions.
+  cupertino_ui: ^1.1.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

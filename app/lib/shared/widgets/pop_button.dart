@@ -1,24 +1,23 @@
-import 'package:ctrl/app/index.dart';
-import 'package:ctrl/core/extensions/index.dart';
+import 'package:material_ui/material_ui.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:msbx/msbx.dart';
+
+import 'package:ctrl/app/router.dart';
 
 final class PopButton extends ConsumerWidget {
+  const new back({super.key, this.argument, this.enabled = true})
+    : _type = _PopButtonType.back;
+
+  const new close({super.key, this.argument, this.enabled = true})
+    : _type = _PopButtonType.close;
+
   final dynamic argument;
   final bool enabled;
 
   final _PopButtonType _type;
-
-  const PopButton.back({super.key, this.argument, this.enabled = true})
-    : _type = _PopButtonType.back;
-
-  const PopButton.close({super.key, this.argument, this.enabled = true})
-    : _type = _PopButtonType.close;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +30,7 @@ final class PopButton extends ConsumerWidget {
 
       child: IconButton(
         onPressed: enabled
-            ? () => ref.read(goRouterProvider).pop(argument)
+            ? () => ref.read(routerProvider).pop(argument)
             : null,
 
         icon: Icon(

@@ -1,5 +1,5 @@
 import 'package:ctrl/core/extensions/index.dart';
-import 'package:ctrl/core/validation/index.dart';
+import 'package:ctrl/core/validation.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -35,16 +35,14 @@ Future<String?> showChangeUsernameModal(
           Text(
             'dialogs.username.title'.tr(),
             textAlign: TextAlign.center,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
 
           Text(
             'dialogs.username.description'.tr(args: ['15']),
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.outline,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge
+                ?.copyWith(color: Theme.of(context).colorScheme.outline),
           ),
 
           TextFormField(

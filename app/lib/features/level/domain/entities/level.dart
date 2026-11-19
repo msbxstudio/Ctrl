@@ -1,4 +1,4 @@
-import 'package:ctrl/features/level/index.dart';
+import 'package:ctrl/features/level.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable

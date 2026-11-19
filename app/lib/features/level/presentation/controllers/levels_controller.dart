@@ -1,11 +1,16 @@
-import 'package:ctrl/features/level/index.dart';
-import 'package:ctrl/features/player/index.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
+import 'package:msbx/msbx.dart';
+
+import 'package:ctrl/features/level.dart';
+import 'package:ctrl/features/player.dart';
 
 /// Controller for [LevelsPage] view.
-final class LevelsController extends AutoDisposeAsyncNotifier<LevelsData> {
+final class LevelsController extends AutoDisposeAsyncNotifier<LevelsState>
+    implements Refreshable {
   @override
-  Future<LevelsData> build() async {
+  FutureOr<LevelsState> build() async {
     final (levels, player) = await Future.wait([
       ref.read(levelRepositoryProvider).getAll(),
       ref.read(playerRepositoryProvider).get(),
@@ -15,12 +20,12 @@ final class LevelsController extends AutoDisposeAsyncNotifier<LevelsData> {
         .read(levelRepositoryProvider)
         .getOne(id: player.currentLevelId);
 
-    return (levels: levels, currentLevel: currentLevel);
+    return LevelsState(levels: levels, currentLevel: currentLevel);
   }
 
+  @override
   Future<void> refresh() async {
     ref.invalidateSelf();
+    await future;
   }
 }
-
-typedef LevelsData = ({List<Level> levels, Level currentLevel});

@@ -1,4 +1,4 @@
-import 'package:ctrl/features/player/index.dart';
+import 'package:ctrl/features/player.dart';
 
 final class PlayerModel extends Player {
   const PlayerModel(

@@ -1,5 +1,5 @@
-import 'app_exception.dart';
+import 'package:msbx/msbx.dart';
 
 final class PurchaseException extends AppException {
-  const PurchaseException(super.message) : super(code: 'purchase_error');
+  const new(super.message) : super(code: 'purchase_error');
 }

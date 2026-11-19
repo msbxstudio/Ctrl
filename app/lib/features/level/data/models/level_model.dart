@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ctrl/features/level/index.dart';
+import 'package:ctrl/features/level.dart';
 
 final class LevelModel extends Level {
   const LevelModel(

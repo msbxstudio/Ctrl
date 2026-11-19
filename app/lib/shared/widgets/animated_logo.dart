@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
 final class AnimatedLogo extends ConsumerStatefulWidget {
+  const new({super.key, this.enabled = true});
+
   final bool enabled;
 
-  const AnimatedLogo({super.key, this.enabled = true});
-
   @override
-  ConsumerState createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _AnimatedLogoState();
   }
 }

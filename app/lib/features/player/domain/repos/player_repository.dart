@@ -1,4 +1,4 @@
-import 'package:ctrl/features/player/index.dart';
+import 'package:ctrl/features/player.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable

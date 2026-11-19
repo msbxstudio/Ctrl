@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 bool isMobile(BuildContext context) {
   return _getWidth(context) < 600;

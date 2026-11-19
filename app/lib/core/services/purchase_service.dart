@@ -1,118 +1,231 @@
-import 'dart:io';
-
-import 'package:ctrl/core/exceptions/index.dart';
-import 'package:ctrl/core/utils/index.dart';
-
-import 'package:flutter/services.dart';
+import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:msbx/msbx.dart';
 
-import 'app_service.dart';
+import 'package:ctrl/core/exceptions.dart';
 
-/// A service class that manages in-app purchases using the `in_app_purchase` package.
-final class PurchaseService extends AppService<InAppPurchase> {
-  static final instance = PurchaseService._();
+/// Manages in-app purchases through the platform's billing system.
+///
+/// Provides singleton access to the shared [InAppPurchase] instance.
+///
+/// Registers purchase stream callbacks during initialization and
+/// releases its subscription during disposal.
+///
+/// Supports idempotent initialization, concurrent disposal,
+/// and recreation after disposal.
+final class PurchaseService implements Disposable {
+  /// Creates a purchase service with optional purchase stream callbacks.
+  PurchaseService._({this.onData, this.onDone, this.onError});
 
-  PurchaseService._() : super(InAppPurchase.instance);
+  static PurchaseService? _instance;
 
-  /// Initializes the purchase service by setting up listeners for purchase updates.
+  /// Called for each purchase update received from the purchase stream.
+  final void Function(PurchaseDetails)? onData;
+
+  /// Called when the purchase stream closes.
+  final void Function()? onDone;
+
+  /// Called when the purchase stream emits an error.
+  final void Function(dynamic)? onError;
+
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
+
+  Future<void>? _disposal;
+
+  bool _initialized = false;
+  bool _disposed = false;
+
+  /// Whether the service has been initialized successfully.
+  bool get isInitialized => _initialized && !_disposed;
+
+  /// Whether disposal has been requested.
   @override
-  void initialize({
+  bool get isDisposed => _disposed;
+
+  /// Returns the initialized singleton instance.
+  ///
+  /// Throws a [StateError] if the service has not been initialized
+  /// or has been disposed.
+  static PurchaseService get instance {
+    final instance = _instance;
+
+    if (instance == null || !instance.isInitialized) {
+      throw StateError('Purchase service is not initialized.');
+    }
+
+    return instance;
+  }
+
+  /// Returns the shared platform billing instance.
+  ///
+  /// Throws a [StateError] if the service has not been initialized
+  /// or has been disposed.
+  InAppPurchase get service {
+    if (_disposed) {
+      throw StateError('Purchase service has been disposed.');
+    }
+
+    if (!_initialized) {
+      throw StateError('Purchase service has not been initialized.');
+    }
+
+    return InAppPurchase.instance;
+  }
+
+  /// Initializes the singleton purchase service.
+  ///
+  /// Registers optional callbacks for purchase updates, stream
+  /// completion, and stream errors.
+  ///
+  /// Subsequent calls reuse the original callbacks.
+  /// Waits for pending disposal before creating a new instance.
+  ///
+  /// Throws if the purchase stream subscription cannot be created.
+  static Future<void> initialize({
+    void Function(PurchaseDetails)? onData,
     void Function()? onDone,
-    void Function(PurchaseDetails purchase)? onData,
-    void Function(dynamic error)? onError,
-  }) async {
-    if (isInitialized || !await service!.isAvailable()) {
-      return;
+    void Function(dynamic)? onError,
+  }) {
+    final current = _instance;
+
+    if (current != null) {
+      if (current._disposed) {
+        return current.dispose().then(
+          (_) => initialize(onData: onData, onDone: onDone, onError: onError),
+        );
+      }
+
+      return Future<void>.value();
     }
 
-    _listenToPurchaseUpdated(onDone: onDone, onData: onData, onError: onError);
-    setInitialized(true);
-  }
+    final instance = PurchaseService._(
+      onData: onData,
+      onDone: onDone,
+      onError: onError,
+    );
 
-  /// Disposes the purchase service by marking it as uninitialized.
-  @override
-  void dispose() {
-    setInitialized(false);
-  }
+    _instance = instance;
 
-  /// Restores previous purchases for the user.
-  Future<void> restore() async {
-    await service!.restorePurchases();
-  }
-
-  /// Initiates the purchase flow for a consumable or non-consumable product.
-  Future<void> purchase(String productId, {bool consumable = true}) async {
-    if (!await service!.isAvailable()) {
-      throw const PurchaseException(
-        'In-app purchases are not available on this device',
+    try {
+      instance._subscription = InAppPurchase.instance.purchaseStream.listen(
+        (details) {
+          for (final detail in details) {
+            instance.onData?.call(detail);
+          }
+        },
+        onDone: () {
+          instance.onDone?.call();
+        },
+        onError: (dynamic error) {
+          instance.onError?.call(error);
+        },
       );
+
+      instance._initialized = true;
+
+      return Future<void>.value();
+    } catch (_) {
+      instance._initialized = false;
+      instance._disposed = true;
+
+      if (identical(_instance, instance)) {
+        _instance = null;
+      }
+
+      rethrow;
     }
+  }
 
-    final response = await service!.queryProductDetails({productId});
+  /// Disposes the service and cancels its purchase stream subscription.
+  ///
+  /// Concurrent calls share the same disposal operation.
+  ///
+  /// Does not dispose the shared [InAppPurchase] instance.
+  ///
+  /// A disposed instance cannot be initialized again.
+  @override
+  Future<void> dispose() {
+    return _disposal ??= _dispose();
+  }
 
-    if (response.error is IAPError) {
-      throw const PurchaseException('Failed to query product details');
+  Future<void> _dispose() async {
+    _disposed = true;
+    _initialized = false;
+
+    final subscription = _subscription;
+    _subscription = null;
+
+    try {
+      await subscription?.cancel();
+    } finally {
+      if (identical(_instance, this)) {
+        _instance = null;
+      }
+    }
+  }
+
+  /// Requests restoration of previous purchases.
+  ///
+  /// Restored transactions are delivered through the purchase stream.
+  /// Consumable purchases are not restored by the underlying store.
+  ///
+  /// Throws a [StateError] if the service is not initialized
+  /// or has been disposed.
+  Future<void> restore() async {
+    await service.restorePurchases();
+  }
+
+  /// Initiates a purchase for the specified [productId].
+  ///
+  /// Queries the store for product details before starting the purchase flow.
+  ///
+  /// When [consumable] is `true`, initiates a consumable purchase.
+  /// Otherwise, initiates a non-consumable purchase.
+  ///
+  /// Throws a [PurchaseException] if the product query fails, no matching
+  /// product is found, or the purchase request cannot be started.
+  ///
+  /// Platform exceptions are logged and rethrown without modification.
+  ///
+  /// Purchase results are delivered asynchronously through [onData].
+  /// A successful return does not indicate that the transaction completed.
+  Future<void> purchase(String productId, {bool consumable = true}) async {
+    final response = await service.queryProductDetails({productId});
+
+    if (response.error != null) {
+      throw const PurchaseException('Failed to query product details.');
     }
 
     if (response.productDetails.isEmpty) {
       throw const PurchaseException(
-        'No product details found for the given product ID',
+        'No product details found for the given product ID.',
       );
     }
 
     final param = PurchaseParam(productDetails: response.productDetails.first);
 
     try {
-      final result = consumable
-          ? await service!.buyConsumable(purchaseParam: param)
-          : await service!.buyNonConsumable(purchaseParam: param);
+      final success = consumable
+          ? await service.buyConsumable(purchaseParam: param)
+          : await service.buyNonConsumable(purchaseParam: param);
 
-      if (!result) {
-        throw const PurchaseException('Purchase failed');
+      if (!success) {
+        throw const PurchaseException('Failed to initiate purchase.');
       }
-    } on PlatformException catch (e) {
-      if (e.code == 'storekit_duplicate_product_object') {
-        // On iOS, fetch unfinished transactions from the payment queue directly.
-        // restorePurchases() only re-delivers completed/restored purchases, NOT pending ones.
-        if (Platform.isIOS) {
-          final transactions = await SKPaymentQueueWrapper().transactions();
-
-          for (final tx in transactions) {
-            await SKPaymentQueueWrapper().finishTransaction(tx);
-          }
-        }
-      }
-    } catch (e) {
-      Debugger.error('Purchase failed: $e');
+    } catch (error) {
+      Debugger.error('Purchase failed: $error');
       rethrow;
     }
   }
 
-  /// Completes a purchase by acknowledging it with the underlying platform's billing system.
+  /// Completes the specified [purchase] with the platform's billing system.
+  ///
+  /// Call after processing and validating a purchase that requires completion.
+  ///
+  /// Throws a [StateError] if the service is not initialized
+  /// or has been disposed.
   Future<void> complete(PurchaseDetails purchase) async {
-    await service!.completePurchase(purchase);
-  }
-
-  /// Listens to purchase updates from the underlying platform's billing system.
-  void _listenToPurchaseUpdated({
-    void Function()? onDone,
-    void Function(PurchaseDetails details)? onData,
-    void Function(dynamic error)? onError,
-  }) {
-    service!.purchaseStream.listen(
-      (details) {
-        for (final detail in details) {
-          onData?.call(detail);
-        }
-      },
-      onDone: () {
-        onDone?.call();
-      },
-      onError: (e) {
-        onError?.call(e);
-      },
-    );
+    await service.completePurchase(purchase);
   }
 }

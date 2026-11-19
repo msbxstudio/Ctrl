@@ -1,4 +1,4 @@
-import 'package:ctrl/features/level/index.dart';
+import 'package:ctrl/features/level.dart';
 
 final class LevelProgressModel extends LevelProgress {
   const LevelProgressModel(

@@ -1,7 +1,7 @@
-import 'package:ctrl/core/exceptions/index.dart';
-import 'package:ctrl/core/services/index.dart';
-import 'package:ctrl/core/utils/index.dart';
-import 'package:ctrl/features/level/index.dart';
+import 'package:ctrl/core/exceptions.dart';
+import 'package:ctrl/core/services.dart';
+import 'package:ctrl/core/utils.dart';
+import 'package:ctrl/features/level.dart';
 
 final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   final DatabaseService _service;

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:ctrl/core/extensions/index.dart';
 import 'package:ctrl/shared/dialogs/index.dart';
-import 'package:ctrl/shared/widgets/index.dart';
+import 'package:ctrl/shared/widgets.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 

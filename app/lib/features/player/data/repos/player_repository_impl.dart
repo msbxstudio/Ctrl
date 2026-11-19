@@ -1,6 +1,6 @@
-import 'package:ctrl/core/exceptions/index.dart';
-import 'package:ctrl/core/services/index.dart';
-import 'package:ctrl/features/player/index.dart';
+import 'package:ctrl/core/exceptions.dart';
+import 'package:ctrl/core/services.dart';
+import 'package:ctrl/features/player.dart';
 
 final class PlayerRepositoryImpl implements PlayerRepository {
   final DatabaseService _service;

@@ -1,5 +1,5 @@
-import 'package:ctrl/core/services/index.dart';
-import 'package:ctrl/features/player/index.dart';
+import 'package:ctrl/core/services.dart';
+import 'package:ctrl/features/player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final playerRepositoryProvider = Provider.autoDispose<PlayerRepository>((_) {
