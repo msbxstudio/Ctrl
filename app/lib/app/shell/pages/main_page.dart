@@ -8,6 +8,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:material_symbols_icons/symbols.dart';
+
 import 'package:msbx/config.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/utils.dart';
@@ -58,8 +59,13 @@ final class _MainPageState extends ConsumerState<MainPage> {
           );
         },
 
-        data: (data) {
-          final (:player, :currentLevel, :solvedPuzzles, :averageTime) = data;
+        data: (state) {
+          final MainState(
+            :player,
+            :currentLevel,
+            :solvedPuzzles,
+            :averageTime,
+          ) = state;
 
           return Scaffold(
             appBar: AppBar(

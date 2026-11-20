@@ -1,16 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ctrl/app/startup.dart';
 
 /// Controller for [SplashPage] view.
-final class SplashController extends AutoDisposeAsyncNotifier<SplashData> {
+final class SplashController extends AutoDisposeAsyncNotifier<void> {
   @override
-  Future<SplashData> build() async {
-    await Future.delayed(const Duration(seconds: 3));
-    return (dummy: null);
-  }
-
-  Future<void> refresh() async {
-    ref.invalidateSelf();
+  FutureOr<void> build() async {
+    await Future.delayed(const Duration(milliseconds: 1500));
   }
 }
-
-typedef SplashData = ({Object? dummy});

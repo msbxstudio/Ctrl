@@ -19,13 +19,13 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.2.1+20260705
 
 environment:
-  # Minimum supported Dart SDK version and compatible future releases.
-  # The caret constraint allows versions >=3.13.4 and <4.0.0.
-  sdk: ^3.13.4
+  # Minimum supported Dart SDK version: 3.14.0.
+  # Allows compatible versions >=3.14.0 and <4.0.0.
+  sdk: ^3.14.0
 
-  # Minimum required Flutter SDK version.
-  # No explicit upper bound is defined.
-  flutter: ">=1.17.0"
+  # Minimum supported Flutter SDK version: 3.50.1.
+  # Allows Flutter 3.50.1 and newer versions.
+  flutter: ">=3.50.1"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
