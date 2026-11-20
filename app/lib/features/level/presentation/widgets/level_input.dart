@@ -2,8 +2,10 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:easy_localization/easy_localization.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_flutter/lucide_flutter.dart';
+
 import 'package:msbx/extensions.dart';
 
 final class LevelInput extends ConsumerWidget {

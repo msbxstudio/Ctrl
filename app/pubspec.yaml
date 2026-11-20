@@ -64,8 +64,8 @@ dependencies:
   # Icon pack based on Tabler Icons.
   flutter_tabler_icons: ^1.43.0
 
-  # Icon pack based on Lucide Icons.
-  lucide_icons: ^0.257.0
+  # Lucide icon set for Flutter.
+  lucide_flutter: ^1.33.0
 
   #
   material_symbols_icons: ^4.2892.0
