@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
-import 'package:msbx/msbx.dart';
+import 'package:msbx/contracts.dart';
 
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/player.dart';

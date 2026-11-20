@@ -1,4 +1,4 @@
-import 'package:msbx/msbx.dart';
+import 'package:msbx/contracts.dart';
 import 'package:ctrl/features/level.dart';
 
 final class const LevelsState({

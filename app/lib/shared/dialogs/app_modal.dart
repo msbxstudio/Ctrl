@@ -1,6 +1,6 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/extensions.dart';
 
 Future<T?> showAppModal<T>(
   BuildContext context, {

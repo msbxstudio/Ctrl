@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-
-import 'package:msbx/msbx.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:msbx/contracts.dart';
 
 /// Manages the application's local SQLite database.
 ///
@@ -16,7 +15,7 @@ import 'package:sqflite/sqflite.dart';
 /// and recreation after disposal.
 final class DatabaseService implements Disposable {
   /// Creates a database service with deferred initialization.
-  DatabaseService._();
+  new _();
 
   /// Name of the application's SQLite database file.
   static const String _databaseName = 'ctrl.db';

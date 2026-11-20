@@ -1,11 +1,12 @@
-import 'package:ctrl/core/exceptions.dart';
+import 'package:msbx/exceptions.dart';
+
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelRepositoryImpl implements LevelRepository {
-  final DatabaseService _service;
+  const new(this._service);
 
-  const LevelRepositoryImpl(this._service);
+  final DatabaseService _service;
 
   @override
   Future<List<Level>> getAll() async {

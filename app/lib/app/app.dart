@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/utils.dart';
 
 import 'package:ctrl/app/router.dart';
 import 'package:ctrl/core/services.dart';

@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/app/shell.dart';
 import 'package:ctrl/app/startup.dart';

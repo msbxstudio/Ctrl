@@ -1,6 +1,8 @@
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/extensions.dart';
 
 final class SettingsPageSkeleton extends ConsumerWidget {
   const new({super.key});

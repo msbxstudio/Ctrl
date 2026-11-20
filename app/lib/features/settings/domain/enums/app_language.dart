@@ -1,4 +1,4 @@
-import 'package:msbx/msbx.dart';
+import 'package:msbx/exceptions.dart';
 
 enum AppLanguage {
   ///

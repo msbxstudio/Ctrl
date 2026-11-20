@@ -4,7 +4,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/config.dart';
+import 'package:msbx/extensions.dart';
+import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/player.dart';

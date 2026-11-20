@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:msbx/msbx.dart';
+import 'package:msbx/contracts.dart';
+import 'package:msbx/utils.dart';
 
 import 'package:ctrl/core/exceptions.dart';
 
@@ -16,7 +17,7 @@ import 'package:ctrl/core/exceptions.dart';
 /// and recreation after disposal.
 final class PurchaseService implements Disposable {
   /// Creates a purchase service with optional purchase stream callbacks.
-  PurchaseService._({this.onData, this.onDone, this.onError});
+  new _({this.onData, this.onDone, this.onError});
 
   static PurchaseService? _instance;
 
