@@ -16,7 +16,7 @@ final class SettingsController extends AutoDisposeAsyncNotifier<SettingsData> {
 
     return (
       player: player,
-      langCode: preferences.language.toDbValue(),
+      langCode: preferences.language.name,
       soundEffects: preferences.allowSounds,
     );
   }
@@ -35,15 +35,15 @@ final class SettingsController extends AutoDisposeAsyncNotifier<SettingsData> {
   /// Updates the preferred application language.
   Future<void> updateLanguage(
     BuildContext context, {
-    required String languageCode,
+    required String langCode,
   }) async {
-    final language = AppLanguage.fromDbValue(languageCode);
+    final lang = AppLanguage.fromDbValue(langCode);
 
-    await ref.read(preferencesNotifierProvider.notifier).setLanguage(language);
+    await ref.read(preferencesNotifierProvider.notifier).setLanguage(lang);
 
     if (!context.mounted) return;
 
-    await context.setLocale(Locale(languageCode));
+    await context.setLocale(Locale(langCode));
   }
 
   /// Enables or disables sound effects.

@@ -248,7 +248,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
     );
 
     if (lang == null) return;
-    await controller.updateLanguage(context, languageCode: lang);
+    await controller.updateLanguage(context, langCode: lang);
   }
 
   void handleEraseData() async {
