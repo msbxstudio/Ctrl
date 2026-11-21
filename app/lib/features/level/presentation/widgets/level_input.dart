@@ -7,17 +7,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 
 import 'package:msbx/extensions.dart';
+import 'package:msbx/msbx.dart';
 
 final class LevelInput extends ConsumerWidget {
-  const new({
+  new({
     super.key,
     required this.onSubmit,
     required this.onClear,
     required this.onAdd,
-    required this.controller,
     required this.items,
-    this.padding,
-  }) : assert(items.length == 10, 'Items list must have 10 items');
+    required this.controller,
+  }) {
+    Debugger.ensure(items.length == 10, 'Items list must have 10 items');
+  }
 
   final void Function() onSubmit;
 
@@ -25,10 +27,9 @@ final class LevelInput extends ConsumerWidget {
 
   final void Function() onClear;
 
-  final TextEditingController controller;
-
   final List<String> items;
-  final EdgeInsetsGeometry? padding;
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +40,9 @@ final class LevelInput extends ConsumerWidget {
         filledButtonTheme: FilledButtonThemeData(
           style: theme.filledButtonTheme.style?.copyWith(
             shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
             ),
           ),
         ),
@@ -125,6 +128,6 @@ final class LevelInput extends ConsumerWidget {
           ],
         ),
       ),
-    ).padded(padding ?? EdgeInsets.zero);
+    );
   }
 }

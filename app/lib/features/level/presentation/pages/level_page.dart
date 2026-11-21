@@ -64,6 +64,19 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
     final asyncValue = ref.watch(levelControllerProvider(widget.id));
 
     return asyncValue.when(
+      loading: () {
+        return const LevelPageSkeleton();
+      },
+
+      error: (error, _) {
+        return LevelPageError(
+          onRetry: () async {
+            await controller.refresh();
+          },
+          error: error,
+        );
+      },
+
       data: (state) {
         final LevelState(:level, :count) = state;
 
@@ -104,69 +117,57 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                         ? TextAlign.start
                         : TextAlign.center,
                   )
-                  .constrained(maxWidth: 600.0)
-                  .centered()
-                  .padded(const EdgeInsets.symmetric(horizontal: 64.0)),
+                  .constrained(maxWidth: Breakpoints.small)
+                  .padded(const EdgeInsets.symmetric(horizontal: 64.0))
+                  .centered(),
 
-          bottomNavigationBar: LevelInput(
-            onSubmit: () async {
-              final match = await controller.checkAnswer(
-                _answerFieldController.text,
-              );
+          bottomNavigationBar:
+              LevelInput(
+                    onSubmit: () async {
+                      final match = await controller.checkAnswer(
+                        _answerFieldController.text,
+                      );
 
-              if (!match) {
-                showSnackbar(context, 'levels.wrong_answer'.tr());
-                return;
-              }
+                      if (!match) {
+                        showSnackbar(context, 'levels.wrong_answer'.tr());
+                        return;
+                      }
 
-              final soundEffects = ref
-                  .read(preferencesNotifierProvider)
-                  .allowSounds;
+                      final soundEffects = ref
+                          .read(preferencesNotifierProvider)
+                          .allowSounds;
 
-              await showLevelCompletedDialog(
-                context,
-                soundEffects: soundEffects,
-                rootNavigator: false,
-              );
+                      await showLevelCompletedDialog(
+                        context,
+                        soundEffects: soundEffects,
+                        rootNavigator: false,
+                      );
 
-              _answerFieldController.clear();
+                      _answerFieldController.clear();
 
-              if (level.id < count) {
-                await ref
-                    .read(routerProvider)
-                    .replace('/levels/${level.id + 1}');
-              } else {
-                ref.read(routerProvider).pop(true);
-              }
-            },
-            onAdd: (char) {
-              addItem(char);
-            },
-            onClear: () {
-              clearAnswer();
-            },
+                      if (level.id < count) {
+                        await ref
+                            .read(routerProvider)
+                            .replace('/levels/${level.id + 1}');
+                      } else {
+                        ref.read(routerProvider).pop(true);
+                      }
+                    },
+                    onAdd: (char) {
+                      addItem(char);
+                    },
+                    onClear: () {
+                      clearAnswer();
+                    },
 
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 8.0,
-            ),
-            controller: _answerFieldController,
-            items: level.options,
-          ).constrained(maxWidth: Breakpoints.small).aligned(Alignment.center),
+                    items: level.options,
+                    controller: _answerFieldController,
+                  )
+                  .constrained(maxWidth: Breakpoints.small)
+                  .padded(
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  ),
         ).dismissKeyboard(context);
-      },
-
-      loading: () {
-        return const LevelPageSkeleton();
-      },
-
-      error: (error, _) {
-        return LevelPageError(
-          onRetry: () async {
-            await controller.refresh();
-          },
-          error: error,
-        );
       },
     );
   }
