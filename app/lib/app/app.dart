@@ -29,6 +29,8 @@ final class _MainAppState extends ConsumerState<MainApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.setLocale(const Locale('en'));
+
       await DatabaseService.initialize();
       await PurchaseService.initialize(
         onDone: () {

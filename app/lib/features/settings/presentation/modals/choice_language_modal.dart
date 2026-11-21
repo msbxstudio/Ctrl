@@ -4,18 +4,16 @@ import 'package:material_ui/material_ui.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:msbx/extensions.dart';
 
+import 'package:ctrl/features/settings.dart';
 import 'package:ctrl/shared/dialogs.dart';
-
-final _languages = const [
-  {'title': 'Español', 'code': 'es'},
-  {'title': 'English', 'code': 'en'},
-];
 
 Future<String?> showChoiceLanguageModal(
   BuildContext context, {
   required String initialValue,
 }) {
-  return showAppModal<String?>(
+  final theme = Theme.of(context);
+
+  return showAppModal<String>(
     context,
     useSafeArea: true,
     constraints: const BoxConstraints(maxWidth: 400.0),
@@ -24,7 +22,7 @@ Future<String?> showChoiceLanguageModal(
       groupValue: initialValue,
       onChanged: (value) {
         if (!context.mounted) return;
-        Navigator.of(context, rootNavigator: true).pop<String?>(value);
+        Navigator.of(context, rootNavigator: true).pop<String>(value);
       },
 
       child: Column(
@@ -36,29 +34,32 @@ Future<String?> showChoiceLanguageModal(
           Text(
             'dialogs.language.title'.tr(),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),
 
           const SizedBox(height: 12.0),
 
           Text(
             'dialogs.language.description'.tr(),
-            style: Theme.of(context).textTheme.bodyLarge
-                ?.copyWith(color: Theme.of(context).colorScheme.outline),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.outline,
+            ),
           ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),
 
           const SizedBox(height: 12.0),
 
-          ..._languages.map(
+          ...AppLanguage.values.map(
             (e) => RadioListTile<String>(
               contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
 
-              value: e['code']!,
+              value: e.name,
               title: Text(
-                e['title']!,
-                style: Theme.of(context).textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w500),
+                e.label,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),

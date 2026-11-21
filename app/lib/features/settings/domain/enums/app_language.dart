@@ -28,9 +28,4 @@ enum AppLanguage {
       en => 'EN',
     };
   }
-
-  @override
-  String toString() {
-    return name.toLowerCase();
-  }
 }

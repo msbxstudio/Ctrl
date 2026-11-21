@@ -25,7 +25,6 @@ final class AppColorScheme {
     onTertiaryContainer: const Color(0xFFF2DAFF),
 
     // Surfaces
-    // surface: const Color(0xFF0B0A0D),
     surface: const Color(0xFF111418),
     onSurface: const Color(0xFFE1E2E8),
     inverseSurface: const Color(0xFFE1E2E8),

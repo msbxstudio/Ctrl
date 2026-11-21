@@ -38,60 +38,69 @@ final class _MainPageState extends ConsumerState<MainPage> {
     final theme = Theme.of(context);
 
     final controller = ref.read(mainControllerProvider.notifier);
-    final asyncValue = ref.watch(mainControllerProvider);
+    final value = ref.watch(mainControllerProvider);
 
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
       ),
 
-      child: asyncValue.when(
-        loading: () {
-          return const MainPageSkeleton();
-        },
+      child: Scaffold(
+        appBar: value.hasValue
+            ? AppBar(
+                actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      final refresh = await ref
+                          .read(routerProvider)
+                          .push<bool>(SettingsPage.routePath);
 
-        error: (e, _) {
-          return MainPageError(
-            onRetry: () async {
-              await controller.refresh();
-            },
-            error: e,
-          );
-        },
+                      if (refresh != true) return;
+                      await controller.refresh();
+                    },
 
-        data: (state) {
-          final MainState(
-            :player,
-            :currentLevel,
-            :solvedPuzzles,
-            :averageTime,
-          ) = state;
-
-          return Scaffold(
-            appBar: AppBar(
-              actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    await ref.read(routerProvider).push(SettingsPage.routePath);
-                    await controller.refresh();
-                  },
-
-                  tooltip: 'home.settings_tooltip'.tr(),
-                  icon: Icon(
-                    LucideIcons.settings,
-                    color: theme.colorScheme.outline,
+                    tooltip: 'home.settings_tooltip'.tr(),
+                    icon: Icon(
+                      LucideIcons.settings,
+                      color: theme.colorScheme.outline,
+                    ),
                   ),
+                ],
+
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(24.0),
+                  child: _buildGreeting(value.requireValue.player.name)
+                      .constrained(maxWidth: Breakpoints.small)
+                      .padded(const EdgeInsets.symmetric(horizontal: 16.0))
+                      .aligned(Alignment.centerLeft),
                 ),
-              ],
+              )
+            : null,
 
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(24.0),
-                child: greeting(player.name),
-              ),
-            ),
+        body: value.when(
+          loading: () {
+            return const MainPageSkeleton();
+          },
 
-            body: SafeArea(
+          error: (error, _) {
+            return MainPageError(
+              onRetry: () async {
+                await controller.refresh();
+              },
+              error: error,
+            );
+          },
+
+          data: (state) {
+            final MainState(
+              :player,
+              :currentLevel,
+              :solvedPuzzles,
+              :averageTime,
+            ) = state;
+
+            return SafeArea(
               child: RefreshIndicator.adaptive(
                 onRefresh: controller.refresh,
 
@@ -114,7 +123,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                             spacing: 8.0,
 
                             children: [
-                              hero(
+                              _buildHero(
                                 currentLevel: currentLevel,
                                 solvedPuzzles: solvedPuzzles,
                               ),
@@ -124,7 +133,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                               Row(
                                 spacing: 12.0,
                                 children: [
-                                  button(
+                                  _buildButton(
                                     label: 'home.buttons.levels'.tr(),
                                     icon: LucideIcons.grip,
                                     route: '/levels',
@@ -132,7 +141,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
                                     controller: controller,
                                     highlight: false,
                                   ).expand(),
-                                  button(
+                                  _buildButton(
                                     label: 'home.buttons.play'.tr(),
                                     icon: LucideIcons.play,
                                     route: '/levels/${currentLevel.id}',
@@ -149,13 +158,13 @@ final class _MainPageState extends ConsumerState<MainPage> {
                             spacing: 12.0,
 
                             children: [
-                              metric(
+                              _buildMetric(
                                 icon: Symbols.timer,
                                 label: 'home.metrics.avg_time'.tr(),
                                 value: formatDuration(averageTime),
                                 highlight: false,
                               ).expand(),
-                              metric(
+                              _buildMetric(
                                 icon: Symbols.local_fire_department,
                                 label: 'home.metrics.streak'.tr(),
                                 value: 'home.metrics.days'.tr(
@@ -171,22 +180,18 @@ final class _MainPageState extends ConsumerState<MainPage> {
                   },
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget greeting(String name) {
+  Widget _buildGreeting(String name) {
     return Text(
-          'home.greeting'.tr(namedArgs: {'name': name}),
-          style: Theme.of(context).textTheme.titleLarge,
-        )
-        .padded(const EdgeInsets.symmetric(horizontal: 16.0))
-        .aligned(Alignment.centerLeft)
-        .constrained(maxWidth: Breakpoints.small)
-        .centered();
+      'home.greeting'.tr(namedArgs: {'name': name}),
+      style: Theme.of(context).textTheme.titleLarge,
+    );
   }
 
   Widget card({
@@ -210,7 +215,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget hero({required Level currentLevel, required int solvedPuzzles}) {
+  Widget _buildHero({required Level currentLevel, required int solvedPuzzles}) {
     final theme = Theme.of(context);
 
     return card(
@@ -279,7 +284,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget button({
+  Widget _buildButton({
     required String label,
     required IconData icon,
     required String route,
@@ -315,7 +320,7 @@ final class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 
-  Widget metric({
+  Widget _buildMetric({
     required IconData icon,
     required String label,
     required String value,
