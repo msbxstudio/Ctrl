@@ -15,8 +15,6 @@ export 'settings/data/datasources/shared_preferences_datasource.dart';
 
 export 'settings/data/models/preferences_model.dart';
 
-export 'settings/data/dtos/settings_data.dart';
-
 export 'settings/data/repos/preferences_repository_impl.dart';
 
 // ---------------------------------------------------------------------------
@@ -32,6 +30,8 @@ export 'settings/presentation/pages/settings_page.dart';
 
 export 'settings/presentation/providers/preferences_provider.dart';
 export 'settings/presentation/providers/settings_provider.dart';
+
+export 'settings/presentation/states/settings_state.dart';
 
 export 'settings/presentation/widgets/section_card.dart';
 export 'settings/presentation/widgets/setting_option.dart';

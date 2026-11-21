@@ -2,8 +2,10 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:msbx/extensions.dart';
-import 'package:msbx/utils.dart';
 
 import 'package:ctrl/app/router.dart';
 import 'package:ctrl/app/startup.dart';
@@ -26,12 +28,12 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
     super.initState();
 
     ref.listenManual(splashControllerProvider, (_, next) {
-      next.maybeWhen(
-        data: (status) {
-          ref.read(routerProvider).replace('/');
-        },
-        orElse: () {
-          Debugger.log('SplashPage: No data yet');
+      next.whenOrNull(
+        data: (state) async {
+          if (!context.mounted) return;
+
+          await context.setLocale(Locale(state.language.name));
+          await ref.read(routerProvider).replace('/');
         },
       );
     });
@@ -39,10 +41,8 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext _) {
-    final asyncValue = ref.watch(splashControllerProvider);
+    final value = ref.watch(splashControllerProvider);
 
-    return Scaffold(
-      body: AnimatedLogo(enabled: asyncValue.isLoading).centered(),
-    );
+    return Scaffold(body: AnimatedLogo(enabled: value.isLoading).centered());
   }
 }

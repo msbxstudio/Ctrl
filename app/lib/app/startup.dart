@@ -12,3 +12,8 @@ export 'startup/pages/splash_page.dart';
 // Providers
 // ---------------------------------------------------------------------------
 export 'startup/providers/splash_provider.dart';
+
+// ---------------------------------------------------------------------------
+// States
+// ---------------------------------------------------------------------------
+export 'startup/states/splash_state.dart';

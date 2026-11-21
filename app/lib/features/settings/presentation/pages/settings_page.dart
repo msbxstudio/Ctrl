@@ -3,7 +3,9 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:msbx/config.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
@@ -63,40 +65,44 @@ final class SettingsPage extends ConsumerStatefulWidget {
 
 final class _SettingsPageState extends ConsumerState<SettingsPage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext _) {
     final controller = ref.read(settingsControllerProvider.notifier);
-    final asyncValue = ref.watch(settingsControllerProvider);
+    final value = ref.watch(settingsControllerProvider);
 
-    return asyncValue.when(
-      loading: () {
-        return const SettingsPageSkeleton();
-      },
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        automaticallyImplyActions: false,
 
-      error: (error, _) {
-        return SettingsPageError(
-          onRetry: () {
-            return controller.refresh();
-          },
-          error: error,
-        );
-      },
+        titleSpacing: 8.0,
+        title: Text('settings.title'.tr()),
 
-      data: (data) {
-        final (:player, :langCode, :soundEffects) = data;
+        leadingWidth: 64.0,
+        leading: const PopButton.back(),
+      ),
 
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: false,
-            automaticallyImplyLeading: false,
-            automaticallyImplyActions: false,
+      body: value.when(
+        skipLoadingOnRefresh: true,
+        skipLoadingOnReload: true,
 
-            titleSpacing: 8.0,
-            title: Text('settings.title'.tr()),
+        loading: () {
+          return const SettingsPageSkeleton();
+        },
 
-            leadingWidth: 64.0,
-            leading: const PopButton.back(),
-          ),
-          body: SafeArea(
+        error: (error, _) {
+          return SettingsPageError(
+            onRetry: () {
+              return controller.refresh();
+            },
+            error: error,
+          );
+        },
+
+        data: (state) {
+          final SettingsState(:player, :langCode, :soundEffects) = state;
+
+          return SafeArea(
             child: RefreshIndicator.adaptive(
               onRefresh: controller.refresh,
 
@@ -133,11 +139,13 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         actions: [
                           SettingOption.tile(
                             onPressed: () {
-                              handleChangeLang(controller);
+                              handleChangeLang(controller, langCode);
                             },
 
                             title: 'settings.preferences.language'.tr(),
-                            trailing: Text(langCode),
+                            trailing: Text(
+                              AppLanguage.fromDbValue(langCode).label,
+                            ),
                           ),
                           SettingOption.toggle(
                             onChanged: (value) async {
@@ -225,9 +233,9 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                 },
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -241,13 +249,10 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
     await controller.updateName(name: name);
   }
 
-  void handleChangeLang(SettingsController controller) async {
-    final lang = await showChoiceLanguageModal(
-      context,
-      initialValue: context.locale.languageCode,
-    );
+  void handleChangeLang(SettingsController controller, String langCode) async {
+    final lang = await showChoiceLanguageModal(context, initialValue: langCode);
 
-    if (lang == null) return;
+    if (lang == null || !mounted) return;
     await controller.updateLanguage(context, langCode: lang);
   }
 

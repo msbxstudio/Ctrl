@@ -2,25 +2,29 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
+
+import 'package:msbx/contracts.dart';
 
 import 'package:ctrl/features/player.dart';
 import 'package:ctrl/features/settings.dart';
 
 /// Controller for [SettingsPage] view.
-final class SettingsController extends AutoDisposeAsyncNotifier<SettingsData> {
+final class SettingsController extends AutoDisposeAsyncNotifier<SettingsState>
+    implements Refreshable {
   @override
-  Future<SettingsData> build() async {
+  Future<SettingsState> build() async {
     final preferences = ref.watch(preferencesNotifierProvider);
     final player = await ref.read(playerRepositoryProvider).get();
 
-    return (
+    return SettingsState(
       player: player,
       langCode: preferences.language.name,
       soundEffects: preferences.allowSounds,
     );
   }
 
+  @override
   Future<void> refresh() async {
     ref.invalidateSelf();
     await future;

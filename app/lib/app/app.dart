@@ -29,9 +29,6 @@ final class _MainAppState extends ConsumerState<MainApp> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.setLocale(const Locale('en'));
-
-      await DatabaseService.initialize();
       await PurchaseService.initialize(
         onDone: () {
           Debugger.log('Purchase stream finished');
@@ -42,12 +39,6 @@ final class _MainAppState extends ConsumerState<MainApp> {
         },
       );
     });
-  }
-
-  @override
-  void dispose() {
-    // DatabaseService.instance.dispose();
-    super.dispose();
   }
 
   @override
@@ -62,7 +53,11 @@ final class _MainAppState extends ConsumerState<MainApp> {
       theme: Theme.of(context).dark,
       themeMode: ThemeMode.dark,
 
-      localizationsDelegates: context.localizationDelegates,
+      localizationsDelegates: [
+        ...context.localizationDelegates,
+        // Easy Localization provides the legacy Flutter UI delegates.
+        ...GlobalMaterialLocalizations.delegates,
+      ],
       supportedLocales: context.supportedLocales,
 
       locale: context.locale,
