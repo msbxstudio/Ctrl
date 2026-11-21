@@ -133,10 +133,10 @@ packages:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: "41e005c33bd814be4d3096aff55b1908d419fde52ca656c8c47719ec745873cd"
+      sha256: b7cc2390aac296c083bea762859413eb1cf5b630c70e0c7e4d831018f762a8b2
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.9"
+    version: "2.0.0"
   cupertino_ui:
     dependency: "direct main"
     description:
@@ -257,10 +257,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: d8f590a69729f719177ea68eb1e598295e8dbc41bbc247fed78b2c8a25660d7c
+      sha256: d4105f50c438c37d0d1372b1fbf1617fe9be398b559fa29d2067756ebbd42b69
       url: "https://pub.dev"
     source: hosted
-    version: "16.3.0"
+    version: "18.1.4"
   hooks:
     dependency: transitive
     description:
@@ -289,18 +289,18 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_purchase
-      sha256: "50004f9e4392deabc7e2585587c38aed4d08d782869cb31c610b657c9a43207b"
+      sha256: d8317ec2ed6fe33199957d67ee67e08a4fd4871ef93b91d7611d8ee560892afc
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.3.1"
   in_app_purchase_android:
     dependency: "direct main"
     description:
       name: in_app_purchase_android
-      sha256: "518b48a385dfc1aa278080472969c6cee0c3d41ef8b9511b0071dd015473ecf1"
+      sha256: b76ab601573f8a848e72d015496257235066ba3479bef6300482239f417e0d72
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0+11"
+    version: "0.5.5"
   in_app_purchase_platform_interface:
     dependency: transitive
     description:
@@ -313,10 +313,10 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_purchase_storekit
-      sha256: "6ce1361278cacc0481508989ba419b2c9f46a2b0dc54b3fe54f5ee63c2718fef"
+      sha256: e9278eb778170ce65a9e2d17672924f41b0f2f3ad958cd9f6ea7ffc0826efa29
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.22+1"
+    version: "0.4.17"
   intl:
     dependency: "direct main"
     description:
