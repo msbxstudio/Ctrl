@@ -11,7 +11,7 @@ final class LevelRepositoryImpl implements LevelRepository {
   @override
   Future<List<Level>> getAll() async {
     try {
-      final result = await _service.query('level');
+      final result = await _service.query('levels');
       final levels = result.map(LevelModel.fromJson).toList();
 
       return levels;
@@ -24,7 +24,7 @@ final class LevelRepositoryImpl implements LevelRepository {
   Future<Level> getOne({required int id}) async {
     try {
       final result = await _service.query(
-        'level',
+        'levels',
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -48,7 +48,7 @@ final class LevelRepositoryImpl implements LevelRepository {
   @override
   Future<int> count() async {
     try {
-      final result = await _service.query('level', columns: const ['id']);
+      final result = await _service.query('levels', columns: const ['id']);
 
       return result.length;
     } catch (e) {

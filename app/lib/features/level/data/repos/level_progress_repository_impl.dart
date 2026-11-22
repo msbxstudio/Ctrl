@@ -12,7 +12,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   @override
   Future<List<LevelProgress>> getAll() async {
     try {
-      final result = await _service.query('level_progress');
+      final result = await _service.query('level_progresses');
       final progress = result.map(LevelProgressModel.fromJson).toList();
 
       return progress;
@@ -30,7 +30,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
 
     try {
       final result = await _service.query(
-        'level_progress',
+        'level_progresses',
         where: 'id = ? OR level_id = ?',
         whereArgs: [id, levelId],
       );
@@ -58,7 +58,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     required int ellapsedTime,
   }) async {
     try {
-      final id = await _service.insert('level_progress', {
+      final id = await _service.insert('level_progresses', {
         'level_id': levelId,
         'attempts': attempts,
         'time_ms': ellapsedTime,
@@ -100,7 +100,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       if (data.isEmpty) return await getOne(id: id);
 
       await _service.update(
-        'level_progress',
+        'level_progresses',
         data,
         where: 'id = ?',
         whereArgs: [id],
@@ -120,7 +120,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   Future<int> averageTime() async {
     try {
       final result = await _service.query(
-        'level_progress',
+        'level_progresses',
         columns: ['AVG(time_ms) AS average_time'],
       );
 
@@ -144,7 +144,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   Future<int> count({bool? completed, bool? distinct}) async {
     try {
       final result = await _service.query(
-        'level_progress',
+        'level_progresses',
         columns: ['COUNT(*) AS count'],
         where: completed != null ? 'is_completed = ?' : null,
         whereArgs: completed != null ? [completed ? 1 : 0] : null,

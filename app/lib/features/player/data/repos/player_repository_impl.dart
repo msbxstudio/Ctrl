@@ -11,7 +11,7 @@ final class PlayerRepositoryImpl implements PlayerRepository {
   Future<Player> get() async {
     try {
       final result = await _service.query(
-        'player',
+        'players',
         where: 'id = ?',
         whereArgs: [1],
       );
@@ -60,7 +60,7 @@ final class PlayerRepositoryImpl implements PlayerRepository {
 
       if (data.isEmpty) return await get();
 
-      await _service.update('player', data, where: 'id = ?', whereArgs: [1]);
+      await _service.update('players', data, where: 'id = ?', whereArgs: [1]);
 
       return await get();
     } catch (e) {

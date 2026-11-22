@@ -168,7 +168,7 @@ final class DatabaseService implements Disposable {
 
     await database.transaction((txn) async {
       for (final data in jsonData) {
-        await txn.insert('level', <String, dynamic>{
+        await txn.insert('levels', <String, dynamic>{
           ...data,
           'question': jsonEncode(data['question']),
           'options': jsonEncode(data['options']),
@@ -176,7 +176,7 @@ final class DatabaseService implements Disposable {
         }, conflictAlgorithm: ConflictAlgorithm.ignore);
       }
 
-      await txn.insert('player', {
+      await txn.insert('players', {
         'id': 1,
         'name': 'Player',
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
@@ -348,20 +348,20 @@ final class DatabaseService implements Disposable {
 
 /// Defines the SQLite database schema and its versioned migrations.
 ///
-/// Creates the initial application tables and provides a migration
-/// entry point for future schema upgrades.
+/// Creates the current application tables and upgrades older schemas
+/// while preserving existing data.
 final class _DatabaseMigration {
   /// Current database schema version.
-  static const int version = 1;
+  static const int version = 2;
 
-  /// Creates the initial database schema.
+  /// Creates the current database schema for new installations.
   ///
-  /// Defines the level, level progress, and player tables with their
+  /// Defines the levels, level progresses, and players tables with their
   /// corresponding constraints and relationships.
   static Future<void> onCreate(Database db, int version) async {
-    // 1. Table: level
+    // 1. Table: levels
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS level (
+      CREATE TABLE IF NOT EXISTS levels (
         id INTEGER PRIMARY KEY,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         type TEXT NOT NULL,
@@ -373,9 +373,9 @@ final class _DatabaseMigration {
       );
     ''');
 
-    // 2. Table: level_progress
+    // 2. Table: level_progresses
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS level_progress (
+      CREATE TABLE IF NOT EXISTS level_progresses (
         id INTEGER PRIMARY KEY,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         attempts INTEGER NOT NULL DEFAULT 0,
@@ -384,14 +384,14 @@ final class _DatabaseMigration {
         level_id INTEGER NOT NULL,
 
         FOREIGN KEY(level_id)
-          REFERENCES level(id)
+          REFERENCES levels(id)
           ON DELETE CASCADE
       );
     ''');
 
-    // 3. Table: player
+    // 3. Table: players
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS player (
+      CREATE TABLE IF NOT EXISTS players (
         id INTEGER PRIMARY KEY,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TEXT NULL,
@@ -401,7 +401,7 @@ final class _DatabaseMigration {
         current_level_id INTEGER NOT NULL DEFAULT 1,
 
         FOREIGN KEY(current_level_id)
-          REFERENCES level(id)
+          REFERENCES levels(id)
       );
     ''');
   }
@@ -410,12 +410,17 @@ final class _DatabaseMigration {
   ///
   /// Receives the previous [oldVersion] and target [newVersion].
   ///
-  /// No migrations are currently defined for the initial schema version.
+  /// Version 2 pluralizes table names without recreating their records.
+  /// sqflite runs this callback inside a transaction.
   static Future<void> onUpgrade(
     Database db,
     int oldVersion,
     int newVersion,
   ) async {
-    // MVP: no migrations yet.
+    if (oldVersion < 2 && newVersion >= 2) {
+      await db.execute('ALTER TABLE level RENAME TO levels');
+      await db.execute('ALTER TABLE level_progress RENAME TO level_progresses');
+      await db.execute('ALTER TABLE player RENAME TO players');
+    }
   }
 }
