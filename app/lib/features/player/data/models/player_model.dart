@@ -1,20 +1,36 @@
 import 'package:ctrl/features/player.dart';
 
-final class PlayerModel extends Player {
-  const PlayerModel(
-    super.id, {
-    required super.name,
-    required super.createdAt,
-    super.updatedAt,
-    super.lastActiveAt,
-    required super.streakDays,
-    required super.currentLevelId,
-    super.currentLevel,
+final class PlayerModel {
+  const new({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.lastActiveAt,
+    required this.streakDays,
   });
 
-  factory PlayerModel.fromJson(Map<String, Object?> map) {
+  ///
+  final int id;
+
+  ///
+  final DateTime createdAt;
+
+  ///
+  final DateTime? updatedAt;
+
+  ///
+  final DateTime? lastActiveAt;
+
+  ///
+  final String name;
+
+  ///
+  final int streakDays;
+
+  factory PlayerModel.fromMap(Map<String, Object?> map) {
     return PlayerModel(
-      map['id'] as int,
+      id: map['id'] as int,
       name: map['name'] as String,
       createdAt: DateTime.parse(map['created_at'] as String),
       updatedAt: map['updated_at'] != null
@@ -24,11 +40,21 @@ final class PlayerModel extends Player {
           ? DateTime.parse(map['last_active_at'] as String)
           : null,
       streakDays: map['streak_days'] as int,
-      currentLevelId: map['current_level_id'] as int,
     );
   }
 
-  Map<String, Object?> toJson() {
+  factory PlayerModel.fromEntity(Player entity) {
+    return PlayerModel(
+      id: entity.id,
+      name: entity.name,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      lastActiveAt: entity.lastActiveAt,
+      streakDays: entity.streakDays,
+    );
+  }
+
+  Map<String, Object?> toMap() {
     return {
       'id': id,
       'name': name,
@@ -36,7 +62,17 @@ final class PlayerModel extends Player {
       'updated_at': updatedAt?.toIso8601String(),
       'last_active_at': lastActiveAt?.toIso8601String(),
       'streak_days': streakDays,
-      'current_level_id': currentLevelId,
     };
+  }
+
+  Player toEntity() {
+    return Player(
+      id: id,
+      name: name,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      lastActiveAt: lastActiveAt,
+      streakDays: streakDays,
+    );
   }
 }

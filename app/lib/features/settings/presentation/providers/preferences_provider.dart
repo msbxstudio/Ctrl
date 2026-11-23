@@ -1,5 +1,6 @@
-import 'package:ctrl/features/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:ctrl/features/settings.dart';
 
 final preferencesRepositoryProvider = Provider<PreferencesRepository>((_) {
   throw UnimplementedError();

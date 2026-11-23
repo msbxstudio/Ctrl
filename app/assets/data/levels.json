@@ -16,13 +16,35 @@
     "keyboard": "symbol",
     "question": {
       "type": "code",
+      "value": "print('ok'"
+    },
+    "answer": ")",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 3,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "code",
       "value": "items[0_"
     },
     "answer": "]",
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 3,
+    "id": 4,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "code",
+      "value": "var a = [1, 2_"
+    },
+    "answer": "]",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 5,
     "type": "syntax",
     "keyboard": "symbol",
     "question": {
@@ -33,29 +55,40 @@
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 4,
+    "id": 6,
     "type": "syntax",
     "keyboard": "symbol",
     "question": {
       "type": "code",
-      "value": "if(x > 0)_"
-    },
-    "answer": "{",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 5,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "print('ok'"
+      "value": "if (x == y_ {"
     },
     "answer": ")",
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 6,
+    "id": 7,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "code",
+      "value": "console.log_\"test\")"
+    },
+    "answer": "(",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 8,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "code",
+      "value": "var str = _hello';"
+    },
+    "answer": "'",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 9,
     "type": "syntax",
     "keyboard": "symbol",
     "question": {
@@ -66,29 +99,29 @@
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 7,
+    "id": 10,
     "type": "syntax",
     "keyboard": "symbol",
     "question": {
-      "type": "raw",
-      "value": "(())]"
+      "type": "code",
+      "value": "let user = { id: 1 _"
     },
-    "answer": "[",
+    "answer": "}",
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 8,
+    "id": 11,
     "type": "syntax",
     "keyboard": "symbol",
     "question": {
-      "type": "raw",
-      "value": "{[)]}"
+      "type": "code",
+      "value": "if(x > 0)_"
     },
-    "answer": "(",
+    "answer": "{",
     "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
   },
   {
-    "id": 9,
+    "id": 12,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -99,7 +132,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 10,
+    "id": 13,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -110,7 +143,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 11,
+    "id": 14,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -121,47 +154,14 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 12,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(9 % 2)"
-    },
-    "answer": "1",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 13,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(2 * 3 + 1)"
-    },
-    "answer": "7",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 14,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print((2 + 3) * 2)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
     "id": 15,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print(3 + 4 * 2)"
+      "value": "print(6 / 2 + 1)"
     },
-    "answer": "11",
+    "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
@@ -170,35 +170,13 @@
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print((10 - 3) * 2 + 1)"
-    },
-    "answer": "15",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 17,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(18 / 3 + 2)"
-    },
-    "answer": "8",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 18,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print((2 + 3 + 4) / 3)"
+      "value": "var x = 12\nprint(x / 4)"
     },
     "answer": "3",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 19,
+    "id": 17,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -209,7 +187,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 20,
+    "id": 18,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -220,18 +198,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 21,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 5\nx = x + 1\nprint(x)"
-    },
-    "answer": "6",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 22,
+    "id": 19,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -242,117 +209,44 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
+    "id": 20,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var arr = [2, 4, 6]\nprint(arr[1])"
+    },
+    "answer": "4",
+    "hint": {
+      "type": "raw",
+      "value": "Array indices start at 0."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 21,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(9 % 2)"
+    },
+    "answer": "1",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 22,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(14 % 4)"
+    },
+    "answer": "2",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
     "id": 23,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 5\nvar y = 2\nprint(x * y + x)"
-    },
-    "answer": "15",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 24,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 2\nx = x + 3\nx = x * 2\nprint(x)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 25,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 4\nx = x * x\nx = x - 6\nprint(x)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 26,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 2\nvar y = x + 3\nvar z = y * 2\nprint(z)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 27,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "x=1\nx=x+2\nx=x*3\nprint(x)"
-    },
-    "answer": "9",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 28,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "x=2;\nx+=3;\nx*=2;\nprint(x)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 29,
-    "type": "logic",
-    "keyboard": "numeric",
-    "question": {
-      "type": "key",
-      "value": "levels.29.question"
-    },
-    "answer": "4",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 30,
-    "type": "logic",
-    "keyboard": "numeric",
-    "question": {
-      "type": "key",
-      "value": "levels.30.question"
-    },
-    "answer": "4",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 31,
-    "type": "logic",
-    "keyboard": "numeric",
-    "question": {
-      "type": "key",
-      "value": "levels.31.question"
-    },
-    "answer": "20",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 32,
-    "type": "logic",
-    "keyboard": "numeric",
-    "question": {
-      "type": "key",
-      "value": "levels.32.question"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 33,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -363,7 +257,7 @@
     "options": ["S", "D", "F", "O", "R", "Y", "A", "T", "W", "U"]
   },
   {
-    "id": 34,
+    "id": 24,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -374,7 +268,62 @@
     "options": ["L", "O", "X", "G", "I", "Y", "N", "M", "Z", "A"]
   },
   {
-    "id": 35,
+    "id": 25,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(2 * 3 + 1)"
+    },
+    "answer": "7",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 26,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(3 + 4 * 2)"
+    },
+    "answer": "11",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 27,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((2 + 3) * 2)"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 28,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(18 / 3 + 2)"
+    },
+    "answer": "8",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 29,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((2 + 3 + 4) / 3)"
+    },
+    "answer": "3",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 30,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -385,7 +334,125 @@
     "options": ["R", "E", "X", "T", "U", "Y", "A", "N", "Z", "O"]
   },
   {
+    "id": 31,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 5\nx = x + 1\nprint(x)"
+    },
+    "answer": "6",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 32,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "x=1\nx=x+2\nx=x*3\nprint(x)"
+    },
+    "answer": "9",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 33,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "x=2;\nx+=3;\nx*=2;\nprint(x)"
+    },
+    "answer": "10",
+    "hint": {
+      "type": "raw",
+      "value": "+= and *= modify the current value."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 34,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 5\nvar y = 2\nprint(x * y + x)"
+    },
+    "answer": "15",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 35,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 2\nx = x + 3\nx = x * 2\nprint(x)"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
     "id": 36,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 2\nvar y = x + 3\nvar z = y * 2\nprint(z)"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 37,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 4\nx = x * x\nx = x - 6\nprint(x)"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 38,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = 5\nvar b = a > 3 ? 10 : 20\nprint(b)"
+    },
+    "answer": "10",
+    "hint": {
+      "type": "raw",
+      "value": "condition ? a : b selects one of two values."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 39,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "raw",
+      "value": "(())]"
+    },
+    "answer": "[",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 40,
+    "type": "syntax",
+    "keyboard": "symbol",
+    "question": {
+      "type": "raw",
+      "value": "{[)]}"
+    },
+    "answer": "(",
+    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
+  },
+  {
+    "id": 41,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -396,7 +463,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 37,
+    "id": 42,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -407,7 +474,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 38,
+    "id": 43,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -418,7 +485,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 39,
+    "id": 44,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -429,7 +496,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 40,
+    "id": 45,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -440,51 +507,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 41,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var a = 3\nvar b = 4\nvar c = a + b\nprint(c * 2 + a)"
-    },
-    "answer": "17",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 42,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 10\nvar y = 3\nx = x - y\ny = x + y\nprint(y)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 43,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var a = 5\nvar b = 2\nvar c = a * b\na = c - 3\nprint(a + b)"
-    },
-    "answer": "9",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 44,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 2\nvar y = 3\nvar z = 4\nprint(x * y + y * z + x * z)"
-    },
-    "answer": "26",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 45,
+    "id": 46,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -492,17 +515,6 @@
       "value": "print((3 + 3 + 3 + 3) / 2)"
     },
     "answer": "6",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 46,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(4 * (5 - 2) + 3 * (2 + 1))"
-    },
-    "answer": "21",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
@@ -522,35 +534,13 @@
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print((8 + 2) * 3 - 4 * 2)"
-    },
-    "answer": "22",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 49,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
       "value": "var a = 10\nvar b = 5\nvar c = 2\nprint(a / b + c * 3)"
     },
     "answer": "8",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 50,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 3\nvar y = 5\nvar z = x + y\nx = z * 2\nprint(x - y)"
-    },
-    "answer": "11",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 51,
+    "id": 49,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -561,62 +551,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 52,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(100 / 10 + 6 * 2 - 4)"
-    },
-    "answer": "18",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 53,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var a = 7\nvar b = 3\na = a * b\nb = a - 5\nprint(a - b)"
-    },
-    "answer": "5",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 54,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print((9 * 9) / 3 + (6 % 4))"
-    },
-    "answer": "29",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 55,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print((12 / 3) * (5 - 1) + 2)"
-    },
-    "answer": "18",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 56,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var a = 6\nvar b = 2\nvar c = 3\nprint(a * b * c - a)"
-    },
-    "answer": "30",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 57,
+    "id": 50,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
@@ -627,29 +562,51 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 58,
+    "id": 51,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "var x = 5\nvar y = 2\nvar z = 1\nx = x + y + z\ny = x * z\nprint(x + y)"
+      "value": "print(100 / 10 + 6 * 2 - 4)"
     },
-    "answer": "16",
+    "answer": "18",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 59,
+    "id": 52,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print(6 / 2 + 1)"
+      "value": "print((10 - 3) * 2 + 1)"
+    },
+    "answer": "15",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 53,
+    "type": "logic",
+    "keyboard": "numeric",
+    "question": {
+      "type": "key",
+      "value": "levels.29.question"
     },
     "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 60,
+    "id": 54,
+    "type": "logic",
+    "keyboard": "numeric",
+    "question": {
+      "type": "key",
+      "value": "levels.30.question"
+    },
+    "answer": "4",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 55,
     "type": "logic",
     "keyboard": "boolean",
     "question": {
@@ -664,7 +621,7 @@
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
   {
-    "id": 61,
+    "id": 56,
     "type": "logic",
     "keyboard": "boolean",
     "question": {
@@ -679,7 +636,7 @@
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
   {
-    "id": 62,
+    "id": 57,
     "type": "logic",
     "keyboard": "boolean",
     "question": {
@@ -694,7 +651,7 @@
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
   {
-    "id": 63,
+    "id": 58,
     "type": "logic",
     "keyboard": "boolean",
     "question": {
@@ -709,7 +666,7 @@
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
   {
-    "id": 64,
+    "id": 59,
     "type": "logic",
     "keyboard": "boolean",
     "question": {
@@ -724,7 +681,7 @@
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
   {
-    "id": 65,
+    "id": 60,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -735,7 +692,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 66,
+    "id": 61,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -746,7 +703,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 67,
+    "id": 62,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -757,18 +714,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 68,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "sum = 0\nfor i = 1 to 4 {\n  sum = sum + i\n}\nprint(sum)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 69,
+    "id": 63,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -779,7 +725,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 70,
+    "id": 64,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -790,7 +736,7 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 71,
+    "id": 65,
     "type": "logic",
     "keyboard": "numeric",
     "question": {
@@ -801,14 +747,80 @@
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
+    "id": 66,
+    "type": "logic",
+    "keyboard": "numeric",
+    "question": {
+      "type": "key",
+      "value": "levels.31.question"
+    },
+    "answer": "20",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 67,
+    "type": "logic",
+    "keyboard": "numeric",
+    "question": {
+      "type": "key",
+      "value": "levels.32.question"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 68,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = 3\nvar b = 4\nvar c = a + b\nprint(c * 2 + a)"
+    },
+    "answer": "17",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 69,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 10\nvar y = 3\nx = x - y\ny = x + y\nprint(y)"
+    },
+    "answer": "10",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 70,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = 5\nvar b = 2\nvar c = a * b\na = c - 3\nprint(a + b)"
+    },
+    "answer": "9",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 71,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 2\nvar y = 3\nvar z = 4\nprint(x * y + y * z + x * z)"
+    },
+    "answer": "26",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
     "id": 72,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print(6 & 3)"
+      "value": "print(4 * (5 - 2) + 3 * (2 + 1))"
     },
-    "answer": "2",
+    "answer": "21",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
@@ -817,9 +829,9 @@
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "print(6 | 1)"
+      "value": "print((8 + 2) * 3 - 4 * 2)"
     },
-    "answer": "7",
+    "answer": "22",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
@@ -828,13 +840,124 @@
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "function f(n) {\n  if(n==1) return 1;\n  return n + f(n-1);\n}\nprint(f(4))"
+      "value": "var x = 3\nvar y = 5\nvar z = x + y\nx = z * 2\nprint(x - y)"
+    },
+    "answer": "11",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 75,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = 7\nvar b = 3\na = a * b\nb = a - 5\nprint(a - b)"
+    },
+    "answer": "5",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 76,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((9 * 9) / 3 + (6 % 4))"
+    },
+    "answer": "29",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 77,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((12 / 3) * (5 - 1) + 2)"
+    },
+    "answer": "18",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 78,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = 6\nvar b = 2\nvar c = 3\nprint(a * b * c - a)"
+    },
+    "answer": "30",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 79,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 5\nvar y = 2\nvar z = 1\nx = x + y + z\ny = x * z\nprint(x + y)"
+    },
+    "answer": "16",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 80,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "sum = 0\nfor i = 1 to 4 {\n  sum = sum + i\n}\nprint(sum)"
     },
     "answer": "10",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
   {
-    "id": 75,
+    "id": 81,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 1\nfor i = 1 to 3 {\n  x = x * 2\n}\nprint(x)"
+    },
+    "answer": "8",
+    "hint": {
+      "type": "raw",
+      "value": "The range 1 to 3 includes both endpoints."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 82,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(6 & 3)"
+    },
+    "answer": "2",
+    "hint": {
+      "type": "raw",
+      "value": "& = bitwise AND"
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 83,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print(6 | 1)"
+    },
+    "answer": "7",
+    "hint": {
+      "type": "raw",
+      "value": "| = bitwise OR"
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 84,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -849,7 +972,7 @@
     "options": ["S", "O", "R", "L", "P", "I", "D", "X", "Y", "Z"]
   },
   {
-    "id": 76,
+    "id": 85,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -864,7 +987,7 @@
     "options": ["E", "A", "B", "N", "C", "D", "F", "G", "H", "I"]
   },
   {
-    "id": 77,
+    "id": 86,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -875,7 +998,7 @@
     "options": ["S", "O", "X", "Y", "Z", "I", "D", "A", "B", "L"]
   },
   {
-    "id": 78,
+    "id": 87,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -886,7 +1009,7 @@
     "options": ["X", "E", "A", "B", "G", "C", "D", "S", "T", "R"]
   },
   {
-    "id": 79,
+    "id": 88,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -897,7 +1020,7 @@
     "options": ["H", "A", "V", "I", "N", "G", "W", "O", "R", "D"]
   },
   {
-    "id": 80,
+    "id": 89,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -908,7 +1031,7 @@
     "options": ["G", "Y", "R", "O", "U", "P", "H", "B", "A", "V"]
   },
   {
-    "id": 81,
+    "id": 90,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -923,7 +1046,7 @@
     "options": ["S", "B", "D", "E", "X", "Y", "Z", "A", "F", "C"]
   },
   {
-    "id": 82,
+    "id": 91,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -938,7 +1061,7 @@
     "options": ["F", "S", "B", "E", "X", "Y", "Z", "A", "C", "D"]
   },
   {
-    "id": 83,
+    "id": 92,
     "type": "hidden_word",
     "keyboard": "hidden_word",
     "question": {
@@ -949,7 +1072,7 @@
     "options": ["S", "O", "X", "Y", "Z", "I", "D", "A", "B", "L"]
   },
   {
-    "id": 84,
+    "id": 93,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -964,7 +1087,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 85,
+    "id": 94,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -979,7 +1102,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 86,
+    "id": 95,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -994,7 +1117,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 87,
+    "id": 96,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -1009,7 +1132,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 88,
+    "id": 97,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -1024,7 +1147,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 89,
+    "id": 98,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -1039,7 +1162,7 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 90,
+    "id": 99,
     "type": "complexity",
     "keyboard": "complexity",
     "question": {
@@ -1054,113 +1177,361 @@
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
   {
-    "id": 91,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "var a = [1, 2_"
-    },
-    "answer": "]",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 92,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "if (x == y_ {"
-    },
-    "answer": ")",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 93,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "let user = { id: 1 _"
-    },
-    "answer": "}",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 94,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "console.log_\"test\")"
-    },
-    "answer": "(",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 95,
-    "type": "syntax",
-    "keyboard": "symbol",
-    "question": {
-      "type": "code",
-      "value": "var str = _hello';"
-    },
-    "answer": "'",
-    "options": ["(", ")", "[", "]", "{", "}", "'", "\"", ".", ";"]
-  },
-  {
-    "id": 96,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var x = 12\nprint(x / 4)"
-    },
-    "answer": "3",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 97,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var a = 5\nvar b = a > 3 ? 10 : 20\nprint(b)"
-    },
-    "answer": "10",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 98,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "var arr = [2, 4, 6]\nprint(arr[1])"
-    },
-    "answer": "4",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
-    "id": 99,
-    "type": "output_prediction",
-    "keyboard": "numeric",
-    "question": {
-      "type": "code",
-      "value": "print(14 % 4)"
-    },
-    "answer": "2",
-    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-  },
-  {
     "id": 100,
     "type": "output_prediction",
     "keyboard": "numeric",
     "question": {
       "type": "code",
-      "value": "var x = 1\nfor i = 1 to 3 {\n  x = x * 2\n}\nprint(x)"
+      "value": "function f(n) {\n  if(n==1) return 1;\n  return n + f(n-1);\n}\nprint(f(4))"
+    },
+    "answer": "10",
+    "hint": {
+      "type": "raw",
+      "value": "Evaluate the base case first, then unwind the calls."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 101,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n == 1) return 1;\n  return n * f(n - 1);\n}\nprint(f(4))"
+    },
+    "answer": "24",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 102,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 0) return 0;\n  return n + f(n - 2);\n}\nprint(f(7))"
+    },
+    "answer": "16",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 103,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var count = 0\nfor i = 1 to 4 {\n  for j = 1 to i {\n    count = count + 1\n  }\n}\nprint(count)"
+    },
+    "answer": "10",
+    "hint": {
+      "type": "raw",
+      "value": "The inner loop runs i times."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 104,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 1\nfor i = 1 to 4 {\n  if (i % 2 == 0) x = x * i\n  else x = x + i\n}\nprint(x)"
+    },
+    "answer": "28",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 105,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = [1, 2, 3, 4]\nfor i = 1 to 3 {\n  a[i] = a[i] + a[i - 1]\n}\nprint(a[3])"
+    },
+    "answer": "10",
+    "hint": {
+      "type": "raw",
+      "value": "Changes to a[i] affect later iterations."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 106,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var count = 0\nfor i = 1 to 4 {\n  for j = 1 to i {\n    if (j % 2 == 0) count = count + 1\n  }\n}\nprint(count)"
+    },
+    "answer": "4",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 107,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 0\nfor i = 1 to 5 {\n  if (i == 4) break\n  x = x * 2 + i\n}\nprint(x)"
+    },
+    "answer": "11",
+    "hint": {
+      "type": "raw",
+      "value": "break stops the loop before updating x."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 108,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var x = 1\nfor i = 1 to 5 {\n  if (i % 2 == 0) continue\n  x = x * 2 + i\n}\nprint(x)"
+    },
+    "answer": "23",
+    "hint": {
+      "type": "raw",
+      "value": "continue skips the remaining body for that iteration."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 109,
+    "type": "logic",
+    "keyboard": "boolean",
+    "question": {
+      "type": "code",
+      "value": "var a = true\nvar b = false\nprint(!(a && !b) || (a == b))"
+    },
+    "answer": "F",
+    "hint": {
+      "type": "raw",
+      "value": "T = True\nF = False"
+    },
+    "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
+  },
+  {
+    "id": 110,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((12 ^ 5) & 7)"
+    },
+    "answer": "1",
+    "hint": {
+      "type": "raw",
+      "value": "^ = XOR\n& = AND"
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 111,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "print((5 << 1) ^ 3)"
+    },
+    "answer": "9",
+    "hint": {
+      "type": "raw",
+      "value": "<< 1 = shift left by one bit\n^ = XOR"
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 112,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = [2, 4, 6, 8]\nvar x = 10\nfor i = 0 to 3 {\n  if (i % 2 == 0) x = x + a[i]\n  else x = x - a[i]\n}\nprint(x)"
+    },
+    "answer": "6",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 113,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return n;\n  return f(n - 1) + f(n - 2);\n}\nprint(f(6))"
     },
     "answer": "8",
+    "hint": {
+      "type": "raw",
+      "value": "Start with f(0) and f(1), then work upward."
+    },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 114,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n == 0) return 0;\n  return 2 * f(n - 1) + 1;\n}\nprint(f(4))"
+    },
+    "answer": "15",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 115,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return 1;\n  return f(n - 1) + 2 * f(n - 2);\n}\nprint(f(5))"
+    },
+    "answer": "21",
+    "hint": {
+      "type": "raw",
+      "value": "Calculate smaller cases before evaluating f(5)."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 116,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n == 0) return 0;\n  if (n % 2 == 0) return f(n / 2);\n  return 1 + f(n - 1);\n}\nprint(f(13))"
+    },
+    "answer": "3",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 117,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var count = 0\nfor i = 1 to 4 {\n  for j = 1 to i {\n    if ((i + j) % 2 == 0) count = count + 1\n  }\n}\nprint(count)"
+    },
+    "answer": "6",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 118,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "var a = [1, 2, 3, 4]\nfor i = 0 to 2 {\n  a[i + 1] = a[i + 1] + a[i]\n}\nprint(a[3] + a[1])"
+    },
+    "answer": "13",
+    "hint": {
+      "type": "raw",
+      "value": "Updates are applied immediately, from left to right."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 119,
+    "type": "output_prediction",
+    "keyboard": "numeric",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return n;\n  if (n % 2 == 0) return f(n - 2) + 2;\n  return f(n - 1) + f(n - 2);\n}\nprint(f(7))"
+    },
+    "answer": "13",
+    "hint": {
+      "type": "raw",
+      "value": "Write down the values of f(0) through f(6)."
+    },
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+  },
+  {
+    "id": 120,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "for i = 1 to n {\n  for j = 1 to i {\n    work()\n  }\n}"
+    },
+    "answer": "2",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
+  },
+  {
+    "id": 121,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return;\n  work();\n  f(n / 2);\n  f(n / 2);\n}"
+    },
+    "answer": "n",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
+  },
+  {
+    "id": 122,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "for i = 1 to n {\n  var j = 1\n  while (j < n) {\n    work()\n    j = j * 2\n  }\n}"
+    },
+    "answer": "M",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
+  },
+  {
+    "id": 123,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return;\n  for i = 1 to n {\n    work()\n  }\n  f(n / 2);\n  f(n / 2);\n}"
+    },
+    "answer": "M",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
+  },
+  {
+    "id": 124,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "function f(n) {\n  if (n <= 1) return;\n  f(n - 1);\n  f(n - 1);\n}"
+    },
+    "answer": "E",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
+  },
+  {
+    "id": 125,
+    "type": "complexity",
+    "keyboard": "complexity",
+    "question": {
+      "type": "code",
+      "value": "for i = 1 to n {\n  var j = i\n  while (j < n) {\n    work()\n    j = j * 2\n  }\n}"
+    },
+    "answer": "n",
+    "hint": {
+      "type": "raw",
+      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)\nTip: the inner loop starts at i, not 1."
+    },
+    "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   }
 ]

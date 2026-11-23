@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
+
 import 'package:msbx/contracts.dart';
 import 'package:msbx/exceptions.dart';
 
@@ -89,9 +90,9 @@ final class LevelController
               streakDays: match
                   ? calculateStreak(player.streakDays, player.lastActiveAt)
                   : null,
-              currentLevelId: (match && level.id < count)
-                  ? level.id + 1
-                  : level.id,
+              // currentLevelId: (match && level.id < count)
+              //     ? level.id + 1
+              //     : level.id,
             );
 
         state = AsyncData(

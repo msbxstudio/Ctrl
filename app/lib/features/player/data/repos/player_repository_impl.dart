@@ -1,28 +1,22 @@
 import 'package:msbx/exceptions.dart';
-import 'package:ctrl/core/services.dart';
+
 import 'package:ctrl/features/player.dart';
 
 final class PlayerRepositoryImpl implements PlayerRepository {
-  final DatabaseService _service;
+  const new({required this._local});
 
-  const PlayerRepositoryImpl(this._service);
+  final LocalPlayerDataSource _local;
 
   @override
   Future<Player> get() async {
     try {
-      final result = await _service.query(
-        'players',
-        where: 'id = ?',
-        whereArgs: [1],
-      );
+      final result = await _local.get();
 
-      if (result.isEmpty) {
-        throw const NotFoundException('Player not found');
+      if (result == null) {
+        throw UnsupportedError('Player not found');
       }
 
-      final player = PlayerModel.fromJson(result.first);
-
-      return player;
+      return result.toEntity();
     } catch (e) {
       if (e is AppException) {
         rethrow;
@@ -37,32 +31,22 @@ final class PlayerRepositoryImpl implements PlayerRepository {
     String? name,
     DateTime? lastActiveAt,
     int? streakDays,
-    int? currentLevelId,
   }) async {
-    final data = <String, Object?>{};
-
     try {
-      if (name != null) {
-        data['name'] = name;
-      }
+      final current = await get();
 
-      if (lastActiveAt != null) {
-        data['last_active_at'] = lastActiveAt.toIso8601String();
-      }
+      final updated = Player(
+        id: current.id,
+        name: name ?? current.name,
+        createdAt: current.createdAt,
+        updatedAt: DateTime.now(),
+        lastActiveAt: lastActiveAt ?? current.lastActiveAt,
+        streakDays: streakDays ?? current.streakDays,
+      );
 
-      if (streakDays != null) {
-        data['streak_days'] = streakDays;
-      }
+      await _local.save(PlayerModel.fromEntity(updated));
 
-      if (currentLevelId != null) {
-        data['current_level_id'] = currentLevelId;
-      }
-
-      if (data.isEmpty) return await get();
-
-      await _service.update('players', data, where: 'id = ?', whereArgs: [1]);
-
-      return await get();
+      return updated;
     } catch (e) {
       if (e is AppException) {
         rethrow;

@@ -9,6 +9,5 @@ abstract interface class PlayerRepository {
     String? name,
     DateTime? lastActiveAt,
     int? streakDays,
-    int? currentLevelId,
   });
 }

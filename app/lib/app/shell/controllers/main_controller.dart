@@ -14,7 +14,7 @@ final class MainController extends AutoDisposeAsyncNotifier<MainState>
     final player = await ref.read(playerRepositoryProvider).get();
 
     final (currentLevel, solvedPuzzles, averageTime) = await Future.wait([
-      ref.read(levelRepositoryProvider).getOne(id: player.currentLevelId),
+      ref.read(levelRepositoryProvider).getCurrent(),
       ref
           .read(levelProgressRepositoryProvider)
           .count(completed: true, distinct: true),

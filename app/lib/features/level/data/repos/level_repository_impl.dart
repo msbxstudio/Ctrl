@@ -4,19 +4,24 @@ import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelRepositoryImpl implements LevelRepository {
+  ///
   const new(this._service);
 
+  ///
   final DatabaseService _service;
 
   @override
   Future<List<Level>> getAll() async {
     try {
       final result = await _service.query('levels');
-      final levels = result.map(LevelModel.fromJson).toList();
 
-      return levels;
+      return result.map(LevelModel.fromMap).toList();
     } catch (e) {
-      throw const UnknownException('Failed to load levels');
+      if (e is AppException) {
+        rethrow;
+      }
+
+      throw const UnknownException('Failed to load level');
     }
   }
 
@@ -33,9 +38,36 @@ final class LevelRepositoryImpl implements LevelRepository {
         throw const NotFoundException('Level not found');
       }
 
-      final level = LevelModel.fromJson(result.first);
+      return LevelModel.fromMap(result.first);
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
 
-      return level;
+      throw const UnknownException('Failed to load level');
+    }
+  }
+
+  @override
+  Future<Level?> getCurrent() async {
+    try {
+      final result = await DatabaseService.instance.query(
+        'levels',
+        where: '''
+          NOT EXISTS (
+            SELECT 1
+            FROM level_progresses lp
+            WHERE lp.level_id = levels.id
+              AND lp.is_completed = 1
+          )
+        ''',
+        orderBy: 'sort_order ASC, id ASC',
+        limit: 1,
+      );
+
+      return result.firstOrNull != null
+          ? LevelModel.fromMap(result.first)
+          : null;
     } catch (e) {
       if (e is AppException) {
         rethrow;

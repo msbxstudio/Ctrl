@@ -7,5 +7,7 @@ abstract interface class LevelRepository {
 
   Future<Level> getOne({required int id});
 
+  Future<Level?> getCurrent();
+
   Future<int> count();
 }

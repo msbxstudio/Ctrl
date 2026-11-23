@@ -3,33 +3,35 @@ import 'dart:convert';
 import 'package:ctrl/features/level.dart';
 
 final class LevelModel extends Level {
-  const LevelModel(
-    super.id, {
+  const new({
+    required super.id,
     required super.type,
     required super.keyboard,
     required super.question,
     required super.answer,
-    super.hint,
+    required super.sortOrder,
+    required super.hint,
     required super.options,
-    super.progress,
+    required super.progress,
   });
 
-  factory LevelModel.fromJson(Map<String, dynamic> json) {
+  factory LevelModel.fromMap(Map<String, dynamic> map) {
     return LevelModel(
-      json['id'] as int,
+      id: map['id'] as int,
 
       question: LevelQuestionModel.fromJson(
-        jsonDecode(json['question']) as Map<String, dynamic>,
+        jsonDecode(map['question']) as Map<String, dynamic>,
       ),
-      hint: json['hint'] != null
+      hint: map['hint'] != null
           ? LevelHintModel.fromJson(
-              jsonDecode(json['hint']) as Map<String, dynamic>,
+              jsonDecode(map['hint']) as Map<String, dynamic>,
             )
           : null,
 
-      answer: json['answer'],
+      answer: map['answer'],
+      sortOrder: map['sort_order'],
 
-      type: switch (json['type']) {
+      type: switch (map['type']) {
         'syntax' => LevelType.syntax,
         'output_prediction' => LevelType.outputPrediction,
         'logic' => LevelType.logic,
@@ -38,7 +40,7 @@ final class LevelModel extends Level {
         _ => throw const FormatException('Invalid level type'),
       },
 
-      keyboard: switch (json['keyboard']) {
+      keyboard: switch (map['keyboard']) {
         'symbol' => LevelKeyboard.symbol,
         'numeric' => LevelKeyboard.numeric,
         'hidden_word' => LevelKeyboard.hiddenWord,
@@ -47,14 +49,17 @@ final class LevelModel extends Level {
         _ => throw const FormatException('Invalid keyboard type'),
       },
 
-      options: (jsonDecode(json['options']) as List).map((e) => '$e').toList(),
+      options: (jsonDecode(map['options']) as List).map((e) => '$e').toList(),
+
+      progress: null,
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'answer': answer,
+      'sort_order': sortOrder,
 
       'type': switch (type) {
         LevelType.syntax => 'syntax',
@@ -63,6 +68,7 @@ final class LevelModel extends Level {
         LevelType.hiddenWord => 'hidden_word',
         LevelType.complexity => 'complexity',
       },
+
       'keyboard': switch (keyboard) {
         LevelKeyboard.symbol => 'symbol',
         LevelKeyboard.numeric => 'numeric',

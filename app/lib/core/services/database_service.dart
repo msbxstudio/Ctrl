@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:msbx/utils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:msbx/contracts.dart';
@@ -147,33 +148,51 @@ final class DatabaseService implements Disposable {
 
     return openDatabase(
       path,
-      version: _DatabaseMigration.version,
-      onCreate: _DatabaseMigration.onCreate,
-      onUpgrade: _DatabaseMigration.onUpgrade,
+      version: _DatabaseConfiguration.version,
+      onCreate: _DatabaseConfiguration.onCreate,
+      onUpgrade: _DatabaseConfiguration.onUpgrade,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON;');
       },
     );
   }
 
-  /// Seeds the database with initial levels and player data.
+  /// Synchronizes bundled levels and initializes the default player.
   ///
-  /// Existing records are preserved. All insertions are performed
-  /// within a single transaction.
+  /// Existing level progress is preserved. Level content and display
+  /// order are updated to match the bundled JSON data.
   ///
-  /// Throws if the asset cannot be loaded, decoded, or inserted.
+  /// All changes are performed within a single transaction.
   static Future<void> _seedDatabase(Database database) async {
     final jsonString = await rootBundle.loadString('assets/data/levels.json');
-    final jsonData = jsonDecode(jsonString) as List;
+
+    final jsonData = jsonDecode(jsonString) as List<dynamic>;
 
     await database.transaction((txn) async {
-      for (final data in jsonData) {
-        await txn.insert('levels', <String, dynamic>{
-          ...data,
+      for (var index = 0; index < jsonData.length; index++) {
+        final data = jsonData[index] as Map<String, dynamic>;
+        final id = data['id'] as int;
+
+        final values = <String, Object?>{
+          'type': data['type'],
+          'keyboard': data['keyboard'],
           'question': jsonEncode(data['question']),
-          'options': jsonEncode(data['options']),
+          'answer': data['answer'],
           'hint': data['hint'] != null ? jsonEncode(data['hint']) : null,
-        }, conflictAlgorithm: ConflictAlgorithm.ignore);
+          'options': jsonEncode(data['options']),
+          'sort_order': index + 1,
+        };
+
+        final updated = await txn.update(
+          'levels',
+          values,
+          where: 'id = ?',
+          whereArgs: [id],
+        );
+
+        if (updated == 0) {
+          await txn.insert('levels', {'id': id, ...values});
+        }
       }
 
       await txn.insert('players', {
@@ -350,7 +369,7 @@ final class DatabaseService implements Disposable {
 ///
 /// Creates the current application tables and upgrades older schemas
 /// while preserving existing data.
-final class _DatabaseMigration {
+final class _DatabaseConfiguration {
   /// Current database schema version.
   static const int version = 2;
 
@@ -358,7 +377,7 @@ final class _DatabaseMigration {
   ///
   /// Defines the levels, level progresses, and players tables with their
   /// corresponding constraints and relationships.
-  static Future<void> onCreate(Database db, int version) async {
+  static Future<void> onCreate(Database db, int _) async {
     // 1. Table: levels
     await db.execute('''
       CREATE TABLE IF NOT EXISTS levels (
@@ -368,6 +387,7 @@ final class _DatabaseMigration {
         keyboard TEXT NOT NULL,
         question TEXT NOT NULL DEFAULT '{}',
         answer TEXT NOT NULL,
+        sort_order INTEGER NOT NULL DEFAULT 0,
         hint TEXT NULL,
         options TEXT NOT NULL DEFAULT '[]'
       );
@@ -381,7 +401,7 @@ final class _DatabaseMigration {
         attempts INTEGER NOT NULL DEFAULT 0,
         time_ms INTEGER NULL,
         is_completed INTEGER NOT NULL DEFAULT 0,
-        level_id INTEGER NOT NULL,
+        level_id INTEGER NOT NULL UNIQUE,
 
         FOREIGN KEY(level_id)
           REFERENCES levels(id)
@@ -397,11 +417,7 @@ final class _DatabaseMigration {
         updated_at TEXT NULL,
         last_active_at TEXT NULL,
         name TEXT NOT NULL,
-        streak_days INTEGER NOT NULL DEFAULT 0,
-        current_level_id INTEGER NOT NULL DEFAULT 1,
-
-        FOREIGN KEY(current_level_id)
-          REFERENCES levels(id)
+        streak_days INTEGER NOT NULL DEFAULT 0
       );
     ''');
   }
@@ -417,10 +433,53 @@ final class _DatabaseMigration {
     int oldVersion,
     int newVersion,
   ) async {
-    if (oldVersion < 2 && newVersion >= 2) {
-      await db.execute('ALTER TABLE level RENAME TO levels');
-      await db.execute('ALTER TABLE level_progress RENAME TO level_progresses');
-      await db.execute('ALTER TABLE player RENAME TO players');
+    if (oldVersion < 3 && newVersion >= 3) {
+      await db.execute('''
+        ALTER TABLE level RENAME TO levels;
+      ''');
+      await db.execute('''
+        ALTER TABLE level_progress RENAME TO level_progresses;
+      ''');
+      await db.execute('''
+        ALTER TABLE player RENAME TO players;
+      ''');
+
+      // 1. Add level ordering.
+      await db.execute('''
+        ALTER TABLE levels
+        ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0;
+      ''');
+
+      // 2. Create the new players table.
+      await db.execute('''
+        CREATE TABLE players_new (
+          id INTEGER PRIMARY KEY,
+          created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          updated_at TEXT NULL,
+          last_active_at TEXT NULL,
+          name TEXT NOT NULL,
+          streak_days INTEGER NOT NULL DEFAULT 0
+        );
+      ''');
+
+      // 3. Preserve existing player data.
+      await db.execute('''
+        INSERT INTO players_new (
+          id, created_at, updated_at, last_active_at,
+          name, streak_days
+        )
+        SELECT
+          id, created_at, updated_at, last_active_at,
+          name, streak_days
+        FROM players;
+      ''');
+
+      // 4. Replace the previous table.
+      await db.execute('DROP TABLE players;');
+
+      await db.execute('''
+        ALTER TABLE players_new RENAME TO players;
+      ''');
     }
   }
 }

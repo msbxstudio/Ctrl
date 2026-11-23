@@ -57,19 +57,18 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext _) {
-    final _ = ref.watch(splashControllerProvider);
+    final controller = ref.read(splashControllerProvider.notifier);
+    final value = ref.watch(splashControllerProvider);
 
     final size = scaledSize(context);
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 16.0,
+        minimum: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
 
+        child: Stack(
           children: [
-            Expanded(
+            Positioned.fill(
               child: Center(
                 child: AnimatedChild.scale(
                   controller: _controller,
@@ -77,6 +76,32 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
                 ),
               ),
             ),
+
+            ...value.whenOrNull(
+                  skipLoadingOnRefresh: true,
+                  skipLoadingOnReload: true,
+
+                  error: (e, _) {
+                    return [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        spacing: 16.0,
+
+                        children: [
+                          Text(e.toString()),
+                          FilledButton(
+                            onPressed: () async {
+                              await controller.refresh();
+                            },
+                            child: const Text('Reintentar'),
+                          ),
+                        ],
+                      ),
+                    ];
+                  },
+                ) ??
+                [],
           ],
         ),
       ),

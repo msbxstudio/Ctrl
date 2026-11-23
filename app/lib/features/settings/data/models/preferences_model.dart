@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:ctrl/features/settings.dart';
 
-@immutable
 final class PreferencesModel {
   const new({required this.language, required this.allowSounds});
 

@@ -1,32 +1,41 @@
-import 'package:ctrl/features/level.dart';
-import 'package:flutter/foundation.dart';
-
-@immutable
-abstract class Player {
-  final int id;
-
-  final DateTime createdAt;
-
-  final DateTime? updatedAt;
-
-  final DateTime? lastActiveAt;
-
-  final String name;
-
-  final int streakDays;
-
-  final int currentLevelId;
-
-  final Level? currentLevel;
-
-  const Player(
-    this.id, {
+///
+final class Player {
+  ///
+  const new({
+    required this.id,
     required this.name,
     required this.createdAt,
-    this.updatedAt,
-    this.lastActiveAt,
+    required this.updatedAt,
+    required this.lastActiveAt,
     required this.streakDays,
-    required this.currentLevelId,
-    this.currentLevel,
   });
+
+  factory Player.defaults() {
+    return Player(
+      id: 1,
+      name: 'Player',
+      createdAt: DateTime.now(),
+      updatedAt: null,
+      lastActiveAt: null,
+      streakDays: 0,
+    );
+  }
+
+  ///
+  final int id;
+
+  ///
+  final DateTime createdAt;
+
+  ///
+  final DateTime? updatedAt;
+
+  ///
+  final DateTime? lastActiveAt;
+
+  ///
+  final String name;
+
+  ///
+  final int streakDays;
 }

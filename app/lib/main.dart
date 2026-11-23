@@ -31,7 +31,7 @@ void main() async {
 
       child: ProviderScope(
         overrides: [
-          preferencesRepositoryProvider.overrideWith((ref) {
+          preferencesRepositoryProvider.overrideWith((_) {
             final datasource = SharedPreferencesDataSourceImpl(preferences);
 
             return PreferencesRepositoryImpl(shared: datasource);

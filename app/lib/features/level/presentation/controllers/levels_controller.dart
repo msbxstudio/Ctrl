@@ -1,26 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
+
 import 'package:msbx/contracts.dart';
 
 import 'package:ctrl/features/level.dart';
-import 'package:ctrl/features/player.dart';
 
 /// Controller for [LevelsPage] view.
 final class LevelsController extends AutoDisposeAsyncNotifier<LevelsState>
     implements Refreshable {
   @override
   FutureOr<LevelsState> build() async {
-    final (levels, player) = await Future.wait([
+    final (levels, current) = await Future.wait([
       ref.read(levelRepositoryProvider).getAll(),
-      ref.read(playerRepositoryProvider).get(),
-    ], eagerError: true).then((r) => (r[0] as List<Level>, r[1] as Player));
+      ref.read(levelRepositoryProvider).getCurrent(),
+    ], eagerError: true).then((r) => (r[0] as List<Level>, r[1] as Level?));
 
-    final currentLevel = await ref
-        .read(levelRepositoryProvider)
-        .getOne(id: player.currentLevelId);
-
-    return LevelsState(levels: levels, currentLevel: currentLevel);
+    return LevelsState(levels: levels, currentLevel: current);
   }
 
   @override

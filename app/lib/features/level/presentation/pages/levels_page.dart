@@ -72,7 +72,8 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
                     final level = levels[index];
 
                     return IconButton(
-                      onPressed: index + 1 <= currentLevel.id
+                      onPressed:
+                          currentLevel == null || index + 1 <= currentLevel.id
                           ? () async {
                               await ref
                                   .read(routerProvider)

@@ -6,6 +6,9 @@ export 'level/domain/entities/level_progress.dart';
 export 'level/domain/entities/level_question.dart';
 export 'level/domain/entities/level.dart';
 
+export 'level/domain/enums/level_keyboard.dart';
+export 'level/domain/enums/level_type.dart';
+
 export 'level/domain/repos/level_repository.dart';
 export 'level/domain/repos/level_progress_repository.dart';
 
