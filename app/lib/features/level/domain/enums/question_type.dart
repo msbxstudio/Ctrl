@@ -1,20 +1,3 @@
-import 'package:flutter/foundation.dart';
-
-@immutable
-abstract class LevelQuestion {
-  /// Indicates how the question text should be resolved.
-  final QuestionType type;
-
-  /// Raw text or translation key depending on [type].
-  final String value;
-
-  @protected
-  const LevelQuestion({required this.type, required this.value});
-
-  /// Resolves the question text based on its [type].
-  String resolve();
-}
-
 /// Defines how the question text should be interpreted.
 enum QuestionType {
   /// Uses the provided text exactly as it is.
@@ -34,5 +17,22 @@ enum QuestionType {
   ///
   /// Example:
   /// `print("Hello, World!");`
-  code,
+  code;
+
+  static QuestionType fromDbValue(String value) {
+    return switch (value.toUpperCase()) {
+      'RAW' => QuestionType.raw,
+      'KEY' => QuestionType.key,
+      'CODE' => QuestionType.code,
+      _ => throw ArgumentError.value(value, ''),
+    };
+  }
+
+  String toDbValue() {
+    return switch (this) {
+      QuestionType.raw => 'RAW',
+      QuestionType.key => 'KEY',
+      QuestionType.code => 'CODE',
+    };
+  }
 }

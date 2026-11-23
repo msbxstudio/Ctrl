@@ -13,34 +13,29 @@ final class LevelController
     implements Refreshable {
   @override
   Future<LevelState> build(int levelId) async {
-    final (
-      level,
-      progress,
-      player,
-      count,
-    ) = await Future.wait([
-      ref.read(levelRepositoryProvider).getOne(id: levelId),
-      // Try to upsert level progress. If it doesn't exist, create it with default values.
-      ref
-          .read(levelProgressRepositoryProvider)
-          .getOne(levelId: levelId)
-          .onError((e, _) async {
-            // If the error is a NotFoundException, it means the level progress doesn't exist,
-            // so we create it with default values.
-            if (e is! NotFoundException) {
-              throw const UnknownException('Failed to upsert level progress');
-            }
+    // Try to upsert level progress. If it doesn't exist, create it with default values.
+    final progress = await ref
+        .read(levelProgressRepositoryProvider)
+        .getOne(LevelProgressByLevelId(levelId))
+        .onError((e, _) {
+          // If the error is a NotFoundException, it means the level progress doesn't exist,
+          // so we create it with default values.
+          if (e is! NotFoundException) throw e as Exception;
 
-            return await ref
-                .read(levelProgressRepositoryProvider)
-                .create(levelId: levelId, attempts: 0, ellapsedTime: 0);
-          }),
-      ref.read(playerRepositoryProvider).get(),
-      ref.read(levelRepositoryProvider).count(),
-    ], eagerError: true).then(
-      (r) =>
-          (r[0] as Level, r[1] as LevelProgress, r[2] as Player, r[3] as int),
-    );
+          return ref
+              .read(levelProgressRepositoryProvider)
+              .create(levelId: levelId, attempts: 0, ellapsedTime: 0);
+        });
+
+    final (level, player, count) = await Future.wait(
+      [
+        ref.read(levelRepositoryProvider).getOne(LevelById(levelId)),
+
+        ref.read(playerRepositoryProvider).get(),
+        ref.read(levelRepositoryProvider).count(),
+      ],
+      eagerError: true,
+    ).then((r) => (r[0] as Level, r[1] as Player, r[2] as int));
 
     return LevelState(
       level: level,

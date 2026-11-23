@@ -13,5 +13,26 @@ enum LevelType {
   hiddenWord,
 
   /// Analyze algorithm complexity.
-  complexity,
+  complexity;
+
+  static LevelType fromDbValue(String value) {
+    return switch (value.toUpperCase()) {
+      'SYNTAX' => LevelType.syntax,
+      'OUTPUT_PREDICTION' => LevelType.outputPrediction,
+      'LOGIC' => LevelType.logic,
+      'HIDDEN_WORD' => LevelType.hiddenWord,
+      'COMPLEXITY' => LevelType.complexity,
+      _ => throw ArgumentError.value(value, ''),
+    };
+  }
+
+  String toDbValue() {
+    return switch (this) {
+      LevelType.syntax => 'SYNTAX',
+      LevelType.outputPrediction => 'OUTPUT_PREDICTION',
+      LevelType.logic => 'LOGIC',
+      LevelType.hiddenWord => 'HIDDEN_WORD',
+      LevelType.complexity => 'COMPLEXITY',
+    };
+  }
 }

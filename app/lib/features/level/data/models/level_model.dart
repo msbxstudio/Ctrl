@@ -2,86 +2,104 @@ import 'dart:convert';
 
 import 'package:ctrl/features/level.dart';
 
-final class LevelModel extends Level {
+final class LevelModel {
   const new({
-    required super.id,
-    required super.type,
-    required super.keyboard,
-    required super.question,
-    required super.answer,
-    required super.sortOrder,
-    required super.hint,
-    required super.options,
-    required super.progress,
+    required this.id,
+    required this.type,
+    required this.keyboard,
+    required this.question,
+    required this.answer,
+    required this.sortOrder,
+    required this.hint,
+    required this.options,
+    required this.progresses,
   });
+
+  final int id;
+
+  final LevelType type;
+
+  final LevelKeyboard keyboard;
+
+  final Question question;
+
+  final String answer;
+
+  final int sortOrder;
+
+  final Hint? hint;
+
+  final List<String> options;
+
+  final List<LevelProgress>? progresses;
 
   factory LevelModel.fromMap(Map<String, dynamic> map) {
     return LevelModel(
       id: map['id'] as int,
 
-      question: LevelQuestionModel.fromJson(
-        jsonDecode(map['question']) as Map<String, dynamic>,
-      ),
+      type: LevelType.fromDbValue(map['type'] as String),
+      keyboard: LevelKeyboard.fromDbValue(map['keyboard'] as String),
+
+      question: QuestionModel.fromMap(map['question'] as Map<String, dynamic>)
+          .toEntity(),
+
+      answer: map['answer'] as String,
+      sortOrder: map['sort_order'] as int,
+
       hint: map['hint'] != null
-          ? LevelHintModel.fromJson(
-              jsonDecode(map['hint']) as Map<String, dynamic>,
-            )
+          ? HintModel.fromMap(map['hint'] as Map<String, dynamic>).toEntity()
           : null,
 
-      answer: map['answer'],
-      sortOrder: map['sort_order'],
+      options: (jsonDecode(map['options'] as String) as List)
+          .map((e) => '$e')
+          .toList(),
 
-      type: switch (map['type']) {
-        'syntax' => LevelType.syntax,
-        'output_prediction' => LevelType.outputPrediction,
-        'logic' => LevelType.logic,
-        'hidden_word' => LevelType.hiddenWord,
-        'complexity' => LevelType.complexity,
-        _ => throw const FormatException('Invalid level type'),
-      },
+      progresses: null,
+    );
+  }
 
-      keyboard: switch (map['keyboard']) {
-        'symbol' => LevelKeyboard.symbol,
-        'numeric' => LevelKeyboard.numeric,
-        'hidden_word' => LevelKeyboard.hiddenWord,
-        'boolean' => LevelKeyboard.boolean,
-        'complexity' => LevelKeyboard.complexity,
-        _ => throw const FormatException('Invalid keyboard type'),
-      },
-
-      options: (jsonDecode(map['options']) as List).map((e) => '$e').toList(),
-
-      progress: null,
+  factory LevelModel.fromEntity(Level entity) {
+    return LevelModel(
+      id: entity.id,
+      type: entity.type,
+      keyboard: entity.keyboard,
+      question: entity.question,
+      answer: entity.answer,
+      sortOrder: entity.sortOrder,
+      hint: entity.hint,
+      options: entity.options,
+      progresses: entity.progresses,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+
+      'type': type.toDbValue(),
+      'keyboard': keyboard.toDbValue(),
+
+      'question': jsonEncode((question as QuestionModel).toMap()),
+
       'answer': answer,
       'sort_order': sortOrder,
 
-      'type': switch (type) {
-        LevelType.syntax => 'syntax',
-        LevelType.outputPrediction => 'output_prediction',
-        LevelType.logic => 'logic',
-        LevelType.hiddenWord => 'hidden_word',
-        LevelType.complexity => 'complexity',
-      },
-
-      'keyboard': switch (keyboard) {
-        LevelKeyboard.symbol => 'symbol',
-        LevelKeyboard.numeric => 'numeric',
-        LevelKeyboard.hiddenWord => 'hidden_word',
-        LevelKeyboard.boolean => 'boolean',
-        LevelKeyboard.complexity => 'complexity',
-      },
-
-      'question': jsonEncode((question as LevelQuestionModel).toJson()),
-      'hint': hint != null
-          ? jsonEncode((hint as LevelHintModel).toJson())
-          : null,
+      'hint': hint != null ? jsonEncode((hint as HintModel).toMap()) : null,
       'options': jsonEncode(options),
     };
+  }
+
+  Level toEntity() {
+    return Level(
+      id: id,
+      type: type,
+      keyboard: keyboard,
+      question: question,
+      answer: answer,
+      sortOrder: sortOrder,
+      hint: hint,
+      options: options,
+      progresses: progresses,
+    );
   }
 }

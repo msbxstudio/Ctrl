@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 abstract interface class LevelProgressRepository {
   Future<List<LevelProgress>> getAll();
 
-  Future<LevelProgress> getOne({int? id, int? levelId});
+  Future<LevelProgress> getOne(LevelProgressLookup lookup);
 
   Future<LevelProgress> create({
     required int levelId,

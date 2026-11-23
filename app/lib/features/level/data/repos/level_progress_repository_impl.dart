@@ -1,51 +1,42 @@
 import 'package:msbx/exceptions.dart';
-import 'package:msbx/utils.dart';
 
-import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelProgressRepositoryImpl implements LevelProgressRepository {
-  const new(this._service);
+  const new({required this._local});
 
-  final DatabaseService _service;
+  final LocalLevelProgressDataSource _local;
 
   @override
   Future<List<LevelProgress>> getAll() async {
     try {
-      final result = await _service.query('level_progresses');
-      final progress = result.map(LevelProgressModel.fromJson).toList();
+      // final result = await _service.query('level_progresses');
+      // final progress = result.map(LevelProgressModel.fromMap).toList();
 
-      return progress;
+      // return progress;
+      return await Future.value(const []);
     } catch (e) {
-      throw const UnknownException('Failed to load level progress');
+      if (e is AppException) rethrow;
+
+      throw const UnknownException('');
     }
   }
 
   @override
-  Future<LevelProgress> getOne({int? id, int? levelId}) async {
-    Debugger.ensure(
-      id != null || levelId != null,
-      'Either id or levelId must be provided',
-    );
-
+  Future<LevelProgress> getOne(LevelProgressLookup lookup) async {
     try {
-      final result = await _service.query(
-        'level_progresses',
-        where: 'id = ? OR level_id = ?',
-        whereArgs: [id, levelId],
-      );
+      final result = await switch (lookup) {
+        LevelProgressById(:final id) => _local.findById(id),
+        LevelProgressByLevelId(:final levelId) => _local.findByLevelId(levelId),
+      };
 
-      if (result.isEmpty) {
-        throw const NotFoundException('Level progress not found');
+      if (result == null) {
+        throw const NotFoundException('');
       }
 
-      final progress = LevelProgressModel.fromJson(result.first);
-
-      return progress;
+      return result.toEntity();
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
       throw const UnknownException('Failed to load level progress');
     }
@@ -58,20 +49,23 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     required int ellapsedTime,
   }) async {
     try {
-      final id = await _service.insert('level_progresses', {
-        'level_id': levelId,
-        'attempts': attempts,
-        'time_ms': ellapsedTime,
-        'is_completed': 0,
-      });
+      final data = LevelProgress(
+        id: 0,
+        createdAt: DateTime.now(),
+        attempts: attempts,
+        ellapsedTime: ellapsedTime,
+        completed: false,
+        levelId: levelId,
+        level: null,
+      );
 
-      return await getOne(id: id);
+      await _local.save(LevelProgressModel.fromEntity(data));
+
+      return data;
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to create level progress');
+      throw const UnknownException('');
     }
   }
 
@@ -82,88 +76,75 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     int? ellapsedTime,
     bool? isCompleted,
   }) async {
-    final data = <String, Object?>{};
-
     try {
-      if (attempts != null) {
-        data['attempts'] = attempts;
-      }
+      final current = await getOne(LevelProgressById(id));
 
-      if (ellapsedTime != null) {
-        data['time_ms'] = ellapsedTime;
-      }
-
-      if (isCompleted != null) {
-        data['is_completed'] = isCompleted ? 1 : 0;
-      }
-
-      if (data.isEmpty) return await getOne(id: id);
-
-      await _service.update(
-        'level_progresses',
-        data,
-        where: 'id = ?',
-        whereArgs: [id],
+      final updated = LevelProgress(
+        id: id,
+        createdAt: current.createdAt,
+        attempts: attempts ?? current.attempts,
+        ellapsedTime: ellapsedTime ?? current.ellapsedTime,
+        completed: isCompleted ?? current.completed,
+        levelId: current.levelId,
+        level: current.level,
       );
 
-      return await getOne(id: id);
-    } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      await _local.save(LevelProgressModel.fromEntity(updated));
 
-      throw const UnknownException('Failed to update level progress');
+      return updated;
+    } catch (e) {
+      if (e is AppException) rethrow;
+
+      throw const UnknownException('');
     }
   }
 
   @override
   Future<int> averageTime() async {
     try {
-      final result = await _service.query(
-        'level_progresses',
-        columns: ['AVG(time_ms) AS average_time'],
-      );
+      // final result = await _service.query(
+      //   'level_progresses',
+      //   columns: ['AVG(time_ms) AS average_time'],
+      // );
 
-      if (result.isEmpty) {
-        throw const NotFoundException('No level progresses found');
-      }
+      // if (result.isEmpty) {
+      //   throw const NotFoundException('No level progresses found');
+      // }
 
-      final averageTime = result.first['average_time'] as double?;
+      // final averageTime = result.first['average_time'] as double?;
 
-      return averageTime?.round() ?? 0;
+      // return averageTime?.round() ?? 0;
+      return await Future.value(0);
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to calculate average time');
+      throw const UnknownException('');
     }
   }
 
   @override
   Future<int> count({bool? completed, bool? distinct}) async {
     try {
-      final result = await _service.query(
-        'level_progresses',
-        columns: ['COUNT(*) AS count'],
-        where: completed != null ? 'is_completed = ?' : null,
-        whereArgs: completed != null ? [completed ? 1 : 0] : null,
-        distinct: distinct ?? false,
-      );
+      // final result = await _service.query(
+      //   'level_progresses',
+      //   columns: ['COUNT(*) AS count'],
+      //   where: completed != null ? 'is_completed = ?' : null,
+      //   whereArgs: completed != null ? [completed ? 1 : 0] : null,
+      //   distinct: distinct ?? false,
+      // );
 
-      if (result.isEmpty) {
-        throw const NotFoundException('No level progresses found');
-      }
+      // if (result.isEmpty) {
+      //   throw const NotFoundException('No level progresses found');
+      // }
 
-      final count = result.first['count'] as int?;
+      // final count = result.first['count'] as int?;
 
-      return count ?? 0;
+      // return count ?? 0;
+      return await Future.value(0);
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to count level progresses');
+      throw const UnknownException('');
     }
   }
 }

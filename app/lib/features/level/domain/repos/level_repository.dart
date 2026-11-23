@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 abstract interface class LevelRepository {
   Future<List<Level>> getAll();
 
-  Future<Level> getOne({required int id});
+  Future<Level> getOne(LevelLookup lookup);
 
   Future<Level?> getCurrent();
 

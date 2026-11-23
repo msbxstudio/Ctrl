@@ -15,11 +15,15 @@ final levelsControllerProvider = AsyncNotifierProvider.autoDispose(
   () => LevelsController(),
 );
 
-final levelRepositoryProvider = Provider.autoDispose<LevelRepository>(
-  (_) => LevelRepositoryImpl(DatabaseService.instance),
-);
+final levelRepositoryProvider = Provider.autoDispose<LevelRepository>((_) {
+  return LevelRepositoryImpl(
+    local: LocalLevelDatasourceImpl(DatabaseService.instance),
+  );
+});
 
 final levelProgressRepositoryProvider =
     Provider.autoDispose<LevelProgressRepository>(
-      (_) => LevelProgressRepositoryImpl(DatabaseService.instance),
+      (_) => LevelProgressRepositoryImpl(
+        local: LocalLevelProgressDatasourceImpl(DatabaseService.instance),
+      ),
     );

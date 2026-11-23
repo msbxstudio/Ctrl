@@ -1,94 +1,68 @@
 import 'package:msbx/exceptions.dart';
 
-import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelRepositoryImpl implements LevelRepository {
   ///
-  const new(this._service);
+  const new({required this._local});
 
-  ///
-  final DatabaseService _service;
+  final LocalLevelDataSource _local;
 
   @override
   Future<List<Level>> getAll() async {
     try {
-      final result = await _service.query('levels');
+      final result = await _local.findAll();
 
-      return result.map(LevelModel.fromMap).toList();
+      return result.map((e) => e.toEntity()).toList();
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to load level');
+      throw const UnknownException('');
     }
   }
 
   @override
-  Future<Level> getOne({required int id}) async {
+  Future<Level> getOne(LevelLookup lookup) async {
     try {
-      final result = await _service.query(
-        'levels',
-        where: 'id = ?',
-        whereArgs: [id],
-      );
+      final result = await switch (lookup) {
+        LevelById(:final id) => _local.findById(id),
+      };
 
-      if (result.isEmpty) {
-        throw const NotFoundException('Level not found');
+      if (result == null) {
+        throw const NotFoundException('');
       }
 
-      return LevelModel.fromMap(result.first);
+      return result.toEntity();
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to load level');
+      throw const UnknownException('');
     }
   }
 
   @override
   Future<Level?> getCurrent() async {
     try {
-      final result = await DatabaseService.instance.query(
-        'levels',
-        where: '''
-          NOT EXISTS (
-            SELECT 1
-            FROM level_progresses lp
-            WHERE lp.level_id = levels.id
-              AND lp.is_completed = 1
-          )
-        ''',
-        orderBy: 'sort_order ASC, id ASC',
-        limit: 1,
-      );
+      final result = await _local.findCurrent();
 
-      return result.firstOrNull != null
-          ? LevelModel.fromMap(result.first)
-          : null;
+      return result?.toEntity();
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to load level');
+      throw const UnknownException('');
     }
   }
 
   @override
   Future<int> count() async {
     try {
-      final result = await _service.query('levels', columns: const ['id']);
+      final result = await _local.count();
 
-      return result.length;
+      return result;
     } catch (e) {
-      if (e is AppException) {
-        rethrow;
-      }
+      if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to count levels');
+      throw const UnknownException('');
     }
   }
 }

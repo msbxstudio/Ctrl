@@ -2,8 +2,10 @@ import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/player.dart';
 
 final class LocalPlayerDataSourceImpl implements LocalPlayerDataSource {
+  ///
   const new(this._database);
 
+  ///
   final DatabaseService _database;
 
   @override
@@ -12,6 +14,7 @@ final class LocalPlayerDataSourceImpl implements LocalPlayerDataSource {
       'players',
       where: 'id = ?',
       whereArgs: [1],
+      limit: 1,
     );
 
     return result.singleOrNull != null
@@ -21,14 +24,14 @@ final class LocalPlayerDataSourceImpl implements LocalPlayerDataSource {
 
   @override
   Future<void> save(PlayerModel model) async {
+    final data = model.toMap()
+      ..remove('id')
+      ..remove('created_at')
+      ..remove('updated_at');
+
     await _database.update(
       'players',
-      {
-        'name': model.name,
-        'updated_at': DateTime.now().toIso8601String(),
-        'last_active_at': model.lastActiveAt,
-        'streak_days': model.streakDays,
-      },
+      {...data, 'updated_at': DateTime.now().toIso8601String()},
       where: 'id = ?',
       whereArgs: [1],
     );
