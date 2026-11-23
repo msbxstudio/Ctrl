@@ -8,21 +8,6 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   final LocalLevelProgressDataSource _local;
 
   @override
-  Future<List<LevelProgress>> getAll() async {
-    try {
-      // final result = await _service.query('level_progresses');
-      // final progress = result.map(LevelProgressModel.fromMap).toList();
-
-      // return progress;
-      return await Future.value(const []);
-    } catch (e) {
-      if (e is AppException) rethrow;
-
-      throw const UnknownException('');
-    }
-  }
-
-  @override
   Future<LevelProgress> getOne(LevelProgressLookup lookup) async {
     try {
       final result = await switch (lookup) {

@@ -13,12 +13,12 @@ import 'levels_page_error.dart';
 import 'levels_page_skeleton.dart';
 
 final class LevelsPage extends ConsumerStatefulWidget {
+  const new({super.key});
+
   static const routePath = '/levels';
 
-  const LevelsPage({super.key});
-
   @override
-  ConsumerState createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _LevelsPageState();
   }
 }
@@ -26,10 +26,8 @@ final class LevelsPage extends ConsumerStatefulWidget {
 final class _LevelsPageState extends ConsumerState<LevelsPage> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final controller = ref.read(levelsControllerProvider.notifier);
-    final asyncValue = ref.watch(levelsControllerProvider);
+    final value = ref.watch(levelsControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,9 +43,24 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
       ),
 
       body: SafeArea(
-        child: asyncValue.when(
-          data: (data) {
-            final LevelsState(:levels, :currentLevel) = data;
+        child: value.when(
+          loading: () {
+            return const LevelsPageSkeleton();
+          },
+
+          error: (err, _) {
+            return LevelsPageError(
+              onRetry: () async {
+                await controller.refresh();
+              },
+              error: err,
+            );
+          },
+
+          data: (state) {
+            final theme = Theme.of(context);
+
+            final LevelsState(:levels, :currentLevel) = state;
 
             return LayoutBuilder(
               builder: (_, constraints) {
@@ -69,15 +82,13 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
 
                   itemCount: levels.length,
                   itemBuilder: (_, index) {
-                    final level = levels[index];
-
                     return IconButton(
                       onPressed:
                           currentLevel == null || index + 1 <= currentLevel.id
                           ? () async {
                               await ref
                                   .read(routerProvider)
-                                  .push('/levels/${level.id}');
+                                  .push('/levels/${levels[index].id}');
                             }
                           : null,
 
@@ -111,17 +122,6 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
                 );
               },
             );
-          },
-          error: (e, _) {
-            return LevelsPageError(
-              onRetry: () async {
-                await controller.refresh();
-              },
-              error: e,
-            );
-          },
-          loading: () {
-            return const LevelsPageSkeleton();
           },
         ),
       ),

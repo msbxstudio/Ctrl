@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 abstract interface class LevelProgressRepository {
-  Future<List<LevelProgress>> getAll();
-
   Future<LevelProgress> getOne(LevelProgressLookup lookup);
 
   Future<LevelProgress> create({

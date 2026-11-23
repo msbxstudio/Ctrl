@@ -61,21 +61,23 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final controller = ref.watch(levelControllerProvider(widget.id).notifier);
-    final asyncValue = ref.watch(levelControllerProvider(widget.id));
+  Widget build(BuildContext _) {
+    final provider = levelControllerProvider(widget.id);
 
-    return asyncValue.when(
+    final controller = ref.read(provider.notifier);
+    final value = ref.watch(provider);
+
+    return value.when(
       loading: () {
         return const LevelPageSkeleton();
       },
 
-      error: (error, _) {
+      error: (err, _) {
         return LevelPageError(
           onRetry: () async {
             await controller.refresh();
           },
-          error: error,
+          error: err,
         );
       },
 
@@ -156,10 +158,10 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                       }
                     },
                     onAdd: (char) {
-                      addItem(char);
+                      _addItem(char);
                     },
                     onClear: () {
-                      clearAnswer();
+                      _clearAnswer();
                     },
 
                     items: level.options,
@@ -174,11 +176,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
     );
   }
 
-  void addItem(String item) {
+  void _addItem(String item) {
     _answerFieldController.text += item;
   }
 
-  void clearAnswer() {
+  void _clearAnswer() {
     _answerFieldController.clear();
   }
 }

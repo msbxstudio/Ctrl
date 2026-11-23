@@ -6,21 +6,13 @@ import 'package:msbx/extensions.dart';
 
 final class MainPageError extends ConsumerWidget {
   ///
-  const new({
-    super.key,
-    required this.onRetry,
-    required this.error,
-    this.trace,
-  });
+  const new({super.key, required this.onRetry, required this.error});
 
   ///
   final Future<void> Function() onRetry;
 
   ///
   final Object error;
-
-  ///
-  final StackTrace? trace;
 
   @override
   Widget build(BuildContext _, WidgetRef _) {

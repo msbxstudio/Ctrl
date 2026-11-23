@@ -40,14 +40,17 @@ final class LevelModel {
       type: LevelType.fromDbValue(map['type'] as String),
       keyboard: LevelKeyboard.fromDbValue(map['keyboard'] as String),
 
-      question: QuestionModel.fromMap(map['question'] as Map<String, dynamic>)
-          .toEntity(),
+      question: QuestionModel.fromMap(
+        jsonDecode(map['question'] as String) as Map<String, dynamic>,
+      ).toEntity(),
 
       answer: map['answer'] as String,
       sortOrder: map['sort_order'] as int,
 
       hint: map['hint'] != null
-          ? HintModel.fromMap(map['hint'] as Map<String, dynamic>).toEntity()
+          ? HintModel.fromMap(
+              jsonDecode(map['hint'] as String) as Map<String, dynamic>,
+            ).toEntity()
           : null,
 
       options: (jsonDecode(map['options'] as String) as List)
