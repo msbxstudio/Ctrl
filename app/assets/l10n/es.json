@@ -11,7 +11,7 @@
   },
   "home": {
     "greeting": "¡Hola, {name}!",
-    "settings_tooltip": "Ajustes",
+    "settings_tooltip": "Configuración",
     "status": {
       "active": "SESIÓN ACTIVA",
       "inactive": "SIN SESIÓN ACTIVA"
@@ -37,7 +37,7 @@
     "error": "Ha ocurrido un error"
   },
   "settings": {
-    "title": "Ajustes",
+    "title": "Configuración",
     "sections": {
       "account": "Cuenta",
       "preferences": "Preferencias",

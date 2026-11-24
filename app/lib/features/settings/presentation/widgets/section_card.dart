@@ -15,7 +15,7 @@ final class SectionCard extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         border: Border.all(color: theme.colorScheme.outline),
 
         boxShadow: [
@@ -27,7 +27,7 @@ final class SectionCard extends ConsumerWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         child: child,
       ),
     );

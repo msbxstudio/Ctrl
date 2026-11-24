@@ -50,7 +50,9 @@ extension AppThemeData on ThemeData {
             const Size(double.minPositive, 44.0),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
           ),
         ),
       ),
@@ -61,7 +63,9 @@ extension AppThemeData on ThemeData {
             const Size(double.minPositive, 44),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
           ),
         ),
       ),
@@ -79,7 +83,9 @@ extension AppThemeData on ThemeData {
             ),
           ),
           shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
           ),
         ),
       ),
@@ -100,26 +106,26 @@ extension AppThemeData on ThemeData {
         isDense: true,
         hintStyle: TextStyle(color: scheme.outline.withValues(alpha: 0.7)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           borderSide: BorderSide(color: scheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           borderSide: BorderSide(color: scheme.primary),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           borderSide: BorderSide(color: scheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           borderSide: BorderSide(color: scheme.error),
         ),
       ),
 
       searchBarTheme: SearchBarThemeData(
         backgroundColor: WidgetStateProperty.all(scheme.surface),
-        elevation: WidgetStateProperty.all(0),
+        elevation: WidgetStateProperty.all(0.0),
       ),
 
       chipTheme: ChipThemeData(
@@ -149,9 +155,9 @@ extension AppThemeData on ThemeData {
       ),
 
       cardTheme: const CardThemeData(
-        elevation: 0,
-        margin: EdgeInsets.zero,
         color: Colors.transparent,
+        margin: EdgeInsets.zero,
+        elevation: 0.0,
       ),
 
       extensions: const [AppColorExtension.dark],

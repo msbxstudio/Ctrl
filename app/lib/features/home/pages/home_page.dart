@@ -304,9 +304,6 @@ final class _HomePageState extends ConsumerState<HomePage> {
               ? theme.colorScheme.primary
               : theme.colorScheme.outlineVariant.withValues(alpha: 0.75),
         ),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        ),
       ),
 
       label: Text(label),

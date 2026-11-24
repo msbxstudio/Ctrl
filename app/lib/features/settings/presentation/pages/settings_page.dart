@@ -216,15 +216,6 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         FilledButton.tonal(
                           onPressed: handleEraseData,
 
-                          style: Theme.of(context).filledButtonTheme.style
-                              ?.copyWith(
-                                shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
-                              ),
-
                           child: Text('settings.danger_zone.erase_all'.tr()),
                         ),
                       ].divide(const SizedBox(height: 8.0)),
