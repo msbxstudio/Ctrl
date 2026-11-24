@@ -15,7 +15,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+    SystemUiOverlayStyle.light.copyWith(
       systemNavigationBarColor: Colors.transparent,
       statusBarColor: Colors.transparent,
     ),

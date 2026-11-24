@@ -1,16 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Refreshable;
 
 import 'package:msbx/contracts.dart';
 
-import 'package:ctrl/app/shell.dart';
+import 'package:ctrl/features/home.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/player.dart';
 
 /// Controller for [MainPage] view.
-final class MainController extends AutoDisposeAsyncNotifier<MainState>
+final class MainController extends AutoDisposeAsyncNotifier<HomeState>
     implements Refreshable {
   @override
-  Future<MainState> build() async {
+  FutureOr<HomeState> build() async {
     final player = await ref.read(playerRepositoryProvider).get();
 
     final (currentLevel, solvedPuzzles, averageTime) = await Future.wait([
@@ -21,7 +23,9 @@ final class MainController extends AutoDisposeAsyncNotifier<MainState>
       ref.read(levelProgressRepositoryProvider).averageTime(),
     ]).then((r) => (r[0] as Level, r[1] as int, r[2] as int));
 
-    return MainState(
+    // throw UnimplementedError();
+
+    return HomeState(
       player: player,
       currentLevel: currentLevel,
       solvedPuzzles: solvedPuzzles,

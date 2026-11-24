@@ -2,8 +2,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:msbx/helpers.dart';
 
-import 'package:ctrl/app/shell.dart';
 import 'package:ctrl/app/startup.dart';
+import 'package:ctrl/features/home.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/settings.dart';
 
@@ -49,7 +49,7 @@ final class AppRoutes() {
     GoRoute(
       path: '/',
       pageBuilder: (_, _) {
-        return pageOf(const MainPage());
+        return pageOf(const HomePage());
       },
     ),
   ];
