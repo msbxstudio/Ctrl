@@ -1,7 +1,7 @@
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
-final class LocalLevelProgressDatasourceImpl
+final class LocalLevelProgressDataSourceImpl
     implements LocalLevelProgressDataSource {
   ///
   const new(this._database);

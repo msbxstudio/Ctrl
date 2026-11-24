@@ -1,29 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:ctrl/core/services.dart';
+import 'package:ctrl/core/types.dart';
 import 'package:ctrl/features/level.dart';
 
 /// Provides the state of the answer verification operation.
-final checkAnswerMutationProvider =
-    StateProvider.autoDispose<AsyncValue<bool?>>((_) => AsyncValue.data(null));
+final checkAnswerMutationProvider = MutationProvider<bool?>((_) {
+  return AsyncValue.data(null);
+});
 
-final levelControllerProvider = AsyncNotifierProvider.autoDispose.family(
-  () => LevelController(),
-);
+final levelControllerProvider = ControllerFamilyProvider(() {
+  return LevelController();
+});
 
-final levelsControllerProvider = AsyncNotifierProvider.autoDispose(
-  () => LevelsController(),
-);
+final levelsControllerProvider = ControllerProvider(() {
+  return LevelsController();
+});
 
-final levelRepositoryProvider = Provider.autoDispose<LevelRepository>((_) {
-  return LevelRepositoryImpl(
-    local: LocalLevelDatasourceImpl(DatabaseService.instance),
-  );
+final levelRepositoryProvider = RepositoryProvider<LevelRepository>((_) {
+  final datasource = LocalLevelDataSourceImpl(DatabaseService.instance);
+
+  return LevelRepositoryImpl(datasource);
 });
 
 final levelProgressRepositoryProvider =
-    Provider.autoDispose<LevelProgressRepository>(
-      (_) => LevelProgressRepositoryImpl(
-        local: LocalLevelProgressDatasourceImpl(DatabaseService.instance),
-      ),
-    );
+    RepositoryProvider<LevelProgressRepository>((_) {
+      final datasource = LocalLevelProgressDataSourceImpl(
+        DatabaseService.instance,
+      );
+
+      return LevelProgressRepositoryImpl(datasource);
+    });

@@ -1,7 +1,7 @@
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/level.dart';
 
-final class LocalLevelDatasourceImpl implements LocalLevelDataSource {
+final class LocalLevelDataSourceImpl implements LocalLevelDataSource {
   const new(this._database);
 
   final DatabaseService _database;

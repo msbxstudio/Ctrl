@@ -4,7 +4,7 @@ import 'package:ctrl/features/level.dart';
 
 final class LevelRepositoryImpl implements LevelRepository {
   ///
-  const new({required this._local});
+  const new(this._local);
 
   final LocalLevelDataSource _local;
 

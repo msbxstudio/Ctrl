@@ -3,7 +3,7 @@ import 'package:msbx/exceptions.dart';
 import 'package:ctrl/features/level.dart';
 
 final class LevelProgressRepositoryImpl implements LevelProgressRepository {
-  const new({required this._local});
+  const new(this._local);
 
   final LocalLevelProgressDataSource _local;
 

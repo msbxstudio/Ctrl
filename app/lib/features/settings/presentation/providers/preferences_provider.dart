@@ -6,9 +6,7 @@ final preferencesRepositoryProvider = Provider<PreferencesRepository>((_) {
   throw UnimplementedError();
 });
 
-final preferencesNotifierProvider =
-    StateNotifierProvider<PreferencesNotifier, Preferences>((ref) {
-      final repository = ref.read(preferencesRepositoryProvider);
-
-      return PreferencesNotifier(repository)..load();
-    });
+final preferencesNotifierProvider = StateNotifierProvider((ref) {
+  final repository = ref.read(preferencesRepositoryProvider);
+  return PreferencesNotifier(repository)..load();
+});

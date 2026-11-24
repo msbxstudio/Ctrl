@@ -2,7 +2,7 @@ import 'package:ctrl/features/settings.dart';
 
 final class PreferencesRepositoryImpl implements PreferencesRepository {
   ///
-  const new({required this._shared});
+  const new(this._shared);
 
   ///
   final SharedPreferencesDataSource _shared;

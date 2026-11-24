@@ -13,6 +13,8 @@ import 'package:ctrl/app/router.dart';
 import 'package:ctrl/app/startup.dart';
 import 'package:ctrl/shared/widgets.dart';
 
+import 'splash_page_error.dart';
+
 final class SplashPage extends ConsumerStatefulWidget {
   const new({super.key});
 
@@ -59,16 +61,22 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
     final controller = ref.read(splashControllerProvider.notifier);
     final value = ref.watch(splashControllerProvider);
 
-    final size = scaledSize(context);
+    return value.maybeWhen(
+      error: (err, _) {
+        return SplashPageError(
+          onRetry: () async {
+            await controller.refresh();
+          },
+          error: err,
+        );
+      },
 
-    return Scaffold(
-      body: SafeArea(
-        minimum: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+      orElse: () {
+        final size = scaledSize(context, scale: 0.325);
 
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Center(
+        return Scaffold(
+          body:
+              Center(
                 child: AnimatedChild.scale(
                   controller: _controller,
                   child: SvgPicture.asset(
@@ -77,73 +85,11 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
                     height: size,
                   ),
                 ),
+              ).padded(
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
               ),
-            ),
-
-            ...value.whenOrNull(
-                  skipLoadingOnRefresh: true,
-                  skipLoadingOnReload: true,
-
-                  error: (_, _) {
-                    final theme = Theme.of(context);
-
-                    return [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 12.0,
-
-                        children: [
-                          Text(
-                            'Problema grave',
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.titleMedium,
-                          ),
-
-                          Text(
-                            'La app no pudo iniciarse correctamente.'
-                            ' '
-                            'Restablecerla podría solucionar el problema, pero eliminará tu progreso guardado en este dispositivo.',
-                            textAlign: TextAlign.center,
-
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withValues(
-                                alpha: 0.8,
-                              ),
-                            ),
-                          ).padded(const EdgeInsets.only(bottom: 16.0)),
-
-                          FilledButton(
-                            onPressed: () async {
-                              await controller.refresh();
-                            },
-                            child: const Text('Restablecer app'),
-                          ),
-
-                          ElevatedButton(
-                            onPressed: () async {
-                              await controller.refresh();
-                            },
-
-                            style: theme.elevatedButtonTheme.style?.copyWith(
-                              backgroundColor: WidgetStateProperty.all(
-                                theme.colorScheme.outlineVariant.withValues(
-                                  alpha: 0.75,
-                                ),
-                              ),
-                            ),
-
-                            child: const Text('Salir'),
-                          ),
-                        ],
-                      ),
-                    ];
-                  },
-                ) ??
-                [],
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

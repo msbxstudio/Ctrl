@@ -3,7 +3,7 @@ import 'package:msbx/exceptions.dart';
 import 'package:ctrl/features/player.dart';
 
 final class PlayerRepositoryImpl implements PlayerRepository {
-  const new({required this._local});
+  const new(this._local);
 
   final LocalPlayerDataSource _local;
 
