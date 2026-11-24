@@ -71,6 +71,8 @@ final class SettingOption extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef _) {
+    final theme = Theme.of(context);
+
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 48.0),
       child: Material(
@@ -110,18 +112,20 @@ final class SettingOption extends ConsumerWidget {
                       _SettingActionType.tile => Icon(
                         LucideIcons.chevronRight,
                         size: 20.0,
-                        color: Theme.of(context).colorScheme.outline,
+                        color: theme.colorScheme.outline,
                       ),
                       _SettingActionType.link => Icon(
                         LucideIcons.arrowUpRight,
                         size: 20.0,
-                        color: Theme.of(context).colorScheme.outline,
+                        color: theme.colorScheme.outline,
                       ),
                       _SettingActionType.toggle => SizedBox(
                         height: 20.0,
                         child: Switch.adaptive(
                           onChanged: onChanged,
                           value: value,
+
+                          activeTrackColor: theme.colorScheme.primary,
 
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,

@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/app/router.dart';
@@ -24,8 +25,6 @@ final class SplashPage extends ConsumerStatefulWidget {
 }
 
 final class _SplashPageState extends ConsumerState<SplashPage> {
-  static const _source = 'assets/images/icon-white.svg';
-
   late final MotionController _controller;
 
   @override
@@ -72,7 +71,11 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
               child: Center(
                 child: AnimatedChild.scale(
                   controller: _controller,
-                  child: SvgPicture.asset(_source, width: size, height: size),
+                  child: SvgPicture.asset(
+                    'assets/images/icon-white.svg',
+                    width: size,
+                    height: size,
+                  ),
                 ),
               ),
             ),
@@ -81,20 +84,56 @@ final class _SplashPageState extends ConsumerState<SplashPage> {
                   skipLoadingOnRefresh: true,
                   skipLoadingOnReload: true,
 
-                  error: (e, _) {
+                  error: (_, _) {
+                    final theme = Theme.of(context);
+
                     return [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        spacing: 16.0,
+                        spacing: 12.0,
 
                         children: [
-                          Text(e.toString()),
+                          Text(
+                            'Problema grave',
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.titleMedium,
+                          ),
+
+                          Text(
+                            'La app no pudo iniciarse correctamente.'
+                            ' '
+                            'Restablecerla podría solucionar el problema, pero eliminará tu progreso guardado en este dispositivo.',
+                            textAlign: TextAlign.center,
+
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: 0.8,
+                              ),
+                            ),
+                          ).padded(const EdgeInsets.only(bottom: 16.0)),
+
                           FilledButton(
                             onPressed: () async {
                               await controller.refresh();
                             },
-                            child: const Text('Reintentar'),
+                            child: const Text('Restablecer app'),
+                          ),
+
+                          ElevatedButton(
+                            onPressed: () async {
+                              await controller.refresh();
+                            },
+
+                            style: theme.elevatedButtonTheme.style?.copyWith(
+                              backgroundColor: WidgetStateProperty.all(
+                                theme.colorScheme.outlineVariant.withValues(
+                                  alpha: 0.75,
+                                ),
+                              ),
+                            ),
+
+                            child: const Text('Salir'),
                           ),
                         ],
                       ),

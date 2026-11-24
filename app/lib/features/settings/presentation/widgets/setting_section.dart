@@ -11,17 +11,13 @@ import 'package:ctrl/shared/widgets.dart';
 import 'section_card.dart';
 
 final class SettingsSection extends ConsumerWidget {
+  const new({super.key, required this.actions, required this.title});
+
   final List<SettingOption> actions;
   final String title;
 
-  const SettingsSection({
-    super.key,
-    required this.actions,
-    required this.title,
-  });
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext _, WidgetRef _) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,

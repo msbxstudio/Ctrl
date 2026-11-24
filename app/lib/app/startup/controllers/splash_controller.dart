@@ -27,6 +27,8 @@ final class SplashController extends AutoDisposeAsyncNotifier<SplashState>
           return values[1] as Preferences;
         });
 
+    // throw UnimplementedError();
+
     return SplashState(language: preferences.language);
   }
 
