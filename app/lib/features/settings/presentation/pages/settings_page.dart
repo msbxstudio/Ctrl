@@ -2,7 +2,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
@@ -13,7 +13,6 @@ import 'package:msbx/helpers.dart';
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/features/player.dart';
 import 'package:ctrl/features/settings.dart';
-import 'package:ctrl/shared/dialogs.dart';
 import 'package:ctrl/shared/widgets.dart';
 
 import 'settings_page_error.dart';
@@ -69,42 +68,40 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
     final controller = ref.read(settingsControllerProvider.notifier);
     final value = ref.watch(settingsControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        automaticallyImplyActions: false,
+    return value.when(
+      skipLoadingOnRefresh: true,
+      skipLoadingOnReload: true,
 
-        titleSpacing: 8.0,
-        title: Text('settings.title'.tr()),
+      loading: () {
+        return const SettingsPageSkeleton();
+      },
 
-        leadingWidth: 64.0,
-        leading: const PopButton.back(),
-      ),
+      error: (err, _) {
+        return SettingsPageError(
+          onRetry: () async {
+            await controller.refresh();
+          },
+          error: err,
+        );
+      },
 
-      body: value.when(
-        skipLoadingOnRefresh: true,
-        skipLoadingOnReload: true,
+      data: (state) {
+        final SettingsState(:player, :language, :allowSoundEffects) = state;
 
-        loading: () {
-          return const SettingsPageSkeleton();
-        },
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            automaticallyImplyActions: false,
 
-        error: (error, _) {
-          return SettingsPageError(
-            onRetry: () {
-              return controller.refresh();
-            },
-            error: error,
-          );
-        },
+            title: Text('settings.title'.tr()),
+            leading: const NavigationButton.back(),
+          ),
 
-        data: (state) {
-          final SettingsState(:player, :langCode, :soundEffects) = state;
-
-          return SafeArea(
+          body: SafeArea(
             child: RefreshIndicator.adaptive(
-              onRefresh: controller.refresh,
+              onRefresh: () async {
+                await controller.refresh();
+              },
 
               child: LayoutBuilder(
                 builder: (_, constraints) {
@@ -138,13 +135,22 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         title: 'settings.sections.preferences'.tr(),
                         actions: [
                           SettingOption.tile(
-                            onPressed: () {
-                              handleChangeLang(controller, langCode);
+                            onPressed: () async {
+                              final lang = await showPickLanguageSheet(
+                                context,
+                                initialValue: language,
+                              );
+
+                              if (lang == null) return;
+
+                              await ref
+                                  .read(preferencesNotifierProvider.notifier)
+                                  .setLanguage(lang);
                             },
 
                             title: 'settings.preferences.language'.tr(),
                             trailing: Text(
-                              AppLanguage.fromDbValue(langCode).label,
+                              AppLanguage.fromDbValue(language.name).label,
                             ),
                           ),
                           SettingOption.toggle(
@@ -153,7 +159,7 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                             },
 
                             title: 'settings.preferences.sound_effects'.tr(),
-                            value: soundEffects,
+                            value: allowSoundEffects,
                           ),
                         ],
                       ),
@@ -214,7 +220,13 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                       ...[
                         Text('settings.sections.danger_zone'.tr()),
                         FilledButton.tonal(
-                          onPressed: handleEraseData,
+                          onPressed: () async {
+                            final confirm = await showResetAppDialog(context);
+
+                            if (confirm != true) return;
+
+                            await resetApp(context);
+                          },
 
                           child: Text('settings.danger_zone.erase_all'.tr()),
                         ),
@@ -224,9 +236,9 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                 },
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -238,37 +250,5 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
 
     if (name == null) return;
     await controller.updateName(name: name);
-  }
-
-  void handleChangeLang(SettingsController controller, String langCode) async {
-    final lang = await showChoiceLanguageModal(context, initialValue: langCode);
-
-    if (lang == null || !mounted) return;
-    await controller.updateLanguage(context, langCode: lang);
-  }
-
-  void handleEraseData() async {
-    final confirmed = await showConfirmationModal(
-      context,
-      title: 'settings.danger_zone.erase_confirm'.tr(),
-    );
-
-    if (confirmed != true) return;
-
-    try {
-      await DatabaseService.instance.reset();
-
-      showSnackbar(
-        context,
-        'settings.danger_zone.erase_success'.tr(),
-        behavior: SnackBarBehavior.fixed,
-      );
-    } catch (e) {
-      showSnackbar(
-        context,
-        'settings.danger_zone.erase_error'.tr(),
-        behavior: SnackBarBehavior.fixed,
-      );
-    }
   }
 }

@@ -20,9 +20,12 @@ export 'settings/data/repos/preferences_repository_impl.dart';
 // ---------------------------------------------------------------------------
 // Presentation
 // ---------------------------------------------------------------------------
+export 'settings/presentation/actions/reset_app.dart';
+
 export 'settings/presentation/controllers/settings_controller.dart';
 
-export 'settings/presentation/modals/choice_language_modal.dart';
+export 'settings/presentation/modals/pick_language.dart';
+export 'settings/presentation/modals/reset_app.dart';
 
 export 'settings/presentation/notifiers/preferences_notifier.dart';
 

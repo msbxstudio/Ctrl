@@ -1,6 +1,6 @@
+import 'package:ctrl/core/types.dart';
 import 'package:ctrl/features/settings.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final settingsControllerProvider = AsyncNotifierProvider.autoDispose(() {
+final settingsControllerProvider = ControllerProvider(() {
   return SettingsController();
 });

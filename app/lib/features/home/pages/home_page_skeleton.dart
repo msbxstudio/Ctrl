@@ -7,10 +7,10 @@ import 'package:msbx/extensions.dart';
 
 final class HomePageSkeleton extends ConsumerWidget {
   /// ...
-  const new({super.key});
+  const HomePageSkeleton({super.key});
 
   @override
   Widget build(BuildContext _, WidgetRef _) {
-    return const CircularProgressIndicator.adaptive().centered();
+    return Scaffold(body: CircularProgressIndicator.adaptive().centered());
   }
 }

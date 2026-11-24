@@ -12,6 +12,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:msbx/config.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/utils.dart';
+import 'package:msbx/widgets.dart';
 
 import 'package:ctrl/app/router.dart';
 import 'package:ctrl/features/home.dart';
@@ -40,76 +41,66 @@ final class _HomePageState extends ConsumerState<HomePage> {
     final controller = ref.read(homeControllerProvider.notifier);
     final value = ref.watch(homeControllerProvider);
 
-    return Scaffold(
-      appBar: value.hasValue
-          ? AppBar(
-              actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    final refresh = await ref
-                        .read(routerProvider)
-                        .push<bool>(SettingsPage.routePath);
+    return value.when(
+      loading: () {
+        return const HomePageSkeleton();
+      },
+      error: (err, _) {
+        return HomePageError(
+          onRetry: () async {
+            await controller.refresh();
+          },
+          error: err,
+        );
+      },
+      data: (state) {
+        final HomeState(:player, :currentLevel, :solvedPuzzles, :averageTime) =
+            state;
 
-                    if (refresh != true) return;
-                    await controller.refresh();
-                  },
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  final refresh = await ref
+                      .read(routerProvider)
+                      .push<bool>(SettingsPage.routePath);
 
-                  tooltip: 'home.settings_tooltip'.tr(),
-                  icon: Icon(
-                    LucideIcons.settings,
-                    color: theme.colorScheme.outline,
-                  ),
+                  if (refresh != true) return;
+                  await controller.refresh();
+                },
+
+                tooltip: 'home.settings_tooltip'.tr(),
+                icon: Icon(
+                  LucideIcons.settings,
+                  color: theme.colorScheme.outline,
                 ),
-              ],
-
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(24.0),
-                child: _buildGreeting(value.requireValue.player.name)
-                    .constrained(maxWidth: Breakpoints.small)
-                    .padded(const EdgeInsets.symmetric(horizontal: 16.0))
-                    .aligned(Alignment.centerLeft),
               ),
-            )
-          : null,
+            ],
 
-      body: value.when(
-        loading: () {
-          return const HomePageSkeleton();
-        },
+            title: Text(
+              'home.greeting'.tr(namedArgs: {'name': player.name}),
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
 
-        error: (error, _) {
-          return HomePageError(
-            onRetry: () async {
+          body: RefreshIndicator.adaptive(
+            onRefresh: () async {
               await controller.refresh();
             },
-            error: error,
-          );
-        },
 
-        data: (state) {
-          final HomeState(
-            :player,
-            :currentLevel,
-            :solvedPuzzles,
-            :averageTime,
-          ) = state;
+            child: LayoutBuilder(
+              builder: (_, constraints) {
+                final width = constraints.maxWidth;
+                final remaining = width - Breakpoints.small;
 
-          return SafeArea(
-            child: RefreshIndicator.adaptive(
-              onRefresh: controller.refresh,
+                return SafeArea(
+                  minimum: EdgeInsets.symmetric(
+                    horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
+                    vertical: 12.0,
+                  ),
 
-              child: LayoutBuilder(
-                builder: (_, constraints) {
-                  final width = constraints.maxWidth;
-                  final remaining = width - Breakpoints.small;
-
-                  return ScrollableFilledView(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
-                      vertical: 12.0,
-                    ),
-
+                  child: FillScrollView(
                     child: Column(
                       children: [
                         Column(
@@ -148,6 +139,7 @@ final class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ],
                         ).expand(),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           spacing: 12.0,
@@ -158,7 +150,8 @@ final class _HomePageState extends ConsumerState<HomePage> {
                               label: 'home.metrics.avg_time'.tr(),
                               value: formatDuration(averageTime),
                               highlight: false,
-                            ).expand(),
+                            ),
+
                             _buildMetric(
                               icon: Symbols.local_fire_department,
                               label: 'home.metrics.streak'.tr(),
@@ -166,25 +159,18 @@ final class _HomePageState extends ConsumerState<HomePage> {
                                 namedArgs: {'count': '${player.streakDays}'},
                               ),
                               highlight: true,
-                            ).expand(),
-                          ],
+                            ),
+                          ].map((e) => e.expand()).toList(),
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildGreeting(String name) {
-    return Text(
-      'home.greeting'.tr(namedArgs: {'name': name}),
-      style: Theme.of(context).textTheme.titleLarge,
+          ),
+        );
+      },
     );
   }
 

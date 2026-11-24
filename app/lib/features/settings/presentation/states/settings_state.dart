@@ -1,11 +1,16 @@
 import 'package:ctrl/features/player.dart';
+import 'package:ctrl/features/settings.dart';
 
-final class const SettingsState({
-  required this.player,
-  required this.langCode,
-  required this.soundEffects,
-}) {
+final class SettingsState {
+  const SettingsState({
+    required this.player,
+    required this.language,
+    required this.allowSoundEffects,
+  });
+
   final Player player;
-  final String langCode;
-  final bool soundEffects;
+
+  final AppLanguage language;
+
+  final bool allowSoundEffects;
 }

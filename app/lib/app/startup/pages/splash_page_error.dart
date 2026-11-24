@@ -10,6 +10,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
+import 'package:ctrl/features/settings.dart';
+
 final class SplashPageError extends ConsumerWidget {
   const new({super.key, required this.onRetry, required this.error});
 
@@ -61,7 +63,13 @@ final class SplashPageError extends ConsumerWidget {
             ).padded(const EdgeInsets.only(bottom: 16.0)),
 
             FilledButton(
-              onPressed: () {},
+              onPressed: () async {
+                final confirm = await showResetAppDialog(context);
+
+                if (confirm != true) return;
+
+                await resetApp(context);
+              },
 
               child: const Text('Restablecer app'),
             ),

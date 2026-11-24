@@ -18,6 +18,7 @@ extension AppThemeData on ThemeData {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: scheme,
+
       applyElevationOverlayColor: brightness == Brightness.dark,
 
       textTheme: const TextTheme(
@@ -141,6 +142,12 @@ extension AppThemeData on ThemeData {
 
       appBarTheme: AppBarThemeData(
         leadingWidth: 64.0,
+        titleSpacing: 12.0,
+
+        centerTitle: false,
+
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: brightness == Brightness.dark

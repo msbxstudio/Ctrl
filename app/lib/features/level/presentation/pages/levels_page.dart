@@ -39,7 +39,7 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
         title: Text('levels.title'.tr()),
 
         leadingWidth: 64.0,
-        leading: const PopButton.back(),
+        leading: const NavigationButton.back(),
       ),
 
       body: SafeArea(

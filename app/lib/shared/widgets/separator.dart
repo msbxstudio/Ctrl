@@ -1,10 +1,8 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final class Separator extends ConsumerWidget {
-  const new({
+final class Separator extends StatelessWidget {
+  const Separator({
     super.key,
     this.opacity = 0.25,
     this.verticalIndent = 16.0,
@@ -16,9 +14,10 @@ final class Separator extends ConsumerWidget {
   final double horizontalIndent;
 
   @override
-  Widget build(BuildContext _, WidgetRef _) {
+  Widget build(BuildContext _) {
     return Opacity(
       opacity: opacity,
+
       child: Divider(
         height: (verticalIndent * 2) + 1.0,
         thickness: 1.0,

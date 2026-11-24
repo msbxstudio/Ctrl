@@ -94,7 +94,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
             title: Text('levels.level'.tr(namedArgs: {'id': '${level.id}'})),
 
             leadingWidth: 64.0,
-            leading: const PopButton.back(),
+            leading: const NavigationButton.back(),
 
             actionsPadding: const EdgeInsets.only(right: 18.0),
             actions: [

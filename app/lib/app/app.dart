@@ -10,6 +10,7 @@ import 'package:msbx/utils.dart';
 
 import 'package:ctrl/app/router.dart';
 import 'package:ctrl/core/services.dart';
+import 'package:ctrl/features/settings.dart';
 import 'package:ctrl/shared/themes.dart';
 
 final class MainApp extends ConsumerStatefulWidget {
@@ -27,6 +28,13 @@ final class _MainAppState extends ConsumerState<MainApp> {
   @override
   void initState() {
     super.initState();
+
+    ref.listenManual(preferencesNotifierProvider, (prev, next) async {
+      if (prev?.language == next.language) return;
+      if (!mounted) return;
+
+      await context.setLocale(Locale(next.language.name));
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await PurchaseService.initialize(
