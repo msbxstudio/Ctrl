@@ -82,9 +82,11 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
 
                   itemCount: levels.length,
                   itemBuilder: (_, index) {
-                    return IconButton(
-                      onPressed:
-                          currentLevel == null || index + 1 <= currentLevel.id
+                    final enabled =
+                        currentLevel == null || index + 1 <= currentLevel.id;
+
+                    return OutlinedButton(
+                      onPressed: enabled
                           ? () async {
                               await ref
                                   .read(routerProvider)
@@ -93,30 +95,32 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
                           : null,
 
                       style: theme.iconButtonTheme.style?.copyWith(
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
                         side: WidgetStateProperty.all(
                           BorderSide(
-                            color: Theme.of(context).colorScheme.outlineVariant
-                                .withValues(alpha: 0.5),
+                            color: enabled
+                                ? theme.colorScheme.outlineVariant.withValues(
+                                    alpha: 0.9,
+                                  )
+                                : theme.colorScheme.outline.withValues(
+                                    alpha: 0.1,
+                                  ),
                             width: 1.0,
                           ),
                         ),
-                        textStyle: WidgetStateProperty.resolveWith((states) {
-                          return theme.textTheme.bodyMedium?.copyWith(
-                            color: states.contains(WidgetState.disabled)
-                                ? theme.colorScheme.onSurfaceVariant.withValues(
-                                    alpha: 0.25,
-                                  )
-                                : theme.colorScheme.onSurfaceVariant,
-                          );
-                        }),
                       ),
 
-                      icon: Text('${index + 1}'),
+                      child: Text(
+                        '${index + 1}',
+
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: enabled
+                              ? theme.colorScheme.onSurface
+                              : theme.colorScheme.outline.withValues(
+                                  alpha: 0.4,
+                                ),
+                        ),
+                      ),
                     );
                   },
                 );

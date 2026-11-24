@@ -16,7 +16,9 @@ final class SectionCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        border: Border.all(color: theme.colorScheme.outline),
+        border: Border.all(
+          color: theme.colorScheme.outline.withValues(alpha: 0.4),
+        ),
 
         boxShadow: [
           BoxShadow(
