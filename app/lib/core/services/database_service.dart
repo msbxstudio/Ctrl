@@ -371,7 +371,7 @@ final class DatabaseService implements Disposable {
 /// while preserving existing data.
 final class _DatabaseConfiguration {
   /// Current database schema version.
-  static const int version = 2;
+  static const int version = 3;
 
   /// Creates the current database schema for new installations.
   ///
@@ -426,7 +426,8 @@ final class _DatabaseConfiguration {
   ///
   /// Receives the previous [oldVersion] and target [newVersion].
   ///
-  /// Version 2 pluralizes table names without recreating their records.
+  /// Version 3 handles both legacy singular tables and existing version 2
+  /// databases, adds level ordering, and removes the obsolete player level.
   /// sqflite runs this callback inside a transaction.
   static Future<void> onUpgrade(
     Database db,
@@ -434,21 +435,36 @@ final class _DatabaseConfiguration {
     int newVersion,
   ) async {
     if (oldVersion < 3 && newVersion >= 3) {
-      await db.execute('''
-        ALTER TABLE level RENAME TO levels;
-      ''');
-      await db.execute('''
-        ALTER TABLE level_progress RENAME TO level_progresses;
-      ''');
-      await db.execute('''
-        ALTER TABLE player RENAME TO players;
-      ''');
+      final tables = await db.query('sqlite_master', columns: ['name']);
+      final tableNames = tables.map((table) => table['name']).toSet();
+
+      for (final entry in const {
+        'level': 'levels',
+        'level_progress': 'level_progresses',
+        'player': 'players',
+      }.entries) {
+        if (tableNames.contains(entry.key)) {
+          await db.execute(
+            'ALTER TABLE ${entry.key} RENAME TO ${entry.value};',
+          );
+        }
+      }
 
       // 1. Add level ordering.
-      await db.execute('''
-        ALTER TABLE levels
-        ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0;
-      ''');
+      final levelColumns = await db.rawQuery('PRAGMA table_info(levels);');
+      if (!levelColumns.any((column) => column['name'] == 'sort_order')) {
+        await db.execute('''
+          ALTER TABLE levels
+          ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0;
+        ''');
+      }
+
+      final playerColumns = await db.rawQuery('PRAGMA table_info(players);');
+      if (!playerColumns.any(
+        (column) => column['name'] == 'current_level_id',
+      )) {
+        return;
+      }
 
       // 2. Create the new players table.
       await db.execute('''

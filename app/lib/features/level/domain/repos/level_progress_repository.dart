@@ -15,7 +15,8 @@ abstract interface class LevelProgressRepository {
   ///
   /// Records the initial number of [attempts] and [ellapsedTime].
   ///
-  /// Returns the newly created progress record.
+  /// Returns the persisted progress with its database ID. If progress already
+  /// exists for this level, returns it without resetting the player's data.
   Future<LevelProgress> create({
     required int levelId,
     required int attempts,
@@ -35,6 +36,9 @@ abstract interface class LevelProgressRepository {
     bool? isCompleted,
   });
 
-  /// Returns the average elapsed time across level progress records.
+  /// Returns the rounded average completion time in milliseconds.
+  ///
+  /// Excludes incomplete levels and records without a time. Returns zero
+  /// when no completed levels have a recorded time.
   Future<int> averageTime();
 }

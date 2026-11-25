@@ -23,7 +23,9 @@ final class LevelState implements Copyable<LevelState> {
   /// The player's progress associated with [level].
   final LevelProgress progress;
 
-  /// The timestamp marking the beginning of the level session.
+  /// The timestamp marking the first successful load of this level session.
+  ///
+  /// Preserved across refreshes until the controller is disposed.
   final DateTime startTime;
 
   /// The total number of available levels.

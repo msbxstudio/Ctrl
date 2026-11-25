@@ -34,7 +34,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     required int ellapsedTime,
   }) async {
     try {
-      final data = LevelProgress(
+      final data = LevelProgressModel(
         id: 0,
         createdAt: DateTime.now(),
         attempts: attempts,
@@ -44,9 +44,9 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
         level: null,
       );
 
-      await _local.save(LevelProgressModel.fromEntity(data));
+      final created = await _local.create(data);
 
-      return data;
+      return created.toEntity();
     } catch (e) {
       if (e is AppException) rethrow;
 
@@ -87,19 +87,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
   @override
   Future<int> averageTime() async {
     try {
-      // final result = await _service.query(
-      //   'level_progresses',
-      //   columns: ['AVG(time_ms) AS average_time'],
-      // );
-
-      // if (result.isEmpty) {
-      //   throw const NotFoundException('No level progresses found');
-      // }
-
-      // final averageTime = result.first['average_time'] as double?;
-
-      // return averageTime?.round() ?? 0;
-      return await Future.value(0);
+      return await _local.averageTime();
     } catch (e) {
       if (e is AppException) rethrow;
 

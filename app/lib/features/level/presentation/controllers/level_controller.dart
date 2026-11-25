@@ -11,6 +11,10 @@ import 'package:ctrl/features/player.dart';
 final class LevelController
     extends AutoDisposeFamilyAsyncNotifier<LevelState, int>
     implements Refreshable {
+  // Riverpod preserves this notifier across rebuilds, including refresh().
+  // Start timing after the first successful load and keep that session origin.
+  DateTime? _startTime;
+
   @override
   Future<LevelState> build(int levelId) async {
     // Try to upsert level progress. If it doesn't exist, create it with default values.
@@ -50,7 +54,7 @@ final class LevelController
       level: level,
       progress: progress,
 
-      startTime: DateTime.now(),
+      startTime: _startTime ??= DateTime.now(),
     );
   }
 
