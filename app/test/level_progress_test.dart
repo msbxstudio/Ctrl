@@ -290,22 +290,13 @@ void main() {
     );
   });
 
-  for (final legacy in [
-    (version: 1, singular: true, modern: false),
-    (version: 2, singular: true, modern: false),
-    (version: 2, singular: false, modern: false),
-    (version: 2, singular: false, modern: true),
-  ]) {
-    test('migrates $legacy without losing player or progress data', () async {
-      await createLegacyDatabase(
-        path.join(directory.path, 'ctrl.db'),
-        version: legacy.version,
-        singular: legacy.singular,
-        modern: legacy.modern,
-      );
+  test(
+    'migrates published version 1 to RC version 2 without data loss',
+    () async {
+      await createPublishedDatabase(path.join(directory.path, 'ctrl.db'));
       await initialize();
       final db = service!.service;
-      expect(await db.getVersion(), 3);
+      expect(await db.getVersion(), 2);
       final levelColumns = await db.rawQuery('PRAGMA table_info(levels)');
       expect(
         levelColumns.map((column) => column['name']),
@@ -350,75 +341,89 @@ void main() {
       await service!.dispose();
       await initialize();
       expect((await repository().getOne(LevelProgressByLevelId(1))).id, 42);
-      expect(await service!.service.getVersion(), 3);
-    });
-  }
+      expect(await service!.service.getVersion(), 2);
+    },
+  );
+
+  test(
+    'creates and reopens RC version 2 without applying the migration',
+    () async {
+      await initialize();
+      expect(await service!.service.getVersion(), 2);
+      final created = await repository().create(
+        levelId: 1,
+        attempts: 2,
+        ellapsedTime: 1500,
+      );
+
+      await service!.dispose();
+      await initialize();
+
+      expect(await service!.service.getVersion(), 2);
+      final persisted = await repository().getOne(LevelProgressByLevelId(1));
+      expect(persisted.id, created.id);
+      expect(persisted.attempts, 2);
+      expect(persisted.ellapsedTime, 1500);
+      expect(
+        await service!.service.rawQuery('PRAGMA foreign_key_check'),
+        isEmpty,
+      );
+    },
+  );
 }
 
-/// Reproduces the schemas shipped before and after the table renaming.
-Future<void> createLegacyDatabase(
-  String databasePath, {
-  required int version,
-  required bool singular,
-  required bool modern,
-}) async {
-  final levelTable = singular ? 'level' : 'levels';
-  final progressTable = singular ? 'level_progress' : 'level_progresses';
-  final playerTable = singular ? 'player' : 'players';
-  final playerLevel = modern
-      ? ''
-      : ''', current_level_id INTEGER NOT NULL DEFAULT 1,
-          FOREIGN KEY(current_level_id) REFERENCES $levelTable(id)''';
+/// Reproduces the version 1 schema used by the published application.
+Future<void> createPublishedDatabase(String databasePath) async {
   final db = await openDatabase(
     databasePath,
-    version: version,
+    version: 1,
     onConfigure: (db) => db.execute('PRAGMA foreign_keys = ON'),
     onCreate: (db, _) async {
       await db.execute('''
-        CREATE TABLE $levelTable (
+        CREATE TABLE level (
           id INTEGER PRIMARY KEY,
           created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
           type TEXT NOT NULL,
           keyboard TEXT NOT NULL,
           question TEXT NOT NULL DEFAULT '{}',
           answer TEXT NOT NULL,
-          ${modern ? 'sort_order INTEGER NOT NULL DEFAULT 0,' : ''}
           hint TEXT NULL,
           options TEXT NOT NULL DEFAULT '[]'
         )
       ''');
       await db.execute('''
-        CREATE TABLE $progressTable (
+        CREATE TABLE level_progress (
           id INTEGER PRIMARY KEY,
           created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
           attempts INTEGER NOT NULL DEFAULT 0,
           time_ms INTEGER NULL,
           is_completed INTEGER NOT NULL DEFAULT 0,
-          level_id INTEGER NOT NULL ${modern ? 'UNIQUE' : ''},
-          FOREIGN KEY(level_id) REFERENCES $levelTable(id) ON DELETE CASCADE
+          level_id INTEGER NOT NULL,
+          FOREIGN KEY(level_id) REFERENCES level(id) ON DELETE CASCADE
         )
       ''');
       await db.execute('''
-        CREATE TABLE $playerTable (
+        CREATE TABLE player (
           id INTEGER PRIMARY KEY,
           created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
           updated_at TEXT NULL,
           last_active_at TEXT NULL,
           name TEXT NOT NULL,
-          streak_days INTEGER NOT NULL DEFAULT 0
-          $playerLevel
+          streak_days INTEGER NOT NULL DEFAULT 0,
+          current_level_id INTEGER NOT NULL DEFAULT 1,
+          FOREIGN KEY(current_level_id) REFERENCES level(id)
         )
       ''');
     },
   );
   try {
-    await db.insert(levelTable, {
+    await db.insert('level', {
       'id': 1,
       'type': 'syntax',
       'keyboard': 'symbol',
       'answer': ')',
     });
-    await db.insert(progressTable, {
+    await db.insert('level_progress', {
       'id': 42,
       'created_at': '2026-11-20T00:00:00',
       'attempts': 4,
@@ -426,7 +431,7 @@ Future<void> createLegacyDatabase(
       'is_completed': 1,
       'level_id': 1,
     });
-    await db.insert(playerTable, {
+    await db.insert('player', {
       'id': 1,
       'name': 'Existing player',
       'streak_days': 7,

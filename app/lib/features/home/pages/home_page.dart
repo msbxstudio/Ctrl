@@ -11,7 +11,6 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:msbx/config.dart';
 import 'package:msbx/extensions.dart';
-import 'package:msbx/utils.dart';
 import 'package:msbx/widgets.dart';
 
 import 'package:ctrl/app/router.dart';
@@ -117,21 +116,37 @@ final class _HomePageState extends ConsumerState<HomePage> {
                             Row(
                               spacing: 12.0,
                               children: [
-                                _buildButton(
-                                  label: 'levels.title'.tr(),
-                                  icon: LucideIcons.grip,
-                                  route: '/levels',
+                                FilledButton.tonalIcon(
+                                  onPressed: () async {
+                                    await ref
+                                        .read(routerProvider)
+                                        .push(LevelsPage.routePath)
+                                        .then((_) {
+                                          return controller.refresh();
+                                        });
+                                  },
 
-                                  controller: controller,
-                                  highlight: false,
+                                  icon: const Icon(LucideIcons.grip),
+                                  label: Text('levels.title'.tr()),
                                 ).expand(),
-                                _buildButton(
-                                  label: 'home.buttons.play'.tr(),
-                                  icon: LucideIcons.play,
-                                  route: '/levels/${currentLevel.id}',
 
-                                  controller: controller,
-                                  highlight: true,
+                                FilledButton.icon(
+                                  onPressed: () async {
+                                    await ref
+                                        .read(routerProvider)
+                                        .push(
+                                          LevelPage.routePath.replaceFirst(
+                                            ':id',
+                                            '${currentLevel.id}',
+                                          ),
+                                        )
+                                        .then((_) {
+                                          return controller.refresh();
+                                        });
+                                  },
+
+                                  icon: const Icon(LucideIcons.play),
+                                  label: Text('home.buttons.play'.tr()),
                                 ).expand(),
                               ],
                             ),
@@ -259,39 +274,6 @@ final class _HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildButton({
-    required String label,
-    required IconData icon,
-    required String route,
-    MainController? controller,
-    bool highlight = false,
-  }) {
-    final theme = Theme.of(context);
-
-    return FilledButton.icon(
-      onPressed: () async {
-        Debugger.log('Navigating to $route');
-
-        await ref.read(routerProvider).push(route);
-
-        Debugger.log('Returned from $route, refreshing main data...');
-
-        await controller?.refresh();
-      },
-
-      style: Theme.of(context).iconButtonTheme.style?.copyWith(
-        backgroundColor: WidgetStateProperty.all(
-          highlight
-              ? theme.colorScheme.primary
-              : theme.colorScheme.outlineVariant.withValues(alpha: 0.75),
-        ),
-      ),
-
-      label: Text(label),
-      icon: Icon(icon),
     );
   }
 
