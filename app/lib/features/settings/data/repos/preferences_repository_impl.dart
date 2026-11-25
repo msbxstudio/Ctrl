@@ -1,3 +1,5 @@
+import 'package:msbx/exceptions.dart';
+
 import 'package:ctrl/features/settings.dart';
 
 final class PreferencesRepositoryImpl implements PreferencesRepository {
@@ -9,30 +11,48 @@ final class PreferencesRepositoryImpl implements PreferencesRepository {
 
   @override
   Future<Preferences> get() async {
-    final value = await _shared.get();
-    return value?.toEntity() ?? const Preferences.defaults();
+    try {
+      final value = await _shared.get();
+      return value?.toEntity() ?? const Preferences.defaults();
+    } on AppException {
+      rethrow;
+    } catch (_) {
+      throw const UnknownException('errors.settings.load');
+    }
   }
 
   @override
   Future<Preferences> update({AppLanguage? language, bool? allowSounds}) async {
-    final current = await get();
+    try {
+      final current = await get();
 
-    final updated = Preferences(
-      language: language ?? current.language,
-      allowSounds: allowSounds ?? current.allowSounds,
-    );
+      final updated = Preferences(
+        language: language ?? current.language,
+        allowSounds: allowSounds ?? current.allowSounds,
+      );
 
-    await _shared.save(PreferencesModel.fromEntity(updated));
+      await _shared.save(PreferencesModel.fromEntity(updated));
 
-    return updated;
+      return updated;
+    } on AppException {
+      rethrow;
+    } catch (_) {
+      throw const UnknownException('errors.settings.save');
+    }
   }
 
   @override
   Future<Preferences> reset() async {
-    const defaults = Preferences.defaults();
+    try {
+      const defaults = Preferences.defaults();
 
-    await _shared.save(PreferencesModel.fromEntity(defaults));
+      await _shared.save(PreferencesModel.fromEntity(defaults));
 
-    return defaults;
+      return defaults;
+    } on AppException {
+      rethrow;
+    } catch (_) {
+      throw const UnknownException('errors.settings.save');
+    }
   }
 }

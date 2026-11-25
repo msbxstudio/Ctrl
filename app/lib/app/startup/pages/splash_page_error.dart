@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
@@ -46,15 +47,13 @@ final class SplashPageError extends ConsumerWidget {
             ).expand(),
 
             Text(
-              'Problema grave',
+              'errors.startup.title'.tr(),
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium,
             ),
 
             Text(
-              'La app no pudo iniciarse correctamente.'
-              ' '
-              'Restablecerla podría solucionar el problema, pero eliminará tu progreso guardado en este dispositivo.',
+              'errors.startup.message'.tr(),
               textAlign: TextAlign.center,
 
               style: theme.textTheme.bodyMedium?.copyWith(
@@ -71,7 +70,7 @@ final class SplashPageError extends ConsumerWidget {
                 await resetApp(context);
               },
 
-              child: const Text('Restablecer app'),
+              child: Text('settings.reset.app'.tr()),
             ),
 
             ElevatedButton(
@@ -87,7 +86,7 @@ final class SplashPageError extends ConsumerWidget {
                 ),
               ),
 
-              child: const Text('Salir'),
+              child: Text('common.actions.exit'.tr()),
             ),
           ],
         ),

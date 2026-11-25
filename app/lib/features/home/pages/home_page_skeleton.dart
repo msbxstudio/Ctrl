@@ -11,6 +11,8 @@ final class HomePageSkeleton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext _, WidgetRef _) {
-    return Scaffold(body: CircularProgressIndicator.adaptive().centered());
+    return Scaffold(
+      body: CircularProgressIndicator.adaptive().centered(),
+    );
   }
 }

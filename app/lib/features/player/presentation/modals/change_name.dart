@@ -36,11 +36,11 @@ Future<String?> showChangeNameSheet(
           height: 88.0,
 
           trailing: NavigationButton.close(
-            tooltip: 'actions.common.cancel'.tr(),
+            tooltip: 'common.actions.cancel'.tr(),
           ),
 
           leading: Text(
-            'dialogs.username.title'.tr(),
+            'player.change_name.title'.tr(),
 
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
@@ -57,7 +57,9 @@ Future<String?> showChangeNameSheet(
 
                 children: [
                   Text(
-                    'dialogs.username.description'.tr(args: ['15']),
+                    'player.change_name.description'.tr(
+                      namedArgs: {'max': '15'},
+                    ),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.outline,
                     ),
@@ -71,13 +73,27 @@ Future<String?> showChangeNameSheet(
 
                     validator:
                         (Validator<String>()
-                              ..required()
-                              ..minLength(3)
-                              ..shouldNotContain(' '))
+                              ..required('validation.required'.tr())
+                              ..minLength(
+                                3,
+                                'validation.min_length'.tr(
+                                  namedArgs: {'min': '3'},
+                                ),
+                              )
+                              ..maxLength(
+                                15,
+                                'validation.max_length'.tr(
+                                  namedArgs: {'max': '15'},
+                                ),
+                              )
+                              ..shouldNotContain(
+                                ' ',
+                                'validation.no_spaces'.tr(),
+                              ))
                             .validate,
 
                     decoration: InputDecoration(
-                      hintText: 'dialogs.username.input_hint'.tr(),
+                      hintText: 'player.change_name.input_hint'.tr(),
                     ),
                   ),
 
@@ -90,7 +106,7 @@ Future<String?> showChangeNameSheet(
                       navigator.pop(controller.text);
                     },
 
-                    child: Text('dialogs.username.confirm'.tr()),
+                    child: Text('common.actions.confirm'.tr()),
                   ),
                 ],
               ).padded(

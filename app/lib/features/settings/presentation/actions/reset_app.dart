@@ -13,9 +13,9 @@ Future<void> resetApp(BuildContext context) async {
   try {
     await DatabaseService.instance.reset();
 
-    message = 'settings.danger_zone.erase_success'.tr();
+    message = 'settings.reset.success'.tr();
   } catch (_) {
-    message = 'settings.danger_zone.erase_error'.tr();
+    message = 'errors.reset'.tr();
   }
 
   if (!context.mounted) return;

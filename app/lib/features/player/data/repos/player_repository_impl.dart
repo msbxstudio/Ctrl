@@ -13,7 +13,7 @@ final class PlayerRepositoryImpl implements PlayerRepository {
       final result = await _local.get();
 
       if (result == null) {
-        throw UnsupportedError('Player not found');
+        throw const NotFoundException('errors.player.missing');
       }
 
       return result.toEntity();
@@ -22,7 +22,7 @@ final class PlayerRepositoryImpl implements PlayerRepository {
         rethrow;
       }
 
-      throw const UnknownException('Failed to get player');
+      throw const UnknownException('errors.player.load');
     }
   }
 
@@ -52,7 +52,7 @@ final class PlayerRepositoryImpl implements PlayerRepository {
         rethrow;
       }
 
-      throw const UnknownException('Failed to update player');
+      throw const UnknownException('errors.player.save');
     }
   }
 }

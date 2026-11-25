@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:msbx/exceptions.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
@@ -88,11 +89,12 @@ final class SettingOption extends ConsumerWidget {
 
                 if (!success) {
                   throw const LaunchException(
-                    'No se pudo abrir el enlace solicitado.',
+                    'errors.link',
                   );
                 }
-              } on LaunchException catch (e) {
-                showSnackbar(context, e.message);
+              } catch (_) {
+                if (!context.mounted) return;
+                showSnackbar(context, 'errors.link'.tr());
               }
             },
             _SettingActionType.toggle => null,

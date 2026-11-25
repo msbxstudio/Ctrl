@@ -7,11 +7,11 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:msbx/config.dart';
-import 'package:msbx/exceptions.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/app/router.dart';
+import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/settings.dart';
 import 'package:ctrl/shared/widgets.dart';
@@ -59,7 +59,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
         showSnackbar(
           context,
-          error is AppException ? error.message : 'levels.error_checking'.tr(),
+          errorMessage(error, fallbackKey: 'errors.levels.check_answer'),
         );
       }
     });
@@ -103,7 +103,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
             automaticallyImplyActions: false,
 
             titleSpacing: 12.0,
-            title: Text('levels.level'.tr(namedArgs: {'id': '${level.id}'})),
+            title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
 
             leadingWidth: 64.0,
             leading: const NavigationButton.back(),
@@ -148,6 +148,11 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                 final match = await controller.checkAnswer(
                   _answerFieldController.text,
                 );
+
+                if (!mounted) return;
+
+                // The mutation listener already displays persistence errors.
+                if (ref.read(checkAnswerMutationProvider).hasError) return;
 
                 if (!match) {
                   return showSnackbar(

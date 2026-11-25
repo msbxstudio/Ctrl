@@ -187,20 +187,26 @@ final class PurchaseService implements Disposable {
   /// Throws a [PurchaseException] if the product query fails, no matching
   /// product is found, or the purchase request cannot be started.
   ///
-  /// Platform exceptions are logged and rethrown without modification.
+  /// Platform failures are logged and mapped to localized purchase errors.
   ///
   /// Purchase results are delivered asynchronously through [onData].
   /// A successful return does not indicate that the transaction completed.
   Future<void> purchase(String productId, {bool consumable = true}) async {
-    final response = await service.queryProductDetails({productId});
+    final ProductDetailsResponse response;
+    try {
+      response = await service.queryProductDetails({productId});
+    } catch (error) {
+      Debugger.error('Product query failed: $error');
+      throw const PurchaseException('errors.purchase.query');
+    }
 
     if (response.error != null) {
-      throw const PurchaseException('Failed to query product details.');
+      throw const PurchaseException('errors.purchase.query');
     }
 
     if (response.productDetails.isEmpty) {
       throw const PurchaseException(
-        'No product details found for the given product ID.',
+        'errors.purchase.unavailable',
       );
     }
 
@@ -212,11 +218,13 @@ final class PurchaseService implements Disposable {
           : await service.buyNonConsumable(purchaseParam: param);
 
       if (!success) {
-        throw const PurchaseException('Failed to initiate purchase.');
+        throw const PurchaseException('errors.purchase.start');
       }
+    } on PurchaseException {
+      rethrow;
     } catch (error) {
       Debugger.error('Purchase failed: $error');
-      rethrow;
+      throw const PurchaseException('errors.purchase.start');
     }
   }
 

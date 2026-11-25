@@ -32,7 +32,7 @@ Future<AppLanguage?> showPickLanguageSheet(
             children: [
               ModalToolbar(
                 title: Text(
-                  'dialogs.language.title'.tr(),
+                  'settings.language_picker.title'.tr(),
 
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ Future<AppLanguage?> showPickLanguageSheet(
                               ),
                             ),
 
-                            title: Text(e.label),
+                            title: Text(e.labelKey.tr()),
                             value: e,
                           ),
                         ),
@@ -84,7 +84,7 @@ Future<AppLanguage?> showPickLanguageSheet(
                   Navigator.of(context, rootNavigator: true).pop(currentValue);
                 },
 
-                child: const Text('Confirmar'),
+                child: Text('common.actions.confirm'.tr()),
               ),
             ],
           ),

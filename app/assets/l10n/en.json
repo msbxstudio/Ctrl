@@ -1,18 +1,17 @@
 {
-  "actions": {
-    "common": {
-      "ok": "OK",
+  "common": {
+    "actions": {
       "back": "Back",
       "close": "Close",
       "confirm": "Confirm",
       "cancel": "Cancel",
       "next": "Next",
-      "save": "Save"
+      "retry": "Try again",
+      "exit": "Exit"
     }
   },
   "home": {
     "greeting": "Hello, {name}!",
-    "settings_tooltip": "Settings",
     "status": {
       "active": "SESSION ACTIVE",
       "inactive": "NO SESSION ACTIVE"
@@ -21,21 +20,25 @@
       "start": "START JOURNEY",
       "continue": "CONTINUE JOURNEY"
     },
-    "level": "Level {id}",
     "progress": {
       "title": "Progress",
       "puzzles_solved": "{count} PUZZLES SOLVED"
     },
     "buttons": {
-      "levels": "Levels",
       "play": "Play"
     },
     "metrics": {
       "avg_time": "AVG TIME",
       "streak": "STREAK",
       "days": "{count} DAYS"
-    },
-    "error": "An error occurred"
+    }
+  },
+  "player": {
+    "change_name": {
+      "title": "Change your name",
+      "description": "Enter a new name to be displayed in the app. This name can be up to {max} characters long.",
+      "input_hint": "New name"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -51,7 +54,6 @@
     },
     "preferences": {
       "language": "Language",
-      "dark_mode": "Dark Mode",
       "sound_effects": "Sound Effects"
     },
     "privacy": {
@@ -63,161 +65,144 @@
       "pizza": "Buy Me a Pizza",
       "support": "Support Me"
     },
-    "danger_zone": {
-      "erase_all": "Erase all data",
-      "erase_confirm": "Are you sure you want to erase all data? This action cannot be undone.",
-      "erase_success": "All data has been erased successfully.",
-      "erase_error": "An error occurred while erasing data.\nPlease try again later."
+    "reset": {
+      "confirm": "Are you sure you want to erase all data? This action cannot be undone.",
+      "success": "All data has been erased successfully.",
+      "action": "Erase all data",
+      "app": "Reset app"
+    },
+    "language_picker": {
+      "title": "Select your language"
+    },
+    "languages": {
+      "en": "English",
+      "es": "Spanish"
     }
   },
   "levels": {
     "title": "Levels",
-    "level": "Level {id}",
     "hint_tooltip": "Hint",
     "no_hint": "No hint available",
     "answer_placeholder": "Answer",
     "enter": "ENTER",
     "wrong_answer": "Wrong answer.",
-    "error_loading": "Error loading level",
-    "error_loading_all": "Error loading levels",
-    "error_checking": "Error checking answer",
-    "29": {
-      "question": "Array with 5 elements. Last index."
-    },
-    "30": {
-      "question": "String 'CTRL'. Length."
-    },
-    "31": {
-      "question": "Array [10,20,30]. Value at index 1"
-    },
-    "32": {
-      "question": "If an array has 10 elements, how many valid indices does it have?"
-    },
-    "33": {
-      "question": "Command to check the current status of the system."
-    },
-    "34": {
-      "question": "Command to log in to the system."
-    },
-    "35": {
-      "question": "Command to exit a function and optionally return a value"
-    },
-    "60": {
-      "question": "If all squares are rectangles and this shape is a square, is it a rectangle?"
-    },
-    "61": {
-      "question": "If A implies B and B implies C, does A imply C?"
-    },
-    "62": {
-      "question": "NOT(true AND false) equals true?"
-    },
-    "63": {
-      "question": "A switch puzzle: can you guarantee all mappings in one try?"
-    },
-    "64": {
-      "question": "Race condition without locks: is result deterministic?"
-    },
-    "65": {
-      "question": "Two references point to same object; how many objects exist?"
-    },
-    "66": {
-      "question": "What is 3^2 + 1?"
-    },
-    "67": {
-      "question": "Loop of 4 iterations. Increment by 1 each iteration. Result"
-    },
-    "69": {
-      "question": "double loop 2x2 prints count"
-    },
-    "70": {
-      "question": "Count vowels in ALGORITHM"
-    },
-    "71": {
-      "question": "Find minimum in [5,2,9,1,6]"
-    },
-    "75": {
-      "question": "Which SOLID principle states a class should have only one reason to change?",
-      "hint": "3 letters"
-    },
-    "76": {
-      "question": "Which principle allows hiding internal state and requiring all interaction through methods?",
-      "hint": "3 letters"
-    },
-    "77": {
-      "question": "Reverse the word: SOLID"
-    },
-    "78": {
-      "question": "Which pattern matches digit sequences?"
-    },
-    "79": {
-      "question": "Which clause filters grouped results?"
-    },
-    "80": {
-      "question": "Which clause groups rows?"
-    },
-    "81": {
-      "question": "Traversal visiting all nodes level by level",
-      "hint": "3 letters"
-    },
-    "82": {
-      "question": "Traversal going deep before breadth",
-      "hint": "3 letters"
-    },
-    "83": {
-      "question": "Acronym for principles: S O L I D"
-    },
-    "84": {
-      "question": "Access an array by index"
-    },
-    "85": {
-      "question": "Traverse an array once"
-    },
-    "86": {
-      "question": "Linear scan of array of size n"
-    },
-    "87": {
-      "question": "Binary search"
-    },
-    "88": {
-      "question": "Two nested loops"
-    },
-    "89": {
-      "question": "Merge sort"
-    },
-    "90": {
-      "question": "Merge sort complexity"
+    "label": "Level {id}",
+    "completed": {
+      "title": "Level complete!",
+      "description": "Congratulations! You've completed the level."
     }
   },
-  "dialogs": {
-    "language": {
-      "title": "Select your language",
-      "description": "Choose your preferred language. You can change it at any time."
-    },
-    "username": {
-      "title": "Change your name",
-      "description": "Enter a new name to be displayed in the app. This name can be up to {} characters long.",
-      "input_hint": "New name",
-      "confirm": "Confirm"
-    },
-    "level": {
-      "completed": {
-        "title": "Level complete!",
-        "description": "Congratulations! You've completed the level."
-      }
-    }
+  "purchases": {
+    "success": "Thank you for your support!",
+    "canceled": "Purchase canceled."
   },
-  "validators": {
-    "string": {
-      "required": "This field is required.",
-      "min_length": "This field must be at least {min} characters long.",
-      "max_length": "This field cannot be longer than {max} characters.",
-      "should_contain": "This field must contain '{value}'.",
-      "should_not_contain": "This field must not contain '{value}'."
-    }
+  "validation": {
+    "required": "This field is required.",
+    "min_length": "Use at least {min} characters.",
+    "max_length": "Use no more than {max} characters.",
+    "no_spaces": "Your name cannot contain spaces."
   },
-  "snackbar": {
-    "purchase_success": "Thank you for your support!",
-    "purchase_failed": "Failed to complete purchase.",
-    "purchase_canceled": "Purchase canceled."
+  "errors": {
+    "load_title": "Unable to load information",
+    "startup": {
+      "title": "The app could not start",
+      "message": "Your saved data could not be loaded. Try opening the app again. If the problem continues, resetting the app may help, but will delete your progress on this device."
+    },
+    "home": "Your profile or progress could not be loaded. Try again to continue playing.",
+    "settings": {
+      "load": "Your settings could not be loaded. Try again to view them.",
+      "save": "Your preference could not be saved. Try making the change again.",
+      "language": "Your saved language is not available. Open the app again and choose a supported language."
+    },
+    "levels": {
+      "load": "The level list could not be loaded. Try again to choose a level.",
+      "level_load": "This level could not be loaded. Go back to the level list and try again.",
+      "missing": "This level is no longer available. Go back and choose another level.",
+      "current": "Your next level could not be found. Return to the home screen and try again.",
+      "count": "Your level totals could not be loaded. Try loading your progress again.",
+      "check_answer": "Your answer could not be checked or your progress saved. Try submitting it again."
+    },
+    "progress": {
+      "missing": "No saved progress was found for this level. Open the level again to start.",
+      "load": "Your progress could not be loaded. Open the level again to retry.",
+      "create": "Your progress for this level could not be started. Open the level again to retry.",
+      "save": "Your progress could not be saved. Try submitting your answer again before leaving the level.",
+      "stats": "Your play time could not be loaded. Try loading your progress again."
+    },
+    "player": {
+      "missing": "Your player profile could not be found. Close and reopen the app to try again.",
+      "load": "Your player profile could not be loaded. Close and reopen the app to try again.",
+      "save": "Your profile changes could not be saved. Try again before leaving this screen."
+    },
+    "purchase": {
+      "query": "The store could not load this donation. Check your connection and try again.",
+      "unavailable": "This donation is not available in the store right now. Choose another option or try again later.",
+      "start": "The store could not start your purchase. Check your connection and try again.",
+      "failed": "The store could not complete your purchase. Check your connection and payment method before trying again.",
+      "complete": "The store has not confirmed your purchase yet. Check your purchase history before trying again."
+    },
+    "link": "This link could not be opened. Check that you have a browser installed and try again.",
+    "reset": "The app data could not be fully erased. Close and reopen the app before trying again."
+  },
+  "content": {
+    "questions": {
+      "29": "Array with 5 elements. Last index.",
+      "30": "String 'CTRL'. Length.",
+      "31": "Array [10,20,30]. Value at index 1",
+      "32": "If an array has 10 elements, how many valid indices does it have?",
+      "33": "Command to check the current status of the system.",
+      "34": "Command to log in to the system.",
+      "35": "Command to exit a function and optionally return a value",
+      "60": "If all squares are rectangles and this shape is a square, is it a rectangle?",
+      "61": "If A implies B and B implies C, does A imply C?",
+      "62": "NOT(true AND false) equals true?",
+      "63": "A switch puzzle: can you guarantee all mappings in one try?",
+      "64": "Race condition without locks: is result deterministic?",
+      "65": "Two references point to same object; how many objects exist?",
+      "66": "What is 3^2 + 1?",
+      "67": "Loop of 4 iterations. Increment by 1 each iteration. Result",
+      "69": "double loop 2x2 prints count",
+      "70": "Count vowels in ALGORITHM",
+      "71": "Find minimum in [5,2,9,1,6]",
+      "75": "Which SOLID principle states a class should have only one reason to change?",
+      "76": "Which principle allows hiding internal state and requiring all interaction through methods?",
+      "77": "Reverse the word: SOLID",
+      "78": "Which pattern matches digit sequences?",
+      "79": "Which clause filters grouped results?",
+      "80": "Which clause groups rows?",
+      "81": "Traversal visiting all nodes level by level",
+      "82": "Traversal going deep before breadth",
+      "83": "Acronym for principles: S O L I D",
+      "84": "Access an array by index",
+      "85": "Traverse an array once",
+      "86": "Linear scan of array of size n",
+      "87": "Binary search",
+      "88": "Two nested loops",
+      "89": "Merge sort",
+      "90": "Merge sort complexity"
+    },
+    "hints": {
+      "three_letters": "3 letters",
+      "array_indices": "Array indices start at 0.",
+      "assignment": "+= and *= modify the current value.",
+      "conditional": "condition ? a : b selects one of two values.",
+      "boolean": "T = True\nF = False",
+      "inclusive_range": "The range 1 to 3 includes both endpoints.",
+      "bitwise_and": "& = bitwise AND",
+      "bitwise_or": "| = bitwise OR",
+      "complexity": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)",
+      "recursion": "Evaluate the base case first, then unwind the calls.",
+      "inner_loop": "The inner loop runs i times.",
+      "array_changes": "Changes to a[i] affect later iterations.",
+      "break": "break stops the loop before updating x.",
+      "continue": "continue skips the remaining body for that iteration.",
+      "xor_and": "^ = XOR\n& = AND",
+      "left_shift": "<< 1 = shift left by one bit\n^ = XOR",
+      "fibonacci": "Start with f(0) and f(1), then work upward.",
+      "smaller_cases": "Calculate smaller cases before evaluating f(5).",
+      "immediate_updates": "Updates are applied immediately, from left to right.",
+      "recursion_values": "Write down the values of f(0) through f(6).",
+      "complexity_range": "@:content.hints.complexity\nTip: the inner loop starts at i, not 1."
+    }
   }
 }

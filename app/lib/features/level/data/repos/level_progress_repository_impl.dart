@@ -16,14 +16,14 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       };
 
       if (result == null) {
-        throw const NotFoundException('');
+        throw const NotFoundException('errors.progress.missing');
       }
 
       return result.toEntity();
     } catch (e) {
       if (e is AppException) rethrow;
 
-      throw const UnknownException('Failed to load level progress');
+      throw const UnknownException('errors.progress.load');
     }
   }
 
@@ -50,7 +50,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     } catch (e) {
       if (e is AppException) rethrow;
 
-      throw const UnknownException('');
+      throw const UnknownException('errors.progress.create');
     }
   }
 
@@ -80,7 +80,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     } catch (e) {
       if (e is AppException) rethrow;
 
-      throw const UnknownException('');
+      throw const UnknownException('errors.progress.save');
     }
   }
 
@@ -103,7 +103,7 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
     } catch (e) {
       if (e is AppException) rethrow;
 
-      throw const UnknownException('');
+      throw const UnknownException('errors.progress.stats');
     }
   }
 }

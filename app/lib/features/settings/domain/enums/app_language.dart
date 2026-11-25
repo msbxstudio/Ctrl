@@ -7,18 +7,14 @@ enum AppLanguage {
   ///
   en;
 
-  String get label {
-    return switch (this) {
-      es => 'Español',
-      en => 'Inglés',
-    };
-  }
+  /// Localization key for this language's display name.
+  String get labelKey => 'settings.languages.$name';
 
   static AppLanguage fromDbValue(String value) {
     return switch (value.toUpperCase()) {
       'ES' => AppLanguage.es,
       'EN' => AppLanguage.en,
-      _ => throw const ValidationException(''),
+      _ => throw const ValidationException('errors.settings.language'),
     };
   }
 

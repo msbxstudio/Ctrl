@@ -4,9 +4,12 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 
 import 'package:msbx/extensions.dart';
+
+import 'package:ctrl/core/utils.dart';
 
 final class HomePageError extends ConsumerWidget {
   ///
@@ -44,13 +47,13 @@ final class HomePageError extends ConsumerWidget {
           ),
 
           Text(
-            'Ocurrió un error',
+            'errors.load_title'.tr(),
             textAlign: TextAlign.center,
             style: theme.textTheme.titleMedium,
           ),
 
           Text(
-            error.toString(),
+            errorMessage(error, fallbackKey: 'errors.home'),
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
@@ -60,8 +63,8 @@ final class HomePageError extends ConsumerWidget {
           FilledButton.icon(
             onPressed: () async => await onRetry(),
 
-            label: const Text('Intentar de nuevo'),
-            icon: Icon(LucideIcons.rotateCcw),
+            label: Text('common.actions.retry'.tr()),
+            icon: const Icon(LucideIcons.rotateCcw),
           ),
         ],
       ).padded(const EdgeInsets.symmetric(horizontal: 32.0)),

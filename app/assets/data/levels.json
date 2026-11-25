@@ -218,8 +218,8 @@
     },
     "answer": "4",
     "hint": {
-      "type": "raw",
-      "value": "Array indices start at 0."
+      "type": "key",
+      "value": "content.hints.array_indices"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -251,7 +251,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.33.question"
+      "value": "content.questions.33"
     },
     "answer": "STATUS",
     "options": ["S", "D", "F", "O", "R", "Y", "A", "T", "W", "U"]
@@ -262,7 +262,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.34.question"
+      "value": "content.questions.34"
     },
     "answer": "LOGIN",
     "options": ["L", "O", "X", "G", "I", "Y", "N", "M", "Z", "A"]
@@ -328,7 +328,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.35.question"
+      "value": "content.questions.35"
     },
     "answer": "RETURN",
     "options": ["R", "E", "X", "T", "U", "Y", "A", "N", "Z", "O"]
@@ -365,8 +365,8 @@
     },
     "answer": "10",
     "hint": {
-      "type": "raw",
-      "value": "+= and *= modify the current value."
+      "type": "key",
+      "value": "content.hints.assignment"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -424,8 +424,8 @@
     },
     "answer": "10",
     "hint": {
-      "type": "raw",
-      "value": "condition ? a : b selects one of two values."
+      "type": "key",
+      "value": "content.hints.conditional"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -589,7 +589,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.29.question"
+      "value": "content.questions.29"
     },
     "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -600,7 +600,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.30.question"
+      "value": "content.questions.30"
     },
     "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -611,12 +611,12 @@
     "keyboard": "boolean",
     "question": {
       "type": "key",
-      "value": "levels.60.question"
+      "value": "content.questions.60"
     },
     "answer": "T",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -626,12 +626,12 @@
     "keyboard": "boolean",
     "question": {
       "type": "key",
-      "value": "levels.61.question"
+      "value": "content.questions.61"
     },
     "answer": "T",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -641,12 +641,12 @@
     "keyboard": "boolean",
     "question": {
       "type": "key",
-      "value": "levels.62.question"
+      "value": "content.questions.62"
     },
     "answer": "T",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -656,12 +656,12 @@
     "keyboard": "boolean",
     "question": {
       "type": "key",
-      "value": "levels.63.question"
+      "value": "content.questions.63"
     },
     "answer": "F",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -671,12 +671,12 @@
     "keyboard": "boolean",
     "question": {
       "type": "key",
-      "value": "levels.64.question"
+      "value": "content.questions.64"
     },
     "answer": "F",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -686,7 +686,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.65.question"
+      "value": "content.questions.65"
     },
     "answer": "1",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -697,7 +697,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.66.question"
+      "value": "content.questions.66"
     },
     "answer": "10",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -708,7 +708,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.67.question"
+      "value": "content.questions.67"
     },
     "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -719,7 +719,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.69.question"
+      "value": "content.questions.69"
     },
     "answer": "4",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -730,7 +730,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.70.question"
+      "value": "content.questions.70"
     },
     "answer": "3",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -741,7 +741,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.71.question"
+      "value": "content.questions.71"
     },
     "answer": "1",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -752,7 +752,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.31.question"
+      "value": "content.questions.31"
     },
     "answer": "20",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -763,7 +763,7 @@
     "keyboard": "numeric",
     "question": {
       "type": "key",
-      "value": "levels.32.question"
+      "value": "content.questions.32"
     },
     "answer": "10",
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -921,8 +921,8 @@
     },
     "answer": "8",
     "hint": {
-      "type": "raw",
-      "value": "The range 1 to 3 includes both endpoints."
+      "type": "key",
+      "value": "content.hints.inclusive_range"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -936,8 +936,8 @@
     },
     "answer": "2",
     "hint": {
-      "type": "raw",
-      "value": "& = bitwise AND"
+      "type": "key",
+      "value": "content.hints.bitwise_and"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -951,8 +951,8 @@
     },
     "answer": "7",
     "hint": {
-      "type": "raw",
-      "value": "| = bitwise OR"
+      "type": "key",
+      "value": "content.hints.bitwise_or"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -962,12 +962,12 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.75.question"
+      "value": "content.questions.75"
     },
     "answer": "SRP",
     "hint": {
       "type": "key",
-      "value": "levels.75.hint"
+      "value": "content.hints.three_letters"
     },
     "options": ["S", "O", "R", "L", "P", "I", "D", "X", "Y", "Z"]
   },
@@ -977,12 +977,12 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.76.question"
+      "value": "content.questions.76"
     },
     "answer": "ENC",
     "hint": {
       "type": "key",
-      "value": "levels.76.hint"
+      "value": "content.hints.three_letters"
     },
     "options": ["E", "A", "B", "N", "C", "D", "F", "G", "H", "I"]
   },
@@ -992,7 +992,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.77.question"
+      "value": "content.questions.77"
     },
     "answer": "DILOS",
     "options": ["S", "O", "X", "Y", "Z", "I", "D", "A", "B", "L"]
@@ -1003,7 +1003,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.78.question"
+      "value": "content.questions.78"
     },
     "answer": "REGEX",
     "options": ["X", "E", "A", "B", "G", "C", "D", "S", "T", "R"]
@@ -1014,7 +1014,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.79.question"
+      "value": "content.questions.79"
     },
     "answer": "HAVING",
     "options": ["H", "A", "V", "I", "N", "G", "W", "O", "R", "D"]
@@ -1025,7 +1025,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.80.question"
+      "value": "content.questions.80"
     },
     "answer": "GROUPBY",
     "options": ["G", "Y", "R", "O", "U", "P", "H", "B", "A", "V"]
@@ -1036,12 +1036,12 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.81.question"
+      "value": "content.questions.81"
     },
     "answer": "BFS",
     "hint": {
       "type": "key",
-      "value": "levels.81.hint"
+      "value": "content.hints.three_letters"
     },
     "options": ["S", "B", "D", "E", "X", "Y", "Z", "A", "F", "C"]
   },
@@ -1051,12 +1051,12 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.82.question"
+      "value": "content.questions.82"
     },
     "answer": "DFS",
     "hint": {
       "type": "key",
-      "value": "levels.82.hint"
+      "value": "content.hints.three_letters"
     },
     "options": ["F", "S", "B", "E", "X", "Y", "Z", "A", "C", "D"]
   },
@@ -1066,7 +1066,7 @@
     "keyboard": "hidden_word",
     "question": {
       "type": "key",
-      "value": "levels.83.question"
+      "value": "content.questions.83"
     },
     "answer": "SOLID",
     "options": ["S", "O", "X", "Y", "Z", "I", "D", "A", "B", "L"]
@@ -1077,12 +1077,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.84.question"
+      "value": "content.questions.84"
     },
     "answer": "1",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1092,12 +1092,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.85.question"
+      "value": "content.questions.85"
     },
     "answer": "n",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1107,12 +1107,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.86.question"
+      "value": "content.questions.86"
     },
     "answer": "n",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1122,12 +1122,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.87.question"
+      "value": "content.questions.87"
     },
     "answer": "L",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1137,12 +1137,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.88.question"
+      "value": "content.questions.88"
     },
     "answer": "2",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1152,12 +1152,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.89.question"
+      "value": "content.questions.89"
     },
     "answer": "M",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1167,12 +1167,12 @@
     "keyboard": "complexity",
     "question": {
       "type": "key",
-      "value": "levels.90.question"
+      "value": "content.questions.90"
     },
     "answer": "M",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1186,8 +1186,8 @@
     },
     "answer": "10",
     "hint": {
-      "type": "raw",
-      "value": "Evaluate the base case first, then unwind the calls."
+      "type": "key",
+      "value": "content.hints.recursion"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1223,8 +1223,8 @@
     },
     "answer": "10",
     "hint": {
-      "type": "raw",
-      "value": "The inner loop runs i times."
+      "type": "key",
+      "value": "content.hints.inner_loop"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1249,8 +1249,8 @@
     },
     "answer": "10",
     "hint": {
-      "type": "raw",
-      "value": "Changes to a[i] affect later iterations."
+      "type": "key",
+      "value": "content.hints.array_changes"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1275,8 +1275,8 @@
     },
     "answer": "11",
     "hint": {
-      "type": "raw",
-      "value": "break stops the loop before updating x."
+      "type": "key",
+      "value": "content.hints.break"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1290,8 +1290,8 @@
     },
     "answer": "23",
     "hint": {
-      "type": "raw",
-      "value": "continue skips the remaining body for that iteration."
+      "type": "key",
+      "value": "content.hints.continue"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1305,8 +1305,8 @@
     },
     "answer": "F",
     "hint": {
-      "type": "raw",
-      "value": "T = True\nF = False"
+      "type": "key",
+      "value": "content.hints.boolean"
     },
     "options": ["T", "F", "1", "0", "Y", "N", "A", "B", "C", "D"]
   },
@@ -1320,8 +1320,8 @@
     },
     "answer": "1",
     "hint": {
-      "type": "raw",
-      "value": "^ = XOR\n& = AND"
+      "type": "key",
+      "value": "content.hints.xor_and"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1335,8 +1335,8 @@
     },
     "answer": "9",
     "hint": {
-      "type": "raw",
-      "value": "<< 1 = shift left by one bit\n^ = XOR"
+      "type": "key",
+      "value": "content.hints.left_shift"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1361,8 +1361,8 @@
     },
     "answer": "8",
     "hint": {
-      "type": "raw",
-      "value": "Start with f(0) and f(1), then work upward."
+      "type": "key",
+      "value": "content.hints.fibonacci"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1387,8 +1387,8 @@
     },
     "answer": "21",
     "hint": {
-      "type": "raw",
-      "value": "Calculate smaller cases before evaluating f(5)."
+      "type": "key",
+      "value": "content.hints.smaller_cases"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1424,8 +1424,8 @@
     },
     "answer": "13",
     "hint": {
-      "type": "raw",
-      "value": "Updates are applied immediately, from left to right."
+      "type": "key",
+      "value": "content.hints.immediate_updates"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1439,8 +1439,8 @@
     },
     "answer": "13",
     "hint": {
-      "type": "raw",
-      "value": "Write down the values of f(0) through f(6)."
+      "type": "key",
+      "value": "content.hints.recursion_values"
     },
     "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
   },
@@ -1454,8 +1454,8 @@
     },
     "answer": "2",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1469,8 +1469,8 @@
     },
     "answer": "n",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1484,8 +1484,8 @@
     },
     "answer": "M",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1499,8 +1499,8 @@
     },
     "answer": "M",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1514,8 +1514,8 @@
     },
     "answer": "E",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)"
+      "type": "key",
+      "value": "content.hints.complexity"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   },
@@ -1529,8 +1529,8 @@
     },
     "answer": "n",
     "hint": {
-      "type": "raw",
-      "value": "1 = O(1)\nn = O(n)\nL = O(log n)\nM = O(n log n)\n2 = O(n²)\nE = O(2ⁿ)\n! = O(n!)\nTip: the inner loop starts at i, not 1."
+      "type": "key",
+      "value": "content.hints.complexity_range"
     },
     "options": ["0", "1", "n", "L", "M", "2", "E", "!", "∞", "?"]
   }

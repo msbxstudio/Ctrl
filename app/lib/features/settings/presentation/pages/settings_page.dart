@@ -11,6 +11,7 @@ import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/core/services.dart';
+import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/features/player.dart';
 import 'package:ctrl/features/settings.dart';
 import 'package:ctrl/shared/widgets.dart';
@@ -120,7 +121,6 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         actions: [
                           SettingOption.tile(
                             onPressed: () async {
-                              // handleChangeName(controller, player);
                               final name = await showChangeNameSheet(
                                 context,
                                 initialValue: player.name,
@@ -128,8 +128,19 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                               if (name == null || name == player.name) return;
 
-                              await controller.updatePlayerName(name: name);
-                              await controller.refresh();
+                              try {
+                                await controller.updatePlayerName(name: name);
+                                await controller.refresh();
+                              } catch (error) {
+                                if (!context.mounted) return;
+                                showSnackbar(
+                                  context,
+                                  errorMessage(
+                                    error,
+                                    fallbackKey: 'errors.player.save',
+                                  ),
+                                );
+                              }
                             },
 
                             title: 'settings.account.change_username'.tr(),
@@ -152,21 +163,43 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
 
                               if (lang == null) return;
 
-                              await ref
-                                  .read(preferencesNotifierProvider.notifier)
-                                  .setLanguage(lang);
+                              try {
+                                await ref
+                                    .read(preferencesNotifierProvider.notifier)
+                                    .setLanguage(lang);
+                              } catch (error) {
+                                if (!context.mounted) return;
+                                showSnackbar(
+                                  context,
+                                  errorMessage(
+                                    error,
+                                    fallbackKey: 'errors.settings.save',
+                                  ),
+                                );
+                              }
                             },
 
                             title: 'settings.preferences.language'.tr(),
                             trailing: Text(
-                              AppLanguage.fromDbValue(language.name).label,
+                              language.labelKey.tr(),
                             ),
                           ),
                           SettingOption.toggle(
                             onChanged: (value) async {
-                              await controller.updateAllowSoundEffects(
-                                allow: value,
-                              );
+                              try {
+                                await controller.updateAllowSoundEffects(
+                                  allow: value,
+                                );
+                              } catch (error) {
+                                if (!context.mounted) return;
+                                showSnackbar(
+                                  context,
+                                  errorMessage(
+                                    error,
+                                    fallbackKey: 'errors.settings.save',
+                                  ),
+                                );
+                              }
                             },
 
                             title: 'settings.preferences.sound_effects'.tr(),
@@ -201,10 +234,14 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                                     await PurchaseService.instance.purchase(
                                       e.code,
                                     );
-                                  } catch (_) {
+                                  } catch (error) {
+                                    if (!context.mounted) return;
                                     showSnackbar(
                                       context,
-                                      'snackbar.purchase_failed'.tr(),
+                                      errorMessage(
+                                        error,
+                                        fallbackKey: 'errors.purchase.start',
+                                      ),
                                       behavior: SnackBarBehavior.fixed,
                                     );
                                   }
@@ -237,9 +274,10 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                             if (confirm != true) return;
 
                             await resetApp(context);
+                            await controller.refresh();
                           },
 
-                          child: Text('settings.danger_zone.erase_all'.tr()),
+                          child: Text('settings.reset.action'.tr()),
                         ),
                       ].divide(const SizedBox(height: 8.0)),
                     ],

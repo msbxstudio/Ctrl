@@ -64,8 +64,8 @@ final class NavigationButton<T extends Object> extends ConsumerWidget {
       message:
           tooltip ??
           switch (_type) {
-            _NavigationButtonType.back => 'actions.common.back',
-            _NavigationButtonType.close => 'actions.common.close',
+            _NavigationButtonType.back => 'common.actions.back',
+            _NavigationButtonType.close => 'common.actions.close',
             _ => '',
           }.tr(),
 

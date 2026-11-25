@@ -59,7 +59,7 @@ Future<void> showLevelCompletedDialog(
               const SizedBox(height: 16.0),
 
               Text(
-                'dialogs.level.completed.title'.tr(),
+                'levels.completed.title'.tr(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
@@ -67,7 +67,7 @@ Future<void> showLevelCompletedDialog(
               const SizedBox(height: 4.0),
 
               Text(
-                'dialogs.level.completed.description'.tr(),
+                'levels.completed.description'.tr(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -79,7 +79,7 @@ Future<void> showLevelCompletedDialog(
               Navigator.of(context).pop();
             },
 
-            child: Text('actions.common.next'.tr()),
+            child: Text('common.actions.next'.tr()),
           ).aligned(Alignment.center),
         ],
       ).padded(const EdgeInsets.symmetric(horizontal: 24.0)),

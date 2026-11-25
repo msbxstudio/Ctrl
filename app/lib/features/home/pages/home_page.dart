@@ -52,19 +52,21 @@ final class _HomePageState extends ConsumerState<HomePage> {
         );
       },
       data: (state) {
-        final HomeState(:player, :currentLevel, :solvedPuzzles, :averageTime) =
-            state;
+        final HomeState(
+          :player,
+          :currentLevel,
+          :solvedPuzzles,
+          :averageTime,
+        ) = state;
 
         return Scaffold(
           appBar: AppBar(
             actions: [
               NavigationButton(
                 onPressed: () async {
-                  final refresh = await ref
+                  await ref
                       .read(routerProvider)
                       .push<bool>(SettingsPage.routePath);
-
-                  if (refresh != true) return;
 
                   await controller.refresh();
                 },
@@ -116,7 +118,7 @@ final class _HomePageState extends ConsumerState<HomePage> {
                               spacing: 12.0,
                               children: [
                                 _buildButton(
-                                  label: 'home.buttons.levels'.tr(),
+                                  label: 'levels.title'.tr(),
                                   icon: LucideIcons.grip,
                                   route: '/levels',
 
@@ -235,7 +237,7 @@ final class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
           Text(
-            'home.level'.tr(namedArgs: {'id': '${currentLevel.id}'}),
+            'levels.label'.tr(namedArgs: {'id': '${currentLevel.id}'}),
             textAlign: TextAlign.start,
             style: theme.textTheme.displaySmall?.copyWith(
               fontWeight: FontWeight.w900,

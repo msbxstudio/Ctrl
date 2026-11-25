@@ -64,7 +64,7 @@ Future<bool?> showConfirmationModal(
                   Theme.of(context).filledButtonTheme.style
                       ?.copyWith(elevation: WidgetStateProperty.all(0.0)),
 
-              child: Text(primaryButtonText ?? 'actions.common.confirm'.tr()),
+              child: Text(primaryButtonText ?? 'common.actions.confirm'.tr()),
             ).expand(),
             ElevatedButton(
               onPressed: () {
@@ -76,7 +76,7 @@ Future<bool?> showConfirmationModal(
                   Theme.of(context).elevatedButtonTheme.style
                       ?.copyWith(elevation: WidgetStateProperty.all(0.0)),
 
-              child: Text(secondaryButtonText ?? 'actions.common.cancel'.tr()),
+              child: Text(secondaryButtonText ?? 'common.actions.cancel'.tr()),
             ).expand(),
           ],
         ).padded(const EdgeInsets.symmetric(horizontal: 20.0)),

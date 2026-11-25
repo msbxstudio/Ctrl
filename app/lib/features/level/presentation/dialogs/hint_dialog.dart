@@ -57,7 +57,7 @@ Future<void> showHintDialog(
               ),
             ),
 
-            child: Text('actions.common.close'.tr()),
+            child: Text('common.actions.close'.tr()),
           ).aligned(Alignment.center),
         ].divide(const SizedBox(height: 16.0)),
       ],

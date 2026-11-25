@@ -17,7 +17,7 @@ final class LevelRepositoryImpl implements LevelRepository {
     } on AppException {
       rethrow;
     } catch (_) {
-      throw const UnknownException('');
+      throw const UnknownException('errors.levels.load');
     }
   }
 
@@ -29,14 +29,14 @@ final class LevelRepositoryImpl implements LevelRepository {
       };
 
       if (result == null) {
-        throw const NotFoundException('');
+        throw const NotFoundException('errors.levels.missing');
       }
 
       return result.toEntity();
     } on AppException {
       rethrow;
     } catch (_) {
-      throw const UnknownException('');
+      throw const UnknownException('errors.levels.level_load');
     }
   }
 
@@ -49,7 +49,7 @@ final class LevelRepositoryImpl implements LevelRepository {
     } on AppException {
       rethrow;
     } catch (_) {
-      throw const UnknownException('');
+      throw const UnknownException('errors.levels.current');
     }
   }
 
@@ -68,7 +68,7 @@ final class LevelRepositoryImpl implements LevelRepository {
     } on AppException {
       rethrow;
     } catch (_) {
-      throw const UnknownException('Failed to count levels.');
+      throw const UnknownException('errors.levels.count');
     }
   }
 }

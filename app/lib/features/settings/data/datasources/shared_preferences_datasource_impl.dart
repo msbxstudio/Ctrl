@@ -1,4 +1,5 @@
 import 'package:ctrl/features/settings.dart';
+import 'package:msbx/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Defines local persistence operations for user preferences.
@@ -33,8 +34,18 @@ final class SharedPreferencesDataSourceImpl
   Future<void> save(PreferencesModel model) async {
     final map = model.toMap();
 
-    await _prefs.setString('language', map['language'] as String);
-    await _prefs.setBool('allow_sounds', map['allow_sounds'] as bool);
+    final languageSaved = await _prefs.setString(
+      'language',
+      map['language'] as String,
+    );
+    final soundsSaved = await _prefs.setBool(
+      'allow_sounds',
+      map['allow_sounds'] as bool,
+    );
+
+    if (!languageSaved || !soundsSaved) {
+      throw const UnknownException('errors.settings.save');
+    }
   }
 
   /// Removes locally stored preferences.

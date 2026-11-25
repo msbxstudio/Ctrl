@@ -11,17 +11,17 @@ Future<bool?> showResetAppDialog(BuildContext context) {
     context,
     builder: (_) {
       return PromptDialog<bool>.adaptive(
-        title: 'settings.danger_zone.erase_confirm'.tr(),
+        title: 'settings.reset.confirm'.tr(),
 
         actions: [
           PromptDialogAction<bool>(
             value: true,
-            label: 'Confirmar',
+            label: 'common.actions.confirm'.tr(),
             isDestructive: true,
           ),
           PromptDialogAction<bool>(
             value: false,
-            label: 'Cancelar',
+            label: 'common.actions.cancel'.tr(),
             isDestructive: false,
           ),
         ],

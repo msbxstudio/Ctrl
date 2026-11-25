@@ -2,7 +2,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:ctrl/core/utils.dart';
 import 'package:msbx/extensions.dart';
 
 final class LevelsPageError extends ConsumerWidget {
@@ -19,6 +19,7 @@ final class LevelsPageError extends ConsumerWidget {
 
   @override
   Widget build(BuildContext _, WidgetRef _) {
-    return Text('levels.error_loading_all'.tr()).centered();
+    return Text(errorMessage(error, fallbackKey: 'errors.levels.load'))
+        .centered();
   }
 }
