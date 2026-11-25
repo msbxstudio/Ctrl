@@ -1,20 +1,26 @@
-/// Available custom keyboard layouts.
+/// Defines the custom keyboard layouts available for constructing
+/// answers within a level.
 enum LevelKeyboard {
-  /// Symbols and punctuation.
+  /// Provides symbols and punctuation characters.
   symbol,
 
-  /// Numeric values.
+  /// Provides numeric input tokens.
   numeric,
 
-  /// Characters used in hidden-word puzzles.
+  /// Provides characters for constructing hidden words or commands.
   hiddenWord,
 
-  /// Boolean values (`true` / `false`).
+  /// Provides boolean input tokens (`true` and `false`).
   boolean,
 
-  /// Complexity notation tokens.
+  /// Provides tokens representing algorithmic complexity notation.
   complexity;
 
+  /// Converts a database [value] into its corresponding keyboard layout.
+  ///
+  /// The conversion is case-insensitive.
+  ///
+  /// Throws an [ArgumentError] if [value] is not recognized.
   static LevelKeyboard fromDbValue(String value) {
     return switch (value.toUpperCase()) {
       'SYMBOL' => LevelKeyboard.symbol,
@@ -26,6 +32,7 @@ enum LevelKeyboard {
     };
   }
 
+  /// Returns the canonical database representation of this keyboard layout.
   String toDbValue() {
     return switch (this) {
       LevelKeyboard.symbol => 'SYMBOL',

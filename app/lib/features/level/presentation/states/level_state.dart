@@ -1,20 +1,42 @@
 import 'package:msbx/contracts.dart';
+
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/player.dart';
 
-final class const LevelState({
-  required this.level,
-  required this.progress,
-  required this.player,
-  required this.startTime,
-  required this.count,
-}) implements Copyable<LevelState> {
+/// Represents the state of an active level session.
+///
+/// Aggregates the current level, its progress, the player, and session metadata.
+final class LevelState implements Copyable<LevelState> {
+  /// Creates a state for a level session.
+  ///
+  /// The supplied [progress] must correspond to [level], and [startTime]
+  /// represents the beginning of the session.
+  const new({
+    required this.level,
+    required this.progress,
+    required this.player,
+    required this.startTime,
+    required this.count,
+  });
+
+  /// The level currently presented to the player.
   final Level level;
+
+  /// The player's progress associated with [level].
   final LevelProgress progress;
+
+  /// The player participating in the current level session.
   final Player player;
+
+  /// The timestamp marking the beginning of the level session.
   final DateTime startTime;
+
+  /// The total number of available levels.
   final int count;
 
+  /// Returns a copy of this state with the specified values replaced.
+  ///
+  /// Omitted or `null` arguments retain their existing values.
   @override
   LevelState copyWith({
     Level? level,

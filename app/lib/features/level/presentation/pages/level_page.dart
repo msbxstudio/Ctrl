@@ -19,11 +19,21 @@ import 'package:ctrl/shared/widgets.dart';
 import 'level_page_error.dart';
 import 'level_page_skeleton.dart';
 
+/// Displays the puzzle associated with a specific level.
+///
+/// Manages the player's answer input and provides access to
+/// Riverpod providers within its state.
 final class LevelPage extends ConsumerStatefulWidget {
-  const new({super.key, required this.id});
+  /// Creates a page for the level identified by [id].
+  const new({
+    super.key,
+    required this.id,
+  });
 
+  /// The route pattern containing the level identifier as a path parameter.
   static const routePath = '/levels/:id';
 
+  /// The identifier of the level to display.
   final int id;
 
   @override
@@ -32,7 +42,9 @@ final class LevelPage extends ConsumerStatefulWidget {
   }
 }
 
+/// Manages the mutable state and answer input of [LevelPage].
 final class _LevelPageState extends ConsumerState<LevelPage> {
+  /// Controls the text representing the player's current answer.
   late final TextEditingController _answerFieldController;
 
   @override
@@ -126,15 +138,17 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                   .centered(),
 
           bottomNavigationBar:
-              LevelInput(
+              AnswerInput(
                     onSubmit: () async {
                       final match = await controller.checkAnswer(
                         _answerFieldController.text,
                       );
 
                       if (!match) {
-                        showSnackbar(context, 'levels.wrong_answer'.tr());
-                        return;
+                        return showSnackbar(
+                          context,
+                          'levels.wrong_answer'.tr(),
+                        );
                       }
 
                       final soundEffects = ref

@@ -106,30 +106,4 @@ final class LevelProgressRepositoryImpl implements LevelProgressRepository {
       throw const UnknownException('');
     }
   }
-
-  @override
-  Future<int> count({bool? completed, bool? distinct}) async {
-    try {
-      // final result = await _service.query(
-      //   'level_progresses',
-      //   columns: ['COUNT(*) AS count'],
-      //   where: completed != null ? 'is_completed = ?' : null,
-      //   whereArgs: completed != null ? [completed ? 1 : 0] : null,
-      //   distinct: distinct ?? false,
-      // );
-
-      // if (result.isEmpty) {
-      //   throw const NotFoundException('No level progresses found');
-      // }
-
-      // final count = result.first['count'] as int?;
-
-      // return count ?? 0;
-      return await Future.value(0);
-    } catch (e) {
-      if (e is AppException) rethrow;
-
-      throw const UnknownException('');
-    }
-  }
 }

@@ -4,8 +4,15 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:msbx/extensions.dart';
 
+/// Displays the loading state of the level page.
+///
+/// Presents a centered, indeterminate progress indicator while level data
+/// is being loaded.
 final class LevelPageSkeleton extends ConsumerWidget {
-  const new({super.key});
+  /// Creates the loading placeholder for the level page.
+  const new({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext _, WidgetRef _) {

@@ -1,20 +1,28 @@
-/// Available puzzle categories.
+/// Defines the puzzle categories available within the game.
+///
+/// Each category identifies the nature of the challenge presented
+/// to the player, independently of its input mechanism.
 enum LevelType {
-  /// Find or repair a syntax error.
+  /// Challenges the player to identify or repair a syntax error.
   syntax,
 
-  /// Predict the output of a code snippet.
+  /// Challenges the player to determine the output of a code snippet.
   outputPrediction,
 
-  /// Solve a programming logic challenge.
+  /// Challenges the player's programming and logical reasoning skills.
   logic,
 
-  /// Discover a hidden word or command.
+  /// Challenges the player to discover a hidden word or command.
   hiddenWord,
 
-  /// Analyze algorithm complexity.
+  /// Challenges the player to determine the complexity of an algorithm.
   complexity;
 
+  /// Converts a database [value] into its corresponding level type.
+  ///
+  /// The conversion is case-insensitive.
+  ///
+  /// Throws an [ArgumentError] if [value] is not recognized.
   static LevelType fromDbValue(String value) {
     return switch (value.toUpperCase()) {
       'SYNTAX' => LevelType.syntax,
@@ -26,6 +34,7 @@ enum LevelType {
     };
   }
 
+  /// Returns the canonical database representation of this level type.
   String toDbValue() {
     return switch (this) {
       LevelType.syntax => 'SYNTAX',

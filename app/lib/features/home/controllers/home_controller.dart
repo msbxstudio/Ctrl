@@ -15,12 +15,10 @@ final class MainController extends AutoDisposeAsyncNotifier<HomeState>
   FutureOr<HomeState> build() async {
     final player = await ref.read(playerRepositoryProvider).get();
 
-    final (currentLevel, solvedPuzzles, averageTime) = await Future.wait([
+    final (currentLevel, averageTime, solvedPuzzles) = await Future.wait([
       ref.read(levelRepositoryProvider).getCurrent(),
-      ref
-          .read(levelProgressRepositoryProvider)
-          .count(completed: true, distinct: true),
       ref.read(levelProgressRepositoryProvider).averageTime(),
+      Future.value(0),
     ]).then((r) => (r[0] as Level, r[1] as int, r[2] as int));
 
     // throw UnimplementedError();

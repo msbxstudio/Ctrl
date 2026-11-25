@@ -1,24 +1,20 @@
-/// Defines how the question text should be interpreted.
+/// Defines how the content of a level question is interpreted
+/// and presented to the player.
 enum QuestionType {
-  /// Uses the provided text exactly as it is.
-  ///
-  /// Example:
-  /// `What is the output of this code?`
+  /// Literal text displayed without localization.
   raw,
 
-  /// Resolves the text through the localization system using a translation key.
-  ///
-  /// Example:
-  /// `levels.25.question`
+  /// A localization key resolved through the translation system.
   key,
 
-  /// Treats the text as a code snippet that should be rendered using the
-  /// application's code presentation UI.
-  ///
-  /// Example:
-  /// `print("Hello, World!");`
+  /// Source code rendered through the application's code presentation UI.
   code;
 
+  /// Converts a database [value] into its corresponding question type.
+  ///
+  /// The conversion is case-insensitive.
+  ///
+  /// Throws an [ArgumentError] if [value] is not recognized.
   static QuestionType fromDbValue(String value) {
     return switch (value.toUpperCase()) {
       'RAW' => QuestionType.raw,
@@ -28,6 +24,7 @@ enum QuestionType {
     };
   }
 
+  /// Returns the canonical database representation of this question type.
   String toDbValue() {
     return switch (this) {
       QuestionType.raw => 'RAW',
