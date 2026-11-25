@@ -28,7 +28,7 @@ final class PlayerModel {
   ///
   final int streakDays;
 
-  factory PlayerModel.fromMap(Map<String, Object?> map) {
+  factory fromMap(Map<String, Object?> map) {
     return PlayerModel(
       id: map['id'] as int,
       name: map['name'] as String,
@@ -43,7 +43,7 @@ final class PlayerModel {
     );
   }
 
-  factory PlayerModel.fromEntity(Player entity) {
+  factory fromEntity(Player entity) {
     return PlayerModel(
       id: entity.id,
       name: entity.name,

@@ -38,8 +38,8 @@ Future<AppLanguage?> showPickLanguageSheet(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                height: 52.0,
-              ).sized(height: 20.0),
+                height: 56.0,
+              ).sized(height: 24.0),
 
               const SizedBox(height: 20.0),
 

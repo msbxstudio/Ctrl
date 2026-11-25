@@ -1,7 +1,10 @@
 import 'package:ctrl/features/settings.dart';
 
 final class PreferencesModel {
-  const new({required this.language, required this.allowSounds});
+  const new({
+    required this.language,
+    required this.allowSounds,
+  });
 
   /// The preferred application language.
   final AppLanguage language;
@@ -10,7 +13,7 @@ final class PreferencesModel {
   final bool allowSounds;
 
   /// Creates a model from a JSON object.
-  factory PreferencesModel.fromMap(Map<String, dynamic> map) {
+  factory fromMap(Map<String, dynamic> map) {
     return PreferencesModel(
       language: AppLanguage.fromDbValue(map['language'] as String),
       allowSounds: map['allow_sounds'] as bool,
@@ -18,7 +21,7 @@ final class PreferencesModel {
   }
 
   /// Creates a model from a domain entity.
-  factory PreferencesModel.fromEntity(Preferences entity) {
+  factory fromEntity(Preferences entity) {
     return PreferencesModel(
       language: entity.language,
       allowSounds: entity.allowSounds,
@@ -27,11 +30,17 @@ final class PreferencesModel {
 
   /// Converts the model to a JSON object.
   Map<String, dynamic> toMap() {
-    return {'language': language.toDbValue(), 'allow_sounds': allowSounds};
+    return {
+      'language': language.toDbValue(),
+      'allow_sounds': allowSounds,
+    };
   }
 
   /// Converts the model to a domain entity.
   Preferences toEntity() {
-    return Preferences(language: language, allowSounds: allowSounds);
+    return Preferences(
+      language: language,
+      allowSounds: allowSounds,
+    );
   }
 }

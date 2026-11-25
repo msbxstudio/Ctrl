@@ -11,7 +11,7 @@ final class AppColorExtension extends ThemeExtension<AppColorExtension> {
   final Color scaffold;
   final Color bottomAppBar;
 
-  const AppColorExtension({
+  const new({
     required this.success,
     required this.warning,
     required this.info,

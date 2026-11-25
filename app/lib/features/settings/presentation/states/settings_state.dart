@@ -2,7 +2,7 @@ import 'package:ctrl/features/player.dart';
 import 'package:ctrl/features/settings.dart';
 
 final class SettingsState {
-  const SettingsState({
+  const new({
     required this.player,
     required this.language,
     required this.allowSoundEffects,

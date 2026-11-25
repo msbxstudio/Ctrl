@@ -2,7 +2,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 final class Separator extends StatelessWidget {
-  const Separator({
+  const new({
     super.key,
     this.opacity = 0.25,
     this.verticalIndent = 16.0,

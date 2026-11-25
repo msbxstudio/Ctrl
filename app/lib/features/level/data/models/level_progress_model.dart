@@ -25,7 +25,7 @@ final class LevelProgressModel {
 
   final Level? level;
 
-  factory LevelProgressModel.fromMap(Map<String, dynamic> map) {
+  factory fromMap(Map<String, dynamic> map) {
     return LevelProgressModel(
       id: map['id'] as int,
       createdAt: DateTime.parse(map['created_at'] as String),
@@ -37,7 +37,7 @@ final class LevelProgressModel {
     );
   }
 
-  factory LevelProgressModel.fromEntity(LevelProgress entity) {
+  factory fromEntity(LevelProgress entity) {
     return LevelProgressModel(
       id: entity.id,
       createdAt: entity.createdAt,

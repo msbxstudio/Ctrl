@@ -10,7 +10,7 @@ final class Player {
     required this.streakDays,
   });
 
-  factory Player.defaults() {
+  factory defaults() {
     return Player(
       id: 1,
       name: 'Player',

@@ -1,7 +1,10 @@
 import 'package:ctrl/features/level.dart';
 
 final class HintModel {
-  const new({required this.type, required this.value});
+  const new({
+    required this.type,
+    required this.value,
+  });
 
   ///
   final HintType type;
@@ -9,14 +12,14 @@ final class HintModel {
   ///
   final String value;
 
-  factory HintModel.fromMap(Map<String, dynamic> map) {
+  factory fromMap(Map<String, dynamic> map) {
     return HintModel(
       type: HintType.fromDbValue(map['type'] as String),
       value: map['value'] as String,
     );
   }
 
-  factory HintModel.fromEntity(Hint entity) {
+  factory fromEntity(Hint entity) {
     return HintModel(type: entity.type, value: entity.value);
   }
 

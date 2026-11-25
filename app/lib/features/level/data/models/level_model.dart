@@ -33,7 +33,7 @@ final class LevelModel {
 
   final List<LevelProgress>? progresses;
 
-  factory LevelModel.fromMap(Map<String, dynamic> map) {
+  factory fromMap(Map<String, dynamic> map) {
     return LevelModel(
       id: map['id'] as int,
 
@@ -61,7 +61,7 @@ final class LevelModel {
     );
   }
 
-  factory LevelModel.fromEntity(Level entity) {
+  factory fromEntity(Level entity) {
     return LevelModel(
       id: entity.id,
       type: entity.type,

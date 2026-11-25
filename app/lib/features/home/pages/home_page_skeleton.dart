@@ -7,7 +7,7 @@ import 'package:msbx/extensions.dart';
 
 final class HomePageSkeleton extends ConsumerWidget {
   /// ...
-  const HomePageSkeleton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext _, WidgetRef _) {

@@ -10,7 +10,7 @@ import 'package:msbx/extensions.dart';
 
 final class HomePageError extends ConsumerWidget {
   ///
-  const HomePageError({
+  const new({
     super.key,
     required this.onRetry,
     required this.error,
