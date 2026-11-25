@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
@@ -15,14 +20,10 @@ Future<void> showLevelCompletedDialog(
   bool soundEffects = true,
   bool rootNavigator = true,
 }) {
+  final theme = Theme.of(context);
+
   if (soundEffects) {
-    AudioPlayer()
-        .play(
-          AssetSource('audio/success.mp3'),
-          mode: PlayerMode.lowLatency,
-          volume: 0.2,
-        )
-        .ignore();
+    _playSuccessSound().ignore();
   }
 
   return showAppDialog(
@@ -43,7 +44,7 @@ Future<void> showLevelCompletedDialog(
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: theme.colorScheme.onPrimary,
                   shape: BoxShape.circle,
                 ),
                 width: 64.0,
@@ -52,7 +53,7 @@ Future<void> showLevelCompletedDialog(
                 child: Icon(
                   TablerIcons.check,
                   size: 48.0,
-                  color: Theme.of(context).colorScheme.surface,
+                  color: theme.colorScheme.surface,
                 ),
               ),
 
@@ -61,7 +62,7 @@ Future<void> showLevelCompletedDialog(
               Text(
                 'levels.completed.title'.tr(),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: theme.textTheme.headlineSmall,
               ),
 
               const SizedBox(height: 4.0),
@@ -69,14 +70,14 @@ Future<void> showLevelCompletedDialog(
               Text(
                 'levels.completed.description'.tr(),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: theme.textTheme.bodyLarge,
               ),
             ],
           ).expand(),
 
           FilledButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context, rootNavigator: true).pop();
             },
 
             child: Text('common.actions.next'.tr()),
@@ -85,4 +86,57 @@ Future<void> showLevelCompletedDialog(
       ).padded(const EdgeInsets.symmetric(horizontal: 24.0)),
     ),
   );
+}
+
+/// Temporarily ducks external music on iOS while the victory effect plays.
+Future<void> _playSuccessSound() async {
+  const audioSession = MethodChannel('dev.msbx.ctrl/sound_effect_audio');
+  final usesIOSSession = !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+  final player = AudioPlayer()..positionUpdater = null;
+  final completed = Completer<void>();
+  var sessionAcquired = false;
+
+  void finish() {
+    if (!completed.isCompleted) completed.complete();
+  }
+
+  final subscription = player.onPlayerComplete.listen(
+    (_) {
+      finish();
+    },
+    onError: (_, _) {
+      finish();
+    },
+  );
+
+  try {
+    await player.setAudioContext(
+      AudioContext(
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.playback,
+          options: {AVAudioSessionOptions.duckOthers},
+        ),
+      ),
+    );
+    // Prepare first so music is ducked only when the effect is ready to play.
+    await player.setSource(AssetSource('audio/success.mp3'));
+    await player.setVolume(0.2);
+    if (usesIOSSession) {
+      await audioSession.invokeMethod<void>('beginEffect');
+      sessionAcquired = true;
+    }
+    // The default mediaPlayer mode provides completion events on all platforms.
+    await player.resume();
+    // The effect lasts 1.6 seconds; also clean up if completion is never sent.
+    await completed.future.timeout(const Duration(seconds: 10));
+  } finally {
+    try {
+      await subscription.cancel();
+      await player.dispose();
+    } finally {
+      if (sessionAcquired) {
+        await audioSession.invokeMethod<void>('endEffect');
+      }
+    }
+  }
 }

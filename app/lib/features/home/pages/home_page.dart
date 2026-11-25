@@ -103,15 +103,12 @@ final class _HomePageState extends ConsumerState<HomePage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          spacing: 8.0,
 
                           children: [
                             _buildHero(
                               currentLevel: currentLevel,
                               solvedPuzzles: solvedPuzzles,
                             ),
-
-                            const Separator(verticalIndent: 8.0),
 
                             Row(
                               spacing: 12.0,
@@ -150,7 +147,7 @@ final class _HomePageState extends ConsumerState<HomePage> {
                                 ).expand(),
                               ],
                             ),
-                          ],
+                          ].divide(const SizedBox(height: 12.0)),
                         ).expand(),
 
                         Row(
