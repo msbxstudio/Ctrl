@@ -18,6 +18,6 @@ export 'player/data/repos/player_repository_impl.dart';
 // ---------------------------------------------------------------------------
 // Presentation
 // ---------------------------------------------------------------------------
-export 'player/presentation/dialogs/change_username_modal.dart';
+export 'player/presentation/modals/change_name.dart';
 
 export 'player/presentation/providers/player_provider.dart';

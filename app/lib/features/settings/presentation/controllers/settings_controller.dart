@@ -27,13 +27,12 @@ final class SettingsController extends AutoDisposeAsyncNotifier<SettingsState>
   }
 
   /// Updates the player's name.
-  Future<void> updateName({required String name}) async {
+  Future<void> updatePlayerName({required String name}) async {
     await ref.read(playerRepositoryProvider).update(name: name);
-    await refresh();
   }
 
   /// Enables or disables sound effects.
-  Future<void> updateSound({required bool sound}) async {
-    await ref.read(preferencesNotifierProvider.notifier).setAllowSounds(sound);
+  Future<void> updateAllowSoundEffects({required bool allow}) async {
+    await ref.read(preferencesNotifierProvider.notifier).setAllowSounds(allow);
   }
 }

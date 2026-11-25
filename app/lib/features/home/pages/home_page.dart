@@ -60,18 +60,19 @@ final class _HomePageState extends ConsumerState<HomePage> {
         return Scaffold(
           appBar: AppBar(
             actions: [
-              IconButton(
+              NavigationButton(
                 onPressed: () async {
                   final refresh = await ref
                       .read(routerProvider)
                       .push<bool>(SettingsPage.routePath);
 
                   if (refresh != true) return;
+
                   await controller.refresh();
                 },
 
-                tooltip: 'home.settings_tooltip'.tr(),
-                icon: Icon(
+                tooltip: 'settings.title'.tr(),
+                child: Icon(
                   LucideIcons.settings,
                   color: theme.colorScheme.outline,
                 ),

@@ -119,8 +119,17 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                         title: 'settings.sections.account'.tr(),
                         actions: [
                           SettingOption.tile(
-                            onPressed: () {
-                              handleChangeName(controller, player);
+                            onPressed: () async {
+                              // handleChangeName(controller, player);
+                              final name = await showChangeNameSheet(
+                                context,
+                                initialValue: player.name,
+                              );
+
+                              if (name == null || name == player.name) return;
+
+                              await controller.updatePlayerName(name: name);
+                              await controller.refresh();
                             },
 
                             title: 'settings.account.change_username'.tr(),
@@ -155,7 +164,9 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
                           ),
                           SettingOption.toggle(
                             onChanged: (value) async {
-                              await controller.updateSound(sound: value);
+                              await controller.updateAllowSoundEffects(
+                                allow: value,
+                              );
                             },
 
                             title: 'settings.preferences.sound_effects'.tr(),
@@ -240,15 +251,5 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
         );
       },
     );
-  }
-
-  void handleChangeName(SettingsController controller, Player player) async {
-    final name = await showChangeUsernameModal(
-      context,
-      initialValue: player.name,
-    );
-
-    if (name == null) return;
-    await controller.updateName(name: name);
   }
 }

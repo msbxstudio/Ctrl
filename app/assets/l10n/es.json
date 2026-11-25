@@ -6,7 +6,8 @@
       "close": "Cerrar",
       "confirm": "Confirmar",
       "cancel": "Cancelar",
-      "next": "Siguiente"
+      "next": "Siguiente",
+      "save": "Guardar"
     }
   },
   "home": {

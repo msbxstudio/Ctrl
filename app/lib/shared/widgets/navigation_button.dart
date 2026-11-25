@@ -10,23 +10,46 @@ import 'package:msbx/extensions.dart';
 
 import 'package:ctrl/app/router.dart';
 
-/// ...
 enum _NavigationButtonType {
-  /// ...
-  back,
+  ///
+  pop,
 
-  /// ...
-  close,
+  ///
+  custom,
 }
 
 final class NavigationButton<T extends Object> extends ConsumerWidget {
-  const NavigationButton.back({super.key, this.result})
-    : _type = _NavigationButtonType.back;
+  const new({
+    super.key,
+    required this.onPressed,
+    required this.child,
+    this.result,
+    this.tooltip,
+  }) : _type = _NavigationButtonType.custom;
 
-  const NavigationButton.close({super.key, this.result})
-    : _type = _NavigationButtonType.close;
+  const new back({
+    super.key,
+    this.result,
+  }) : onPressed = null,
+       child = const Icon(LucideIcons.chevronLeft),
+       tooltip = 'actions.common.back',
+       _type = _NavigationButtonType.pop;
+
+  const new close({
+    super.key,
+    this.result,
+  }) : onPressed = null,
+       child = const Icon(LucideIcons.x),
+       tooltip = 'actions.common.close',
+       _type = _NavigationButtonType.pop;
+
+  final VoidCallback? onPressed;
+
+  final Widget child;
 
   final T? result;
+
+  final String? tooltip;
 
   final _NavigationButtonType _type;
 
@@ -35,23 +58,30 @@ final class NavigationButton<T extends Object> extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Tooltip(
-      message: _type == _NavigationButtonType.back
-          ? 'actions.common.back'.tr()
-          : 'actions.common.close'.tr(),
+      message: tooltip?.tr() ?? '',
 
       child: IconButton(
-        onPressed: () {
-          ref.read(routerProvider).pop(result);
-        },
+        onPressed: _type == _NavigationButtonType.pop
+            ? () {
+                ref.read(routerProvider).pop(result);
+              }
+            : onPressed,
 
-        icon: Icon(
-          switch (_type) {
-            _NavigationButtonType.back => LucideIcons.chevronLeft,
-            _NavigationButtonType.close => LucideIcons.x,
-          },
+        style: theme.iconButtonTheme.style?.copyWith(
+          backgroundColor: WidgetStateProperty.all(
+            theme.colorScheme.secondaryContainer.withValues(alpha: 0.2),
+          ),
+        ),
 
-          color: theme.colorScheme.outline,
-          size: 24.0,
+        icon: Theme(
+          data: theme.copyWith(
+            iconTheme: IconThemeData(
+              color: theme.colorScheme.onSecondaryContainer,
+              size: 24.0,
+            ),
+          ),
+
+          child: child,
         ),
       ),
     ).aligned(Alignment.centerRight);

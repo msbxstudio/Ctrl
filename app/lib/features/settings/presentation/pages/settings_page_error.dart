@@ -8,19 +8,27 @@ import 'package:lucide_flutter/lucide_flutter.dart';
 
 import 'package:msbx/extensions.dart';
 
+/// Represents the error state of the settings page.
+///
+/// Holds diagnostic information and an asynchronous retry callback
+/// for recovering from a failed loading operation.
 final class SettingsPageError extends ConsumerWidget {
-  ///
-  const SettingsPageError({
+  /// Creates an error state with the associated [error] and retry callback.
+  const new({
     super.key,
     required this.onRetry,
     required this.error,
+    this.stackTrace,
   });
 
-  /// ...
+  /// The asynchronous callback intended to retry loading the settings.
   final Future<void> Function() onRetry;
 
-  /// ...
+  /// The error associated with the failed loading operation.
   final Object error;
+
+  /// The stack trace associated with [error].
+  final StackTrace? stackTrace;
 
   @override
   Widget build(BuildContext context, WidgetRef _) {
