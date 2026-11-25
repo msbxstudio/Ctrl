@@ -12,7 +12,10 @@ import 'package:ctrl/app/router.dart';
 
 enum _NavigationButtonType {
   ///
-  pop,
+  back,
+
+  ///
+  close,
 
   ///
   custom,
@@ -30,18 +33,18 @@ final class NavigationButton<T extends Object> extends ConsumerWidget {
   const new back({
     super.key,
     this.result,
+    this.tooltip,
   }) : onPressed = null,
        child = const Icon(LucideIcons.chevronLeft),
-       tooltip = 'actions.common.back',
-       _type = _NavigationButtonType.pop;
+       _type = _NavigationButtonType.back;
 
   const new close({
     super.key,
     this.result,
+    this.tooltip,
   }) : onPressed = null,
        child = const Icon(LucideIcons.x),
-       tooltip = 'actions.common.close',
-       _type = _NavigationButtonType.pop;
+       _type = _NavigationButtonType.close;
 
   final VoidCallback? onPressed;
 
@@ -58,14 +61,21 @@ final class NavigationButton<T extends Object> extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Tooltip(
-      message: tooltip?.tr() ?? '',
+      message:
+          tooltip ??
+          switch (_type) {
+            _NavigationButtonType.back => 'actions.common.back',
+            _NavigationButtonType.close => 'actions.common.close',
+            _ => '',
+          }.tr(),
 
       child: IconButton(
-        onPressed: _type == _NavigationButtonType.pop
-            ? () {
-                ref.read(routerProvider).pop(result);
-              }
-            : onPressed,
+        onPressed: switch (_type) {
+          _NavigationButtonType.custom => onPressed,
+          _ => () {
+            ref.read(routerProvider).pop(result);
+          },
+        },
 
         style: theme.iconButtonTheme.style?.copyWith(
           backgroundColor: WidgetStateProperty.all(

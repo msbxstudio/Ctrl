@@ -35,7 +35,9 @@ Future<String?> showChangeNameSheet(
           ),
           height: 88.0,
 
-          trailing: const NavigationButton.close(),
+          trailing: NavigationButton.close(
+            tooltip: 'actions.common.cancel'.tr(),
+          ),
 
           leading: Text(
             'dialogs.username.title'.tr(),

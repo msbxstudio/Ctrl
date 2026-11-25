@@ -110,7 +110,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
 
             actionsPadding: const EdgeInsets.only(right: 18.0),
             actions: [
-              IconButton(
+              NavigationButton(
                 onPressed: () async {
                   await showHintDialog(
                     context,
@@ -119,9 +119,9 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                         : 'levels.no_hint'.tr(),
                   );
                 },
-                tooltip: 'levels.hint_tooltip'.tr(),
 
-                icon: const Icon(TablerIcons.bulb_filled),
+                tooltip: 'levels.hint_tooltip'.tr(),
+                child: const Icon(TablerIcons.bulb),
               ),
             ],
           ),
@@ -137,54 +137,56 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                   .padded(const EdgeInsets.symmetric(horizontal: 64.0))
                   .centered(),
 
-          bottomNavigationBar:
-              AnswerInput(
-                    onSubmit: () async {
-                      final match = await controller.checkAnswer(
-                        _answerFieldController.text,
-                      );
+          bottomNavigationBar: SafeArea(
+            minimum: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
 
-                      if (!match) {
-                        return showSnackbar(
-                          context,
-                          'levels.wrong_answer'.tr(),
-                        );
-                      }
+            child: AnswerInput(
+              onSubmit: () async {
+                final match = await controller.checkAnswer(
+                  _answerFieldController.text,
+                );
 
-                      final soundEffects = ref
-                          .read(preferencesNotifierProvider)
-                          .allowSounds;
+                if (!match) {
+                  return showSnackbar(
+                    context,
+                    'levels.wrong_answer'.tr(),
+                  );
+                }
 
-                      await showLevelCompletedDialog(
-                        context,
-                        soundEffects: soundEffects,
-                        rootNavigator: false,
-                      );
+                final soundEffects = ref
+                    .read(preferencesNotifierProvider)
+                    .allowSounds;
 
-                      _answerFieldController.clear();
+                await showLevelCompletedDialog(
+                  context,
+                  soundEffects: soundEffects,
+                  rootNavigator: false,
+                );
 
-                      if (level.id < count) {
-                        await ref
-                            .read(routerProvider)
-                            .replace('/levels/${level.id + 1}');
-                      } else {
-                        ref.read(routerProvider).pop(true);
-                      }
-                    },
-                    onAdd: (char) {
-                      _addItem(char);
-                    },
-                    onClear: () {
-                      _clearAnswer();
-                    },
+                _answerFieldController.clear();
 
-                    items: level.options,
-                    controller: _answerFieldController,
-                  )
-                  .constrained(maxWidth: Breakpoints.small)
-                  .padded(
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  ),
+                if (level.id < count) {
+                  await ref
+                      .read(routerProvider)
+                      .replace('/levels/${level.id + 1}');
+                } else {
+                  ref.read(routerProvider).pop(true);
+                }
+              },
+              onAdd: (char) {
+                _addItem(char);
+              },
+              onClear: () {
+                _clearAnswer();
+              },
+
+              items: level.options,
+              controller: _answerFieldController,
+            ).constrained(maxWidth: Breakpoints.small),
+          ),
         ).dismissKeyboard(context);
       },
     );

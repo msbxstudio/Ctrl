@@ -35,9 +35,7 @@ final class HomePage extends ConsumerStatefulWidget {
 
 final class _HomePageState extends ConsumerState<HomePage> {
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
+  Widget build(BuildContext _) {
     final controller = ref.read(homeControllerProvider.notifier);
     final value = ref.watch(homeControllerProvider);
 
@@ -72,10 +70,7 @@ final class _HomePageState extends ConsumerState<HomePage> {
                 },
 
                 tooltip: 'settings.title'.tr(),
-                child: Icon(
-                  LucideIcons.settings,
-                  color: theme.colorScheme.outline,
-                ),
+                child: const Icon(LucideIcons.settings),
               ),
             ],
 

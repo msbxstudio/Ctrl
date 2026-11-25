@@ -2,6 +2,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:msbx/extensions.dart';
 
 import 'package:msbx/helpers.dart';
 import 'package:msbx/widgets.dart';
@@ -32,10 +33,13 @@ Future<AppLanguage?> showPickLanguageSheet(
               ModalToolbar(
                 title: Text(
                   'dialogs.language.title'.tr(),
-                  style: Theme.of(context).textTheme.titleMedium
-                      ?.copyWith(fontSize: 16.0),
+
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                height: 52.0,
+              ).sized(height: 20.0),
 
               const SizedBox(height: 20.0),
 
