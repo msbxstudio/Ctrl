@@ -31,13 +31,11 @@ void main() async {
 
       child: ProviderScope(
         overrides: [
-          preferencesRepositoryProvider.overrideWith((_) {
-            final repository = PreferencesRepositoryImpl(
+          preferencesRepositoryProvider.overrideWith(
+            (_) => PreferencesRepositoryImpl(
               SharedPreferencesDataSourceImpl(preferences),
-            );
-
-            return repository as PreferencesRepository;
-          }),
+            ),
+          ),
         ],
         child: const MainApp(),
       ),

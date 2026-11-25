@@ -2,23 +2,25 @@ import 'package:flutter/foundation.dart';
 
 import 'package:ctrl/features/level.dart';
 
-/// Defines the retrieval contract for levels.
+/// Defines the retrieval contract for game levels.
 ///
-/// Provides access to individual levels, the level collection,
-/// and the player's current position within the game progression.
+/// Provides access to the level collection, individual levels, and
+/// progression-related information.
 @immutable
 abstract interface class LevelRepository {
-  /// Retrieves all available levels.
+  /// Retrieves the complete collection of available levels.
   Future<List<Level>> getAll();
 
-  /// Retrieves a level matching the specified [lookup] criteria.
+  /// Retrieves the level identified by the specified [lookup] criteria.
   Future<Level> getOne(LevelLookup lookup);
 
-  /// Retrieves the current level within the player's progression.
+  /// Retrieves the level associated with the player's current progression.
   ///
-  /// Returns `null` if no current level is available.
+  /// Returns `null` when no current level is available.
   Future<Level?> getCurrent();
 
   /// Returns the total number of available levels.
-  Future<int> count();
+  Future<int> getCount([
+    LevelCountFilter filter = LevelCountFilter.all,
+  ]);
 }

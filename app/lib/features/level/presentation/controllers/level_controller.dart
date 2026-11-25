@@ -27,22 +27,30 @@ final class LevelController
               .create(levelId: levelId, attempts: 0, ellapsedTime: 0);
         });
 
-    final (level, player, count) = await Future.wait(
-      [
-        ref.read(levelRepositoryProvider).getOne(LevelById(levelId)),
+    final (count, level) =
+        await Future.wait(
+          [
+            /// ...
+            ref.read(levelRepositoryProvider).getCount(),
 
-        ref.read(playerRepositoryProvider).get(),
-        ref.read(levelRepositoryProvider).count(),
-      ],
-      eagerError: true,
-    ).then((r) => (r[0] as Level, r[1] as Player, r[2] as int));
+            /// ...
+            ref.read(levelRepositoryProvider).getOne(LevelById(levelId)),
+          ],
+
+          eagerError: true,
+        ).then((r) {
+          return (
+            r[0] as int,
+            r[1] as Level,
+          );
+        });
 
     return LevelState(
+      count: count,
       level: level,
       progress: progress,
-      player: player,
+
       startTime: DateTime.now(),
-      count: count,
     );
   }
 
@@ -61,37 +69,57 @@ final class LevelController
     final result = await AsyncValue.guard(() async {
       final current = state.requireValue;
 
-      final LevelState(:level, :progress, :player, :startTime, :count) =
-          current;
+      final LevelState(
+        :level,
+        progress: currentProgress,
+        :startTime,
+        :count,
+      ) = current;
 
       final match = level.answer == answer;
 
-      if (!progress.completed) {
-        final updatedProgress = await ref
-            .read(levelProgressRepositoryProvider)
-            .update(
-              progress.id,
-              attempts: progress.attempts + 1,
-              ellapsedTime: match
-                  ? DateTime.now().difference(startTime).inMilliseconds
-                  : null,
-              isCompleted: match,
-            );
+      if (!currentProgress.completed) {
+        final (player, updatedProgress) =
+            await Future.wait(
+              [
+                /// ...
+                ref.read(playerRepositoryProvider).get(),
 
-        final updatedPlayer = await ref
-            .read(playerRepositoryProvider)
-            .update(
-              lastActiveAt: match ? DateTime.now() : null,
-              streakDays: match
-                  ? calculateStreak(player.streakDays, player.lastActiveAt)
-                  : null,
-              // currentLevelId: (match && level.id < count)
-              //     ? level.id + 1
-              //     : level.id,
-            );
+                /// ...
+                ref
+                    .read(levelProgressRepositoryProvider)
+                    .update(
+                      currentProgress.id,
+                      attempts: currentProgress.attempts + 1,
+                      ellapsedTime: match
+                          ? DateTime.now().difference(startTime).inMilliseconds
+                          : null,
+                      isCompleted: match,
+                    ),
+              ],
+
+              eagerError: true,
+            ).then((values) {
+              return (
+                values[0] as Player,
+                values[1] as LevelProgress,
+              );
+            });
+
+        if (match) {
+          await ref
+              .read(playerRepositoryProvider)
+              .update(
+                lastActiveAt: DateTime.now(),
+                streakDays: calculateStreak(
+                  player.streakDays,
+                  player.lastActiveAt,
+                ),
+              );
+        }
 
         state = AsyncData(
-          current.copyWith(progress: updatedProgress, player: updatedPlayer),
+          current.copyWith(progress: updatedProgress),
         );
       }
 

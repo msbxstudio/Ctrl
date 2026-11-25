@@ -1,7 +1,6 @@
 import 'package:msbx/contracts.dart';
 
 import 'package:ctrl/features/level.dart';
-import 'package:ctrl/features/player.dart';
 
 /// Represents the state of an active level session.
 ///
@@ -14,7 +13,6 @@ final class LevelState implements Copyable<LevelState> {
   const new({
     required this.level,
     required this.progress,
-    required this.player,
     required this.startTime,
     required this.count,
   });
@@ -24,9 +22,6 @@ final class LevelState implements Copyable<LevelState> {
 
   /// The player's progress associated with [level].
   final LevelProgress progress;
-
-  /// The player participating in the current level session.
-  final Player player;
 
   /// The timestamp marking the beginning of the level session.
   final DateTime startTime;
@@ -41,14 +36,12 @@ final class LevelState implements Copyable<LevelState> {
   LevelState copyWith({
     Level? level,
     LevelProgress? progress,
-    Player? player,
     DateTime? startTime,
     int? count,
   }) {
     return LevelState(
       level: level ?? this.level,
       progress: progress ?? this.progress,
-      player: player ?? this.player,
       startTime: startTime ?? this.startTime,
       count: count ?? this.count,
     );

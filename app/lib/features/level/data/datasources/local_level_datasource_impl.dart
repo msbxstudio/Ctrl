@@ -49,10 +49,44 @@ final class LocalLevelDataSourceImpl implements LocalLevelDataSource {
   }
 
   @override
-  Future<int> count() async {
-    final result = await _database.query('levels', columns: ['id']);
+  Future<int> countAll() async {
+    final result = await _database.query(
+      'levels',
+      columns: ['COUNT(*) AS total'],
+    );
 
-    return result.length;
+    return result.first['total'] as int;
+  }
+
+  @override
+  Future<int> countCompleted() async {
+    final result = await _database.query(
+      'level_progresses',
+      columns: ['COUNT(*) AS total'],
+      where: 'is_completed = ?',
+      whereArgs: [1],
+    );
+
+    return result.first['total'] as int;
+  }
+
+  @override
+  Future<int> countUncompleted() async {
+    final result = await _database.query(
+      'levels',
+      columns: ['COUNT(*) AS total'],
+      where: '''
+      NOT EXISTS (
+        SELECT 1
+        FROM level_progresses
+        WHERE level_id = levels.id
+          AND is_completed = ?
+      )
+    ''',
+      whereArgs: [1],
+    );
+
+    return result.first['total'] as int;
   }
 
   @override

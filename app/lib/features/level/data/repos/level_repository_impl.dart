@@ -14,9 +14,9 @@ final class LevelRepositoryImpl implements LevelRepository {
       final result = await _local.findAll();
 
       return result.map((e) => e.toEntity()).toList();
-    } catch (e) {
-      if (e is AppException) rethrow;
-
+    } on AppException {
+      rethrow;
+    } catch (_) {
       throw const UnknownException('');
     }
   }
@@ -33,9 +33,9 @@ final class LevelRepositoryImpl implements LevelRepository {
       }
 
       return result.toEntity();
-    } catch (e) {
-      if (e is AppException) rethrow;
-
+    } on AppException {
+      rethrow;
+    } catch (_) {
       throw const UnknownException('');
     }
   }
@@ -46,23 +46,29 @@ final class LevelRepositoryImpl implements LevelRepository {
       final result = await _local.findCurrent();
 
       return result?.toEntity();
-    } catch (e) {
-      if (e is AppException) rethrow;
-
+    } on AppException {
+      rethrow;
+    } catch (_) {
       throw const UnknownException('');
     }
   }
 
   @override
-  Future<int> count() async {
+  Future<int> getCount([
+    LevelCountFilter filter = LevelCountFilter.all,
+  ]) async {
     try {
-      final result = await _local.count();
+      final result = await switch (filter) {
+        LevelCountFilter.all => _local.countAll(),
+        LevelCountFilter.completed => _local.countCompleted(),
+        LevelCountFilter.pending => _local.countUncompleted(),
+      };
 
       return result;
-    } catch (e) {
-      if (e is AppException) rethrow;
-
-      throw const UnknownException('');
+    } on AppException {
+      rethrow;
+    } catch (_) {
+      throw const UnknownException('Failed to count levels.');
     }
   }
 }

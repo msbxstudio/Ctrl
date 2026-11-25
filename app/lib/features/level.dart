@@ -7,6 +7,7 @@ export 'level/domain/entities/level.dart';
 export 'level/domain/entities/question.dart';
 
 export 'level/domain/enums/hint_type.dart';
+export 'level/domain/enums/level_count_filter.dart';
 export 'level/domain/enums/level_keyboard.dart';
 export 'level/domain/enums/level_type.dart';
 export 'level/domain/enums/question_type.dart';

@@ -7,7 +7,11 @@ abstract interface class LocalLevelDataSource {
 
   Future<LevelModel?> findCurrent();
 
-  Future<int> count();
+  Future<int> countAll();
+
+  Future<int> countCompleted();
+
+  Future<int> countUncompleted();
 
   Future<void> save(LevelModel model);
 }
