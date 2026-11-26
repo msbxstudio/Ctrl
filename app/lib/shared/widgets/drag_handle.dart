@@ -21,7 +21,7 @@ final class DragHandle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: margin ?? const EdgeInsets.symmetric(vertical: 8.0),
+      padding: margin ?? const EdgeInsets.symmetric(vertical: 12.0),
       child: Center(
         child: Container(
           width: width,
