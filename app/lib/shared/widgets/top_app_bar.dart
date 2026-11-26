@@ -14,7 +14,14 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.centerTitle = true,
     this.borderRadius = BorderRadius.zero,
-  });
+  }) : assert(
+         toolbarHeight == null ||
+             (toolbarHeight >= 0.0 && toolbarHeight < double.infinity),
+       ),
+       assert(
+         bottomHeight == null ||
+             (bottomHeight >= 0.0 && bottomHeight < double.infinity),
+       );
 
   /// The primary content displayed in the toolbar.
   final Widget? title;
@@ -53,20 +60,32 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    if (!_hasToolbar && bottom == null) {
-      return Size.zero;
-    }
+    final toolbar = _hasToolbar ? toolbarHeight : 0.0;
+    final footer = bottom != null ? bottomHeight : 0.0;
 
-    if ((_hasToolbar && toolbarHeight == null) ||
-        (bottom != null && bottomHeight == null)) {
+    if (toolbar == null || footer == null) {
       return const Size.fromHeight(double.maxFinite);
     }
 
-    return Size.fromHeight(
-      (_hasToolbar ? toolbarHeight! : 0.0) +
-          (bottom != null ? bottomHeight! : 0.0),
-    );
+    return Size.fromHeight(toolbar + footer);
   }
+
+  // @override
+  // Size get preferredSize {
+  //   if (!_hasToolbar && bottom == null) {
+  //     return Size.zero;
+  //   }
+
+  //   if ((_hasToolbar && toolbarHeight == null) ||
+  //       (bottom != null && bottomHeight == null)) {
+  //     return const Size.fromHeight(double.maxFinite);
+  //   }
+
+  //   return Size.fromHeight(
+  //     (_hasToolbar ? toolbarHeight! : 0.0) +
+  //         (bottom != null ? bottomHeight! : 0.0),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +96,7 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       child: SafeArea(
-        top: Scaffold.maybeOf(context)?.widget.primary ?? true,
+        top: Scaffold.maybeOf(context)?.widget.primary ?? false,
         bottom: false,
 
         child: Column(
