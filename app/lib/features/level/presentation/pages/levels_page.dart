@@ -30,15 +30,16 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
     final value = ref.watch(levelsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        automaticallyImplyActions: false,
+      appBar: ConstrainedAppBar(
+        actionsPadding: EdgeInsets.zero,
+        titleSpacing: 16.0,
+        leadingWidth: 44.0,
 
-        titleSpacing: 8.0,
+        constraints: const BoxConstraints(
+          maxWidth: Breakpoints.small,
+        ),
+
         title: Text('levels.title'.tr()),
-
-        leadingWidth: 64.0,
         leading: const NavigationButton.back(),
       ),
 

@@ -47,6 +47,14 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
   /// Controls the text representing the player's current answer.
   late final TextEditingController _answerFieldController;
 
+  void _addItem(String item) {
+    _answerFieldController.text += item;
+  }
+
+  void _clearAnswer() {
+    _answerFieldController.clear();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,18 +105,15 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
         final LevelState(:level, :count) = state;
 
         return Scaffold(
-          appBar: AppBar(
-            centerTitle: false,
-            automaticallyImplyLeading: false,
-            automaticallyImplyActions: false,
+          appBar: ConstrainedAppBar(
+            actionsPadding: EdgeInsets.zero,
+            titleSpacing: 16.0,
+            leadingWidth: 44.0,
 
-            titleSpacing: 12.0,
-            title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.small,
+            ),
 
-            leadingWidth: 64.0,
-            leading: const NavigationButton.back(),
-
-            actionsPadding: const EdgeInsets.only(right: 18.0),
             actions: [
               NavigationButton(
                 onPressed: () async {
@@ -124,84 +129,89 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
                 child: const Icon(TablerIcons.bulb),
               ),
             ],
+
+            title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
+            leading: const NavigationButton.back(),
           ),
 
-          body:
-              Text(
-                    level.question.resolve(),
-                    textAlign: level.question.type == QuestionType.code
-                        ? TextAlign.start
-                        : TextAlign.center,
-                  )
-                  .constrained(maxWidth: Breakpoints.small)
-                  .padded(const EdgeInsets.symmetric(horizontal: 64.0))
-                  .centered(),
+          body: Text(
+            // level.question.resolve(),
+            'Hola',
+            textAlign: level.question.type == QuestionType.code
+                ? TextAlign.start
+                : TextAlign.center,
+          ).centered().expand(),
+          // .constrained(maxWidth: Breakpoints.small)
+          // .padded(const EdgeInsets.symmetric(horizontal: 64.0))
+          // .centered(),
 
           bottomNavigationBar: SafeArea(
             minimum: const EdgeInsets.symmetric(
               horizontal: 16.0,
-              vertical: 8.0,
+              vertical: 12.0,
             ),
 
-            child: AnswerInput(
-              onSubmit: () async {
-                final match = await controller.checkAnswer(
-                  _answerFieldController.text,
-                );
+            child:
+                AnswerInput(
+                      onSubmit: () async {
+                        final match = await controller.checkAnswer(
+                          _answerFieldController.text,
+                        );
 
-                if (!mounted) return;
+                        if (!mounted) return;
 
-                // The mutation listener already displays persistence errors.
-                if (ref.read(checkAnswerMutationProvider).hasError) return;
+                        // The mutation listener already displays persistence errors.
+                        if (ref.read(checkAnswerMutationProvider).hasError) {
+                          return;
+                        }
 
-                if (!match) {
-                  return showSnackbar(
-                    context,
-                    'levels.wrong_answer'.tr(),
-                  );
-                }
+                        if (!match) {
+                          return showSnackbar(
+                            context,
+                            'levels.wrong_answer'.tr(),
+                          );
+                        }
 
-                final soundEffects = ref
-                    .read(preferencesNotifierProvider)
-                    .allowSounds;
+                        final soundEffects = ref
+                            .read(preferencesNotifierProvider)
+                            .allowSounds;
 
-                await showLevelCompletedDialog(
-                  context,
-                  soundEffects: soundEffects,
-                  rootNavigator: false,
-                );
+                        await showLevelCompletedDialog(
+                          context,
+                          soundEffects: soundEffects,
+                          rootNavigator: false,
+                        );
 
-                _answerFieldController.clear();
+                        _answerFieldController.clear();
 
-                if (level.id < count) {
-                  await ref
-                      .read(routerProvider)
-                      .replace('/levels/${level.id + 1}');
-                } else {
-                  ref.read(routerProvider).pop(true);
-                }
-              },
-              onAdd: (char) {
-                _addItem(char);
-              },
-              onClear: () {
-                _clearAnswer();
-              },
+                        if (level.id < count) {
+                          await ref
+                              .read(routerProvider)
+                              .replace('/levels/${level.id + 1}');
+                        } else {
+                          ref.read(routerProvider).pop(true);
+                        }
+                      },
+                      onAdd: (char) {
+                        _addItem(char);
+                      },
+                      onClear: () {
+                        _clearAnswer();
+                      },
 
-              items: level.options,
-              controller: _answerFieldController,
-            ).constrained(maxWidth: Breakpoints.small),
+                      items: level.options,
+                      controller: _answerFieldController,
+                    )
+                    .constrained(
+                      maxWidth: Breakpoints.small,
+                    )
+                    .aligned(
+                      Alignment.bottomCenter,
+                      heightFactor: 1.0,
+                    ),
           ),
         ).dismissKeyboard(context);
       },
     );
-  }
-
-  void _addItem(String item) {
-    _answerFieldController.text += item;
-  }
-
-  void _clearAnswer() {
-    _answerFieldController.clear();
   }
 }

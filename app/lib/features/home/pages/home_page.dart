@@ -59,7 +59,14 @@ final class _HomePageState extends ConsumerState<HomePage> {
         ) = state;
 
         return Scaffold(
-          appBar: AppBar(
+          appBar: ConstrainedAppBar(
+            actionsPadding: EdgeInsets.zero,
+            titleSpacing: 0.0,
+
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.small,
+            ),
+
             actions: [
               NavigationButton(
                 onPressed: () async {
@@ -81,102 +88,104 @@ final class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
 
-          body: RefreshIndicator.adaptive(
-            onRefresh: () async {
-              await controller.refresh();
-            },
+          body: SafeArea(
+            minimum: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
 
-            child: LayoutBuilder(
-              builder: (_, constraints) {
-                final width = constraints.maxWidth;
-                final remaining = width - Breakpoints.small;
+            child: RefreshIndicator.adaptive(
+              onRefresh: () async {
+                await controller.refresh();
+              },
 
-                return SafeArea(
-                  minimum: EdgeInsets.symmetric(
-                    horizontal: remaining <= 16.0 ? 16.0 : remaining / 2,
-                    vertical: 12.0,
-                  ),
-
-                  child: FillScrollView(
-                    child: Column(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-
+              child: FillScrollView(
+                child:
+                    Column(
                           children: [
-                            _buildHero(
-                              currentLevel: currentLevel,
-                              solvedPuzzles: solvedPuzzles,
-                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+
+                              children: [
+                                _buildHero(
+                                  currentLevel: currentLevel,
+                                  solvedPuzzles: solvedPuzzles,
+                                ),
+
+                                Row(
+                                  spacing: 12.0,
+                                  children: [
+                                    FilledButton.tonalIcon(
+                                      onPressed: () async {
+                                        await ref
+                                            .read(routerProvider)
+                                            .push(LevelsPage.routePath)
+                                            .then((_) {
+                                              return controller.refresh();
+                                            });
+                                      },
+
+                                      icon: const Icon(LucideIcons.grip),
+                                      label: Text('levels.title'.tr()),
+                                    ).expand(),
+
+                                    FilledButton.icon(
+                                      onPressed: () async {
+                                        await ref
+                                            .read(routerProvider)
+                                            .push(
+                                              LevelPage.routePath.replaceFirst(
+                                                ':id',
+                                                '${currentLevel.id}',
+                                              ),
+                                            )
+                                            .then((_) {
+                                              return controller.refresh();
+                                            });
+                                      },
+
+                                      icon: const Icon(LucideIcons.play),
+                                      label: Text('home.buttons.play'.tr()),
+                                    ).expand(),
+                                  ],
+                                ),
+                              ].divide(const SizedBox(height: 12.0)),
+                            ).expand(),
 
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               spacing: 12.0,
-                              children: [
-                                FilledButton.tonalIcon(
-                                  onPressed: () async {
-                                    await ref
-                                        .read(routerProvider)
-                                        .push(LevelsPage.routePath)
-                                        .then((_) {
-                                          return controller.refresh();
-                                        });
-                                  },
 
-                                  icon: const Icon(LucideIcons.grip),
-                                  label: Text('levels.title'.tr()),
+                              children: [
+                                _buildMetric(
+                                  icon: Symbols.timer,
+                                  highlight: false,
+
+                                  label: 'home.metrics.avg_time'.tr(),
+                                  value: formatDuration(averageTime),
                                 ).expand(),
 
-                                FilledButton.icon(
-                                  onPressed: () async {
-                                    await ref
-                                        .read(routerProvider)
-                                        .push(
-                                          LevelPage.routePath.replaceFirst(
-                                            ':id',
-                                            '${currentLevel.id}',
-                                          ),
-                                        )
-                                        .then((_) {
-                                          return controller.refresh();
-                                        });
-                                  },
+                                _buildMetric(
+                                  icon: Symbols.local_fire_department,
+                                  highlight: true,
 
-                                  icon: const Icon(LucideIcons.play),
-                                  label: Text('home.buttons.play'.tr()),
+                                  label: 'home.metrics.streak'.tr(),
+                                  value: 'home.metrics.days'.tr(
+                                    namedArgs: {
+                                      'count': '${player.streakDays}',
+                                    },
+                                  ),
                                 ).expand(),
                               ],
                             ),
-                          ].divide(const SizedBox(height: 12.0)),
-                        ).expand(),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          spacing: 12.0,
-
-                          children: [
-                            _buildMetric(
-                              icon: Symbols.timer,
-                              label: 'home.metrics.avg_time'.tr(),
-                              value: formatDuration(averageTime),
-                              highlight: false,
-                            ),
-
-                            _buildMetric(
-                              icon: Symbols.local_fire_department,
-                              label: 'home.metrics.streak'.tr(),
-                              value: 'home.metrics.days'.tr(
-                                namedArgs: {'count': '${player.streakDays}'},
-                              ),
-                              highlight: true,
-                            ),
-                          ].map((e) => e.expand()).toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+                          ],
+                        )
+                        .constrained(
+                          maxWidth: Breakpoints.small,
+                        )
+                        .centered(),
+              ),
             ),
           ),
         );

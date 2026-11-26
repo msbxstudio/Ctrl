@@ -87,12 +87,20 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
       },
 
       data: (state) {
-        final SettingsState(:player, :language, :allowSoundEffects) = state;
+        final SettingsState(
+          :player,
+          :language,
+          :allowSoundEffects,
+        ) = state;
 
         return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            automaticallyImplyActions: false,
+          appBar: ConstrainedAppBar(
+            titleSpacing: 16.0,
+            leadingWidth: 44.0,
+
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.small,
+            ),
 
             title: Text('settings.title'.tr()),
             leading: const NavigationButton.back(),
