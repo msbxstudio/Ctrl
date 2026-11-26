@@ -37,9 +37,21 @@ Future<String?> showChangeNameSheet(
 
   final controller = TextEditingController(text: initialValue);
 
-  return showModalPage(
+  return showModalSheet(
     context,
-    builder: (_) {
+    draggable: false,
+
+    constraints: const BoxConstraints(
+      maxWidth: Breakpoints.small - 100.0,
+    ),
+
+    borderRadius: responsive(
+      context,
+      fallback: const BorderRadius.all(Radius.circular(24.0)),
+      sm: null,
+    ),
+
+    builder: (c) {
       final theme = Theme.of(context);
 
       final navigator = Navigator.of(
@@ -47,83 +59,83 @@ Future<String?> showChangeNameSheet(
         rootNavigator: true,
       );
 
-      return Scaffold(
-        appBar: TopAppBar(
-          trailing:
-              NavigationButton.close(
-                tooltip: 'common.actions.cancel'.tr(),
-              ).padded(
-                const EdgeInsets.only(top: 16.0, right: 16.0),
-              ),
+      return SafeArea(
+        minimum: const EdgeInsets.all(20.0),
 
-          title: Text(
-            'player.change_name.title'.tr(),
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        left: false,
+        top: false,
+        right: false,
 
-        body: Form(
-          key: formKey,
+        child:
+            Form(
+              key: formKey,
 
-          child:
-              Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
 
-                    children: [
-                      Text(
-                        'player.change_name.description'.tr(
-                          namedArgs: {'max': '15'},
-                        ),
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: theme.colorScheme.outline,
-                        ),
-                      ),
+                children: [
+                  TopAppBar(
+                    trailing: NavigationButton.close(
+                      tooltip: 'common.actions.cancel'.tr(),
+                    ),
 
-                      const SizedBox(height: 12.0),
-
-                      TextFormField(
-                        maxLength: 15,
-                        controller: controller,
-
-                        validator: (text) {
-                          return _nameFieldValidator.validate(text);
-                        },
-
-                        decoration: InputDecoration(
-                          hintText: 'player.change_name.input_hint'.tr(),
-                        ),
-                      ),
-
-                      const SizedBox(height: 24.0),
-
-                      FilledButton(
-                        onPressed: () {
-                          if (!formKey.currentState!.validate()) return;
-
-                          navigator.pop(controller.text);
-                        },
-
-                        child: Text('common.actions.confirm'.tr()),
-                      ),
-                    ],
-                  )
-                  .padded(
-                    responsive(
-                      context,
-                      fallback: const EdgeInsets.symmetric(vertical: 12.0),
-                      sm: const EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 20.0,
+                    title: Text(
+                      'player.change_name.title'.tr(),
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                  .constrained(
-                    maxWidth: Breakpoints.small,
-                  )
-                  .centered(),
-        ),
+                  ),
+
+                  const SizedBox(height: 20.0),
+
+                  Text(
+                    'player.change_name.description'.tr(
+                      namedArgs: {'max': '15'},
+                    ),
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.outline,
+                    ),
+                  ),
+
+                  const SizedBox(height: 12.0),
+
+                  Material(
+                    type: MaterialType.transparency,
+
+                    child: TextFormField(
+                      maxLength: 15,
+                      controller: controller,
+
+                      validator: (text) {
+                        return _nameFieldValidator.validate(text);
+                      },
+
+                      decoration: InputDecoration(
+                        hintText: 'player.change_name.input_hint'.tr(),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24.0),
+
+                  FilledButton(
+                    onPressed: () {
+                      if (!formKey.currentState!.validate()) return;
+
+                      navigator.pop(controller.text);
+                    },
+
+                    child: Text('common.actions.confirm'.tr()),
+                  ),
+                ],
+              ),
+            ).padded(
+              EdgeInsets.only(
+                bottom: MediaQuery.viewInsetsOf(c).bottom,
+              ),
+            ),
       ).dismissKeyboard(context);
     },
   );
