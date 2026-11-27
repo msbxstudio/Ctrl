@@ -137,15 +137,13 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
             ),
           ),
 
-          body: Center(
-            child: Text(
-              level.question.resolve(),
-              textAlign: switch (level.question.type) {
-                QuestionType.code => TextAlign.start,
-                _ => TextAlign.center,
-              },
-            ),
-          ).expand(),
+          body: Text(
+            level.question.resolve(),
+            textAlign: switch (level.question.type) {
+              QuestionType.code => TextAlign.start,
+              _ => TextAlign.center,
+            },
+          ).centered(),
 
           bottomNavigationBar: SafeArea(
             minimum: padding.copyWith(top: 12.0, bottom: 12.0),

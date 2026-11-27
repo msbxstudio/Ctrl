@@ -11,7 +11,8 @@ Future<bool?> showResetAppDialog(BuildContext context) {
     context,
     builder: (_) {
       return PromptDialog<bool>.adaptive(
-        title: 'settings.reset.confirm'.tr(),
+        title: 'settings.reset.confirm.title'.tr(),
+        message: 'settings.reset.confirm.message'.tr(),
 
         actions: [
           PromptDialogAction<bool>(

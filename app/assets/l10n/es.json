@@ -66,10 +66,13 @@
       "support": "Apóyame"
     },
     "reset": {
-      "confirm": "¿Estás seguro de que deseas borrar todos los datos? Esta acción no se puede deshacer.",
-      "success": "Todos los datos han sido borrados exitosamente.",
+      "confirm": {
+        "title": "¿Borrar todos los datos?",
+        "message": "Esta acción no se puede deshacer."
+      },
+      "success": "Todos los datos se han borrado correctamente.",
       "action": "Borrar todos los datos",
-      "app": "Restablecer app"
+      "app": "Restablecer aplicación"
     },
     "language_picker": {
       "title": "Selecciona tu idioma"

@@ -66,7 +66,10 @@
       "support": "Support Me"
     },
     "reset": {
-      "confirm": "Are you sure you want to erase all data? This action cannot be undone.",
+      "confirm": {
+        "title": "Erase all data?",
+        "message": "This action cannot be undone."
+      },
       "success": "All data has been erased successfully.",
       "action": "Erase all data",
       "app": "Reset app"
