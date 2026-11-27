@@ -2,7 +2,6 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:msbx/extensions.dart';
 
 /// Displays the loading state of the level page.
 ///
@@ -10,12 +9,12 @@ import 'package:msbx/extensions.dart';
 /// is being loaded.
 final class LevelPageSkeleton extends ConsumerWidget {
   /// Creates the loading placeholder for the level page.
-  const new({
-    super.key,
-  });
+  const new({super.key});
 
   @override
   Widget build(BuildContext _, WidgetRef _) {
-    return const CircularProgressIndicator().centered();
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator.adaptive()),
+    );
   }
 }

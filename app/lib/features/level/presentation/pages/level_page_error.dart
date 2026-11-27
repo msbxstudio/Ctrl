@@ -30,7 +30,9 @@ final class LevelPageError extends ConsumerWidget {
 
   @override
   Widget build(BuildContext _, WidgetRef _) {
-    return Text(errorMessage(error, fallbackKey: 'errors.levels.level_load'))
-        .centered();
+    return Scaffold(
+      body: Text(errorMessage(error, fallbackKey: 'errors.levels.level_load'))
+          .centered(),
+    );
   }
 }

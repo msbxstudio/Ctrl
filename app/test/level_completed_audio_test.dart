@@ -123,7 +123,7 @@ void main() {
         ),
       ),
     );
-    showLevelCompletedDialog(context, soundEffects: soundEffects).ignore();
+    showLevelCompletedDialog(context, allowSounds: soundEffects).ignore();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     await flushAudio(tester);

@@ -5,7 +5,6 @@ import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -17,12 +16,12 @@ import 'package:ctrl/shared/dialogs.dart';
 
 Future<void> showLevelCompletedDialog(
   BuildContext context, {
-  bool soundEffects = true,
+  bool allowSounds = true,
   bool rootNavigator = true,
 }) {
   final theme = Theme.of(context);
 
-  if (soundEffects) {
+  if (allowSounds) {
     _playSuccessSound().ignore();
   }
 
