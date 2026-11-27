@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -19,7 +21,7 @@ import 'package:ctrl/shared/widgets.dart';
 import 'settings_page_error.dart';
 import 'settings_page_skeleton.dart';
 
-final _legalOptions = const <({String key, String source})>[
+final _legalOptions = const [
   (
     key: 'settings.privacy.privacy_policy',
     source: 'https://ctrl.msbx.dev/privacy',
@@ -94,17 +96,29 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
         ) = state;
 
         return Scaffold(
-          appBar: ConstrainedAppBar(
-            titleSpacing: 16.0,
-            leadingWidth: 44.0,
+          appBar: () {
+            final size = MediaQueryData.fromView(
+              View.of(context),
+            ).size;
 
-            constraints: const BoxConstraints(
-              maxWidth: Breakpoints.small,
-            ),
+            final remaining = max(size.width - Breakpoints.small, 16.0);
 
-            title: Text('settings.title'.tr()),
-            leading: const NavigationButton.back(),
-          ),
+            return TopAppBar(
+              centerTitle: false,
+
+              title: Padding(
+                padding: EdgeInsets.only(left: (remaining / 2.0) + 44.0 + 16.0),
+                child: Text(
+                  'settings.title'.tr(),
+                ),
+              ),
+
+              leading: Padding(
+                padding: EdgeInsets.only(left: remaining / 2.0),
+                child: const NavigationButton.back(),
+              ),
+            );
+          }(),
 
           body: SafeArea(
             child: RefreshIndicator.adaptive(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -59,34 +61,41 @@ final class _HomePageState extends ConsumerState<HomePage> {
         ) = state;
 
         return Scaffold(
-          appBar: ConstrainedAppBar(
-            actionsPadding: EdgeInsets.zero,
-            titleSpacing: 0.0,
+          appBar: () {
+            final size = MediaQueryData.fromView(
+              View.of(context),
+            ).size;
 
-            constraints: const BoxConstraints(
-              maxWidth: Breakpoints.small,
-            ),
+            final remaining = max(size.width - Breakpoints.small, 16.0);
 
-            actions: [
-              NavigationButton(
-                onPressed: () async {
-                  await ref
-                      .read(routerProvider)
-                      .push<bool>(SettingsPage.routePath);
+            return TopAppBar(
+              centerTitle: false,
 
-                  await controller.refresh();
-                },
-
-                tooltip: 'settings.title'.tr(),
-                child: const Icon(LucideIcons.settings),
+              title: Padding(
+                padding: EdgeInsets.only(left: remaining / 2.0),
+                child: Text(
+                  'home.greeting'.tr(namedArgs: {'name': player.name}),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-            ],
 
-            title: Text(
-              'home.greeting'.tr(namedArgs: {'name': player.name}),
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+              trailing: Padding(
+                padding: EdgeInsets.only(right: remaining / 2.0),
+                child: NavigationButton(
+                  onPressed: () async {
+                    await ref
+                        .read(routerProvider)
+                        .push<bool>(SettingsPage.routePath);
+
+                    await controller.refresh();
+                  },
+
+                  tooltip: 'settings.title'.tr(),
+                  child: const Icon(LucideIcons.settings),
+                ),
+              ),
+            );
+          }(),
 
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(

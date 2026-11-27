@@ -6,8 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 
-import 'package:msbx/extensions.dart';
-
 import 'package:ctrl/app/router.dart';
 
 enum _NavigationButtonType {
@@ -94,6 +92,6 @@ final class NavigationButton<T extends Object> extends ConsumerWidget {
           child: child,
         ),
       ),
-    ).aligned(Alignment.centerRight);
+    );
   }
 }

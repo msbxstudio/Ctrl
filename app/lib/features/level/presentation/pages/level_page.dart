@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -81,7 +83,7 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
   }
 
   @override
-  Widget build(BuildContext _) {
+  Widget build(BuildContext context) {
     final provider = levelControllerProvider(widget.id);
 
     final controller = ref.read(provider.notifier);
@@ -105,38 +107,44 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
         final LevelState(:level, :count) = state;
 
         return Scaffold(
-          appBar: ConstrainedAppBar(
-            actionsPadding: EdgeInsets.zero,
-            titleSpacing: 16.0,
-            leadingWidth: 44.0,
+          appBar: () {
+            final size = MediaQueryData.fromView(
+              View.of(context),
+            ).size;
 
-            constraints: const BoxConstraints(
-              maxWidth: Breakpoints.small,
-            ),
+            final remaining = max(size.width - Breakpoints.small, 16.0);
 
-            actions: [
-              NavigationButton(
-                onPressed: () async {
-                  await showHintDialog(
-                    context,
-                    hint: level.hint != null
-                        ? level.hint!.resolve()
-                        : 'levels.no_hint'.tr(),
-                  );
-                },
+            return TopAppBar(
+              title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
 
-                tooltip: 'levels.hint_tooltip'.tr(),
-                child: const Icon(TablerIcons.bulb),
+              leading: Padding(
+                padding: EdgeInsets.only(left: remaining / 2.0),
+                child: const NavigationButton.back(
+                  result: true,
+                ),
               ),
-            ],
 
-            title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
-            leading: const NavigationButton.back(),
-          ),
+              trailing: Padding(
+                padding: EdgeInsets.only(right: remaining / 2.0),
+                child: NavigationButton(
+                  onPressed: () async {
+                    await showHintDialog(
+                      context,
+                      hint: level.hint != null
+                          ? level.hint!.resolve()
+                          : 'levels.no_hint'.tr(),
+                    );
+                  },
+
+                  tooltip: 'levels.hint_tooltip'.tr(),
+                  child: const Icon(TablerIcons.bulb),
+                ),
+              ),
+            );
+          }(),
 
           body: Text(
-            // level.question.resolve(),
-            'Hola',
+            level.question.resolve(),
             textAlign: level.question.type == QuestionType.code
                 ? TextAlign.start
                 : TextAlign.center,

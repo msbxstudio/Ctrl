@@ -116,7 +116,7 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                     if (leading != null)
                       Align(
                         heightFactor: 1.0,
-                        alignment: AlignmentDirectional.centerStart,
+                        alignment: Alignment.centerLeft,
                         child: leading!,
                       ),
 
@@ -124,15 +124,15 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Align(
                         heightFactor: 1.0,
                         alignment: centerTitle
-                            ? AlignmentDirectional.center
-                            : AlignmentDirectional.centerStart,
+                            ? Alignment.center
+                            : Alignment.centerLeft,
                         child: title!,
                       ),
 
                     if (trailing != null)
                       Align(
                         heightFactor: 1.0,
-                        alignment: AlignmentDirectional.centerEnd,
+                        alignment: Alignment.centerRight,
                         child: trailing!,
                       ),
                   ],

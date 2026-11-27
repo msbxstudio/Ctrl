@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -30,18 +32,27 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
     final value = ref.watch(levelsControllerProvider);
 
     return Scaffold(
-      appBar: ConstrainedAppBar(
-        actionsPadding: EdgeInsets.zero,
-        titleSpacing: 16.0,
-        leadingWidth: 44.0,
+      appBar: () {
+        final size = MediaQueryData.fromView(
+          View.of(context),
+        ).size;
 
-        constraints: const BoxConstraints(
-          maxWidth: Breakpoints.small,
-        ),
+        final remaining = max(size.width - Breakpoints.small, 16.0);
 
-        title: Text('levels.title'.tr()),
-        leading: const NavigationButton.back(),
-      ),
+        return TopAppBar(
+          centerTitle: false,
+
+          title: Padding(
+            padding: EdgeInsets.only(left: (remaining / 2.0) + 44.0 + 16.0),
+            child: Text('levels.title'.tr()),
+          ),
+
+          leading: Padding(
+            padding: EdgeInsets.only(left: remaining / 2.0),
+            child: const NavigationButton.back(),
+          ),
+        );
+      }(),
 
       body: SafeArea(
         child: value.when(
