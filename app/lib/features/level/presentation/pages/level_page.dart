@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -13,6 +11,7 @@ import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
 import 'package:ctrl/app/router.dart';
+import 'package:ctrl/core/helpers.dart';
 import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/settings.dart';
@@ -106,42 +105,38 @@ final class _LevelPageState extends ConsumerState<LevelPage> {
       data: (state) {
         final LevelState(:level, :count) = state;
 
+        final padding = EdgeInsets.symmetric(
+          horizontal: responsiveHorizontalPadding(context),
+        );
+
         return Scaffold(
-          appBar: () {
-            final size = MediaQueryData.fromView(
-              View.of(context),
-            ).size;
+          appBar: TopAppBar(
+            title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
 
-            final remaining = max(size.width - Breakpoints.small, 16.0);
-
-            return TopAppBar(
-              title: Text('levels.label'.tr(namedArgs: {'id': '${level.id}'})),
-
-              leading: Padding(
-                padding: EdgeInsets.only(left: remaining / 2.0),
-                child: const NavigationButton.back(
-                  result: true,
-                ),
+            leading: Padding(
+              padding: padding.copyWith(right: 0.0),
+              child: const NavigationButton.back(
+                result: true,
               ),
+            ),
 
-              trailing: Padding(
-                padding: EdgeInsets.only(right: remaining / 2.0),
-                child: NavigationButton(
-                  onPressed: () async {
-                    await showHintDialog(
-                      context,
-                      hint: level.hint != null
-                          ? level.hint!.resolve()
-                          : 'levels.no_hint'.tr(),
-                    );
-                  },
+            trailing: Padding(
+              padding: padding.copyWith(left: 0.0),
+              child: NavigationButton(
+                onPressed: () async {
+                  await showHintDialog(
+                    context,
+                    hint: level.hint != null
+                        ? level.hint!.resolve()
+                        : 'levels.no_hint'.tr(),
+                  );
+                },
 
-                  tooltip: 'levels.hint_tooltip'.tr(),
-                  child: const Icon(TablerIcons.bulb),
-                ),
+                tooltip: 'levels.hint_tooltip'.tr(),
+                child: const Icon(TablerIcons.bulb),
               ),
-            );
-          }(),
+            ),
+          ),
 
           body: Text(
             level.question.resolve(),

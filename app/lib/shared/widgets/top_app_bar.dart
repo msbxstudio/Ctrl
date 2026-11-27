@@ -70,23 +70,6 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Size.fromHeight(toolbar + footer);
   }
 
-  // @override
-  // Size get preferredSize {
-  //   if (!_hasToolbar && bottom == null) {
-  //     return Size.zero;
-  //   }
-
-  //   if ((_hasToolbar && toolbarHeight == null) ||
-  //       (bottom != null && bottomHeight == null)) {
-  //     return const Size.fromHeight(double.maxFinite);
-  //   }
-
-  //   return Size.fromHeight(
-  //     (_hasToolbar ? toolbarHeight! : 0.0) +
-  //         (bottom != null ? bottomHeight! : 0.0),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,7 +109,15 @@ final class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                         alignment: centerTitle
                             ? Alignment.center
                             : Alignment.centerLeft,
-                        child: title!,
+                        child: DefaultTextStyle(
+                          style:
+                              Theme.of(context).textTheme.titleMedium ??
+                              const TextStyle(
+                                fontFamily: 'JetBrains Mono',
+                                fontSize: 18.0,
+                              ),
+                          child: title!,
+                        ),
                       ),
 
                     if (trailing != null)

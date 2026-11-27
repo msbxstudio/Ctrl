@@ -1,13 +1,13 @@
-import 'dart:math';
-
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:msbx/config.dart';
 
 import 'package:ctrl/app/router.dart';
+import 'package:ctrl/core/helpers.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/shared/widgets.dart';
 
@@ -31,28 +31,27 @@ final class _LevelsPageState extends ConsumerState<LevelsPage> {
     final controller = ref.read(levelsControllerProvider.notifier);
     final value = ref.watch(levelsControllerProvider);
 
+    final padding = EdgeInsets.symmetric(
+      horizontal: responsiveHorizontalPadding(context),
+    );
+
     return Scaffold(
-      appBar: () {
-        final size = MediaQueryData.fromView(
-          View.of(context),
-        ).size;
+      appBar: TopAppBar(
+        centerTitle: false,
 
-        final remaining = max(size.width - Breakpoints.small, 16.0);
-
-        return TopAppBar(
-          centerTitle: false,
-
-          title: Padding(
-            padding: EdgeInsets.only(left: (remaining / 2.0) + 44.0 + 16.0),
-            child: Text('levels.title'.tr()),
+        title: Padding(
+          padding: padding.copyWith(
+            left: padding.left + 44.0 + 16.0,
+            right: 0.0,
           ),
+          child: Text('levels.title'.tr()),
+        ),
 
-          leading: Padding(
-            padding: EdgeInsets.only(left: remaining / 2.0),
-            child: const NavigationButton.back(),
-          ),
-        );
-      }(),
+        leading: Padding(
+          padding: padding.copyWith(right: 0.0),
+          child: const NavigationButton.back(),
+        ),
+      ),
 
       body: SafeArea(
         child: value.when(

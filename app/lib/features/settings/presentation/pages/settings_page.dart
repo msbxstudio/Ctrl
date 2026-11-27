@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -12,6 +10,7 @@ import 'package:msbx/config.dart';
 import 'package:msbx/extensions.dart';
 import 'package:msbx/helpers.dart';
 
+import 'package:ctrl/core/helpers.dart';
 import 'package:ctrl/core/services.dart';
 import 'package:ctrl/core/utils.dart';
 import 'package:ctrl/features/player.dart';
@@ -95,30 +94,27 @@ final class _SettingsPageState extends ConsumerState<SettingsPage> {
           :allowSoundEffects,
         ) = state;
 
+        final padding = EdgeInsets.symmetric(
+          horizontal: responsiveHorizontalPadding(context),
+        );
+
         return Scaffold(
-          appBar: () {
-            final size = MediaQueryData.fromView(
-              View.of(context),
-            ).size;
+          appBar: TopAppBar(
+            centerTitle: false,
 
-            final remaining = max(size.width - Breakpoints.small, 16.0);
-
-            return TopAppBar(
-              centerTitle: false,
-
-              title: Padding(
-                padding: EdgeInsets.only(left: (remaining / 2.0) + 44.0 + 16.0),
-                child: Text(
-                  'settings.title'.tr(),
-                ),
+            title: Padding(
+              padding: padding.copyWith(
+                left: padding.left + 44.0 + 16.0,
+                right: 0.0,
               ),
+              child: Text('settings.title'.tr()),
+            ),
 
-              leading: Padding(
-                padding: EdgeInsets.only(left: remaining / 2.0),
-                child: const NavigationButton.back(),
-              ),
-            );
-          }(),
+            leading: Padding(
+              padding: padding.copyWith(right: 0.0),
+              child: const NavigationButton.back(),
+            ),
+          ),
 
           body: SafeArea(
             child: RefreshIndicator.adaptive(

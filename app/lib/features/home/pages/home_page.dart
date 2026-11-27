@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -16,6 +14,7 @@ import 'package:msbx/extensions.dart';
 import 'package:msbx/widgets.dart';
 
 import 'package:ctrl/app/router.dart';
+import 'package:ctrl/core/helpers.dart';
 import 'package:ctrl/features/home.dart';
 import 'package:ctrl/features/level.dart';
 import 'package:ctrl/features/settings.dart';
@@ -36,7 +35,7 @@ final class HomePage extends ConsumerStatefulWidget {
 
 final class _HomePageState extends ConsumerState<HomePage> {
   @override
-  Widget build(BuildContext _) {
+  Widget build(BuildContext context) {
     final controller = ref.read(homeControllerProvider.notifier);
     final value = ref.watch(homeControllerProvider);
 
@@ -60,42 +59,35 @@ final class _HomePageState extends ConsumerState<HomePage> {
           :averageTime,
         ) = state;
 
+        final padding = EdgeInsets.symmetric(
+          horizontal: responsiveHorizontalPadding(context),
+        );
+
         return Scaffold(
-          appBar: () {
-            final size = MediaQueryData.fromView(
-              View.of(context),
-            ).size;
+          appBar: TopAppBar(
+            centerTitle: false,
 
-            final remaining = max(size.width - Breakpoints.small, 16.0);
+            title: Padding(
+              padding: padding.copyWith(right: 0.0),
+              child: Text('home.greeting'.tr(namedArgs: {'name': player.name})),
+            ),
 
-            return TopAppBar(
-              centerTitle: false,
+            trailing: Padding(
+              padding: padding.copyWith(left: 0.0),
+              child: NavigationButton(
+                onPressed: () async {
+                  await ref
+                      .read(routerProvider)
+                      .push<bool>(SettingsPage.routePath);
 
-              title: Padding(
-                padding: EdgeInsets.only(left: remaining / 2.0),
-                child: Text(
-                  'home.greeting'.tr(namedArgs: {'name': player.name}),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                  await controller.refresh();
+                },
+
+                tooltip: 'settings.title'.tr(),
+                child: const Icon(LucideIcons.settings),
               ),
-
-              trailing: Padding(
-                padding: EdgeInsets.only(right: remaining / 2.0),
-                child: NavigationButton(
-                  onPressed: () async {
-                    await ref
-                        .read(routerProvider)
-                        .push<bool>(SettingsPage.routePath);
-
-                    await controller.refresh();
-                  },
-
-                  tooltip: 'settings.title'.tr(),
-                  child: const Icon(LucideIcons.settings),
-                ),
-              ),
-            );
-          }(),
+            ),
+          ),
 
           body: SafeArea(
             minimum: const EdgeInsets.symmetric(
